@@ -9,7 +9,7 @@ class ProfileController extends Controller
 {
     public function update(UpdateProfileRequest $request)
     {
-      auth()->user()->update($request->only('name', 'email'));
+      auth()->user()->update($request->only('first_name', 'email'));
 
       if ($request->input('password')) {
           auth()->user()->update([
