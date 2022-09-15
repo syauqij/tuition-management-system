@@ -12,11 +12,18 @@
         <form method="POST" action="{{ route('register') }}">
             @csrf
 
-            <!-- Name -->
+            <!-- First Name -->
             <div>
-                <x-input-label for="name" :value="__('Name')" />
+                <x-input-label for="first_name" :value="__('First Name')" />
 
-                <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
+                <x-text-input id="first_name" class="block mt-1 w-full" type="text" name="first_name" :value="old('first_name')" required autofocus />
+            </div>
+
+            <!-- Last Name -->
+            <div class="mt-4">
+                <x-input-label for="last_name" :value="__('Last Name')" />
+
+                <x-text-input id="last_name" class="block mt-1 w-full" type="text" name="last_name" :value="old('last_name')" required autofocus />
             </div>
 
             <!-- Email Address -->
@@ -36,13 +43,11 @@
                                 required autocomplete="new-password" />
             </div>
 
-            <!-- Confirm Password -->
+            <!-- Phone Number -->
             <div class="mt-4">
-                <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+              <x-input-label for="phone_no" :value="__('Phone Number')" />
 
-                <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required />
+              <x-text-input id="phone_no" class="block mt-1 w-full" type="text" name="phone_no" :value="old('phone_no')" required />
             </div>
 
             <div class="flex items-center justify-end mt-4">
