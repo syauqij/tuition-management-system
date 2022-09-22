@@ -5,9 +5,10 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-10 w-auto fill-current text-gray-600" />
-                    </a>
+                  <a href=" {{ route('dashboard') }} " class="flex title-font font-medium items-center text-gray-900">
+                    <x-application-logo />
+                    <span class="ml-3 text-xl">TMS</span>
+                  </a>
                 </div>
 
                 <!-- Navigation Links -->

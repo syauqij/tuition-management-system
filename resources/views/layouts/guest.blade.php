@@ -14,8 +14,41 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body>
-        <div class="font-sans text-red-900 antialiased">
-            {{ $slot }}
+      <header class="text-gray-600 body-font border">
+        <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+
+          <!-- Logo -->
+          <a href="/" class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+            <x-application-logo />
+            <span class="ml-3 text-xl">TMS</span>
+          </a>
+
+          <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
+            <a class="mr-5 hover:text-gray-900">First Link</a>
+            <a class="mr-5 hover:text-gray-900">Second Link</a>
+            @if (Route::has('login'))
+                @auth
+                  <a href="{{ url('/dashboard') }}">
+                    <x-primary-button>
+                       Dashboard
+                    </x-primary-button>
+                  </a>
+                @else
+                  <a href="{{ route('register') }}">
+                    <x-primary-button>
+                        Register
+                    </x-primary-button>
+                  </a>
+                @endauth
+            @endif
+          </nav>
         </div>
-    </body>
+        </header>
+
+        <!-- Page Content -->
+        <main>
+              {{ $slot }}
+        </main>
+        @include('layouts.footer')
+      </body>
 </html>

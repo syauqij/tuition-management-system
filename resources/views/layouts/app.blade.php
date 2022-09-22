@@ -25,9 +25,12 @@
             </header>
 
             <!-- Page Content -->
-            <main>
+            <main class="h-screen">
+              <div class="h-full">
                 {{ $slot }}
+              </div>
             </main>
+            @include('layouts.footer')
         </div>
     </body>
 </html>
