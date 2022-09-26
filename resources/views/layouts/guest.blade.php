@@ -14,7 +14,8 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body>
-      <header class="text-gray-600 body-font border">
+      <div class="flex flex-col h-screen">
+        <header class="text-gray-600 body-font border">
         <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
 
           <!-- Logo -->
@@ -46,9 +47,10 @@
         </header>
 
         <!-- Page Content -->
-        <main>
+        <main class="flex-grow">
               {{ $slot }}
         </main>
         @include('layouts.footer')
-      </body>
+      </div>
+    </body>
 </html>

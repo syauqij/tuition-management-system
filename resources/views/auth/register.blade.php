@@ -1,6 +1,6 @@
 <x-guest-layout>
   <section class="text-gray-600 body-font">
-    <div class="container px-5 py-24 mx-auto flex flex-wrap items-center justify-between">
+    <div class="container px-5 py-12 mx-auto flex flex-wrap items-top justify-between">
       <x-column-text>
         <x-slot:title>
           Register an account
@@ -20,12 +20,28 @@
 
           <form method="POST" action="{{ route('register') }}">
               @csrf
-
+              
+              <x-input-label class="mb-1" for="role" :value="__('Signing up as ')" />
+              <ul class="grid gap-2 grid-cols-2 mb-2">
+                  <li>
+                      {{-- <input type="checkbox" name="ielts" value="IELTS" {{ old('ielts') == "IELTS" ? 'checked' : '' }}> --}}
+                      <x-radio-input id="role-parent" class="hidden peer" type="radio" name="role" :value="__('parent')" checked required autofocus />
+                      
+                      <x-radio-label class="text-center" for="role-parent" :value="__('Parent')" />
+                  </li>
+                  <li>
+                      <x-radio-input id="role-student" class="hidden peer" type="radio" name="role" :value="__('student')" required autofocus />
+                        
+                      <x-radio-label class="text-center" for="role-student" :value="__('Student')" />
+                  </li>
+              </ul>
+      
               <!-- First Name -->
               <div class="relative mb-4">
                   <x-input-label for="first_name" :value="__('First Name')" />
 
-                  <x-text-input id="first_name" class="block mt-1 w-full" type="text" name="first_name" :value="old('first_name')" required autofocus />
+                  <x-text-input id="first_name" class="block mt-1 w-full" type="text" name="first_name" 
+                  placeholder="E.g. Muhamad Syauqi" :value="old('first_name')" required autofocus />
               </div>
 
               <!-- Last Name -->
