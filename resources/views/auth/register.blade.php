@@ -41,21 +41,23 @@
                   <x-input-label for="first_name" :value="__('First Name')" />
 
                   <x-text-input id="first_name" class="block mt-1 w-full" type="text" name="first_name" 
-                  placeholder="E.g. Muhamad Syauqi" :value="old('first_name')" required autofocus />
+                  placeholder="E.g. Mohd Zaky" :value="old('first_name')" required autofocus />
               </div>
 
               <!-- Last Name -->
               <div class="relative mb-4">
                   <x-input-label for="last_name" :value="__('Last Name')" />
 
-                  <x-text-input id="last_name" class="block mt-1 w-full" type="text" name="last_name" :value="old('last_name')" required autofocus />
+                  <x-text-input id="last_name" class="block mt-1 w-full" type="text" name="last_name" 
+                  placeholder="E.g. Yahaya" :value="old('last_name')" required autofocus />
               </div>
 
               <!-- Email Address -->
               <div class="relative mb-4">
                   <x-input-label for="email" :value="__('Email')" />
 
-                  <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
+                  <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" 
+                  placeholder="mohdzaky.yahaya@gmail.com" :value="old('email')" required />
               </div>
 
               <!-- Password -->
