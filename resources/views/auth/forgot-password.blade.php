@@ -28,7 +28,7 @@
                   <x-input-text id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
               </div>
 
-              <x-button-primary class="w-full">
+              <x-button-primary class="w-full uppercase">
                 {{ __('Email Password Reset Link') }}
               </x-button-primary>
 

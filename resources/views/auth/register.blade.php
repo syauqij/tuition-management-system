@@ -77,7 +77,7 @@
                 <x-input-text id="phone_no" class="block mt-1 w-full" type="text" name="phone_no" :value="old('phone_no')" required />
               </div>
               
-              <x-button-primary class="w-full">
+              <x-button-primary class="w-full uppercase">
                 {{ __('Register') }}
               </x-button-primary>
 

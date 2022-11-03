@@ -45,7 +45,7 @@
                   </label>
               </div>
 
-              <x-button-primary class="w-full">
+              <x-button-primary class="w-full uppercase">
                 {{ __('Login') }}
               </x-button-primary>
               

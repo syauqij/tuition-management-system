@@ -35,7 +35,7 @@
                   </a>
                 @else
                   <a href="{{ route('register') }}">
-                    <x-button-primary>
+                    <x-button-primary class="uppercase">
                         Register
                     </x-button-primary>
                   </a>
