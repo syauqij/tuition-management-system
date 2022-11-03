@@ -48,9 +48,9 @@
                           </div>
                       </div>
                       <div class="flex items-center justify-end mt-4">
-                          <x-primary-button class="ml-3">
+                          <x-button-primary class="ml-3">
                               {{ __('Update') }}
-                          </x-primary-button>
+                          </x-button-primary>
                       </div>
                   </form>
               </div>

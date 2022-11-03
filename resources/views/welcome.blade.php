@@ -29,15 +29,15 @@
             @if (Route::has('login'))
                 @auth
                   <a href="{{ url('/dashboard') }}">
-                    <x-primary-button>
+                    <x-button-primary>
                        Dashboard
-                    </x-primary-button>
+                    </x-button-primary>
                   </a>
                 @else
                   <a href="{{ route('register') }}">
-                    <x-primary-button>
+                    <x-button-primary>
                         Register
-                    </x-primary-button>
+                    </x-button-primary>
                   </a>
                 @endauth
             @endif

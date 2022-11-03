@@ -77,9 +77,9 @@
                 <x-input-text id="phone_no" class="block mt-1 w-full" type="text" name="phone_no" :value="old('phone_no')" required />
               </div>
               
-              <x-primary-button class="w-full">
+              <x-button-primary class="w-full">
                 {{ __('Register') }}
-              </x-primary-button>
+              </x-button-primary>
 
               <p class="text-xs text-gray-500 mt-3"> Already have an account?  
                 <x-auth-link :value="__('Sign in')" href="{{ route('login') }}" />

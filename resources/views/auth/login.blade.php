@@ -45,9 +45,9 @@
                   </label>
               </div>
 
-              <x-primary-button class="w-full">
+              <x-button-primary class="w-full">
                 {{ __('Login') }}
-              </x-primary-button>
+              </x-button-primary>
               
               <p class="text-xs text-gray-500 mt-3"> Don't have an account? 
                 <x-auth-link :value="__('Create a new one')" href="{{ route('register') }}" />
