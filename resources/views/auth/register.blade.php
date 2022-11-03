@@ -40,7 +40,7 @@
               <div class="relative mb-4">
                   <x-input-label for="first_name" :value="__('First Name')" />
 
-                  <x-text-input id="first_name" class="block mt-1 w-full" type="text" name="first_name" 
+                  <x-input-text id="first_name" class="block mt-1 w-full" type="text" name="first_name" 
                   placeholder="E.g. Mohd Zaky" :value="old('first_name')" required autofocus />
               </div>
 
@@ -48,7 +48,7 @@
               <div class="relative mb-4">
                   <x-input-label for="last_name" :value="__('Last Name')" />
 
-                  <x-text-input id="last_name" class="block mt-1 w-full" type="text" name="last_name" 
+                  <x-input-text id="last_name" class="block mt-1 w-full" type="text" name="last_name" 
                   placeholder="E.g. Yahaya" :value="old('last_name')" required autofocus />
               </div>
 
@@ -56,7 +56,7 @@
               <div class="relative mb-4">
                   <x-input-label for="email" :value="__('Email')" />
 
-                  <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" 
+                  <x-input-text id="email" class="block mt-1 w-full" type="email" name="email" 
                   placeholder="mohdzaky.yahaya@gmail.com" :value="old('email')" required />
               </div>
 
@@ -64,7 +64,7 @@
               <div class="relative mb-4">
                   <x-input-label for="password" :value="__('Password')" />
 
-                  <x-text-input id="password" class="block mt-1 w-full"
+                  <x-input-text id="password" class="block mt-1 w-full"
                                 type="password"
                                 name="password"
                                 required autocomplete="new-password" />
@@ -74,7 +74,7 @@
               <div class="relative mb-4">
                 <x-input-label for="phone_no" :value="__('Phone Number')" />
 
-                <x-text-input id="phone_no" class="block mt-1 w-full" type="text" name="phone_no" :value="old('phone_no')" required />
+                <x-input-text id="phone_no" class="block mt-1 w-full" type="text" name="phone_no" :value="old('phone_no')" required />
               </div>
               
               <x-primary-button class="w-full">

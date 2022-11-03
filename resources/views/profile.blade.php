@@ -17,7 +17,7 @@
  
                         <div>
                             <x-input-label for="first_name" :value="__('First Name')" />
-                            <x-text-input id="first_name" class="block mt-1 w-full" type="text" name="first_name" value="{{ auth()->user()->first_name }}" />
+                            <x-input-text id="first_name" class="block mt-1 w-full" type="text" name="first_name" value="{{ auth()->user()->first_name }}" />
                             @error('first_name')
                               <x-alert-message type="error" :message="$message"/>
                             @enderror
@@ -25,7 +25,7 @@
                         
                         <div>
                           <x-input-label for="last_name" :value="__('Last Name')" />
-                          <x-text-input id="last_name" class="block mt-1 w-full" type="text" name="last_name" value="{{ auth()->user()->last_name }}" />
+                          <x-input-text id="last_name" class="block mt-1 w-full" type="text" name="last_name" value="{{ auth()->user()->last_name }}" />
                             @error('last_name')
                               <x-alert-message type="error" :message="$message"/>
                             @enderror
@@ -33,7 +33,7 @@
                           
                           <div>
                             <x-input-label for="email" :value="__('Email')" />
-                            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" value="{{ auth()->user()->email }}" />
+                            <x-input-text id="email" class="block mt-1 w-full" type="email" name="email" value="{{ auth()->user()->email }}" />
                             @error('email')
                               <x-alert-message type="error" :message="$message"/>
                             @enderror
@@ -41,7 +41,7 @@
 
                           <div>
                               <x-input-label for="phone_no" :value="__('Phone Number')" />
-                              <x-text-input id="phone_no" class="block mt-1 w-full" type="text" name="phone_no" value="{{ auth()->user()->phone_no }}" />
+                              <x-input-text id="phone_no" class="block mt-1 w-full" type="text" name="phone_no" value="{{ auth()->user()->phone_no }}" />
                               @error('phone_no')
                                 <x-alert-message type="error" :message="$message"/>
                               @enderror
