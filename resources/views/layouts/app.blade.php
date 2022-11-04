@@ -25,12 +25,10 @@
             </header>
 
             <!-- Page Content -->
-            <main class="h-screen">
-              <div class="h-full">
+            <main class="flex-grow">
                 {{ $slot }}
-              </div>
             </main>
-            @include('layouts.footer')
-        </div>
+          </div>
+          @include('layouts.footer')
     </body>
 </html>
