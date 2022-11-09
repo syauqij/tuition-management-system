@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\SubjectCategoryController;
+use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +37,8 @@ Route::group(['middleware' => 'auth'], function() {
     })->name('settings');
 
     Route::resource('subject-categories', SubjectCategoryController::class);
+    Route::resource('subjects', SubjectController::class);
+    Route::resource('courses', CourseController::class);
   });
 });
 

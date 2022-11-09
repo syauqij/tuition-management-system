@@ -6,12 +6,20 @@
   </x-slot>
 
   <div class="py-12">
-      <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-          <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-              <div class="p-6 bg-white border-b border-gray-200">
-                  {{ $subjectCategories }}
-              </div>
-          </div>
+    <x-card>
+      <div class="flex flex-col text-center w-full mb-10">
+        <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Manage Subject Category</h1>
+        <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Please select the category below to edit or 
+          <x-auth-link :value="__('Create New Category')" href="{{ route('subject-categories.create') }}" /></p>
       </div>
+
+      @include('layouts.flash-message')
+
+      @foreach ($subjectCategories as $category)
+        <p> {{ $loop->index+1 . ") " }} 
+            <x-auth-link :value="$category->name" href="{{ route('subject-categories.edit', $category->id) }}" /> 
+        </p>
+      @endforeach
+    </x-card>
   </div>
 </x-app-layout>

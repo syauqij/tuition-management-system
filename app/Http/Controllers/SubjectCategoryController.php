@@ -7,11 +7,6 @@ use Illuminate\Http\Request;
 
 class SubjectCategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     { 
       $getCategories = SubjectCategory::orderBy('created_at', 'desc')->get();
@@ -21,67 +16,43 @@ class SubjectCategoryController extends Controller
       ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+      return view('settings.subjectCategories.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
-    {
-        //
+    {        
+      $request->validate([
+        'category_name' => ['required', 'string', 'max:255']
+      ]);
+      
+      SubjectCategory::create([
+        'name' => $request->category_name
+      ]);
+
+      return redirect()->route('subject-categories.index')->with('success','New category ' . $request->category_name .' has been created successfully.');
+
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\SubjectCategory  $subjectCategory
-     * @return \Illuminate\Http\Response
-     */
-    public function show(SubjectCategory $id)
+    public function edit(SubjectCategory $subjectCategory)
     {
-        dd($id);
+       
+      return view('settings.subjectCategories.edit',compact('subjectCategory'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\SubjectCategory  $subjectCategory
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(SubjectCategory $id)
+    public function update(Request $request, SubjectCategory $subjectCategory)
     {
-        //
+      $request->validate([
+        'name' => 'required',
+      ]);
+      
+      $subjectCategory->fill($request->post())->save();
+
+      return redirect()->route('subject-categories.index')->with('success','Category ' . $subjectCategory->name .' has been updated successfully.');
+
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\SubjectCategory  $subjectCategory
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, SubjectCategory $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\SubjectCategory  $subjectCategory
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(SubjectCategory $id)
     {
         //
