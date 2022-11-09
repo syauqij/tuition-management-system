@@ -15,11 +15,21 @@
 
       @include('layouts.flash-message')
 
-      @foreach ($subjectCategories as $category)
-        <p> {{ $loop->index+1 . ") " }} 
-            <x-auth-link :value="$category->name" href="{{ route('subject-categories.edit', $category->id) }}" /> 
-        </p>
-      @endforeach
+      
+      <div class="container mb-10 mx-auto lg:px-10">
+        <div class="flex flex-wrap">
+            @foreach ($subjectCategories as $category)
+              <div class="lg:w-3/12 md:w-1/2 p-2 w-full text-center">
+                <a href="{{ route('subject-categories.edit', $category->id)}} ">
+                  <span class="py-1 px-2 rounded bg-neutral-100 text-indigo-500 text-base font-medium tracking-widest truncate block">
+                    {{ $category->name }}
+                  </span>
+                </a>
+              </div>
+            @endforeach
+        </div>
+      </div>
+      
     </x-card>
   </div>
 </x-app-layout>
