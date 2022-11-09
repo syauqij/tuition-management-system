@@ -31,8 +31,12 @@
               </div>
             </div>
 
-            <div class="p-2 w-full">
-              <x-button-primary class="flex mx-auto text-lg">
+            <div class="p-2 w-full flex justify-center">
+              <x-button-cancel class="mr-2 text-lg" :value="__('subject-categories.index')" >
+                {{ __('Cancel') }}
+              </x-button-cancel>
+
+              <x-button-primary class="text-lg">
                 {{ __('Update') }}
               </x-button-primary>
             </div>
