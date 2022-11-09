@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-      Schema::create('subject_categories', function (Blueprint $table) {
-        $table->id()->autoIncrement();;
-        $table->string('name');
-        $table->timestamps();
-      });
+        Schema::create('subjects', function (Blueprint $table) {
+            $table->id()->autoIncrement();
+            $table->string('name');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-      Schema::dropIfExists('subject_categories');
+        Schema::dropIfExists('subjects');
     }
 };
