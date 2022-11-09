@@ -31,23 +31,24 @@ class SubjectController extends Controller
         'name' => $request->subject_name,
       ]);
 
-      return redirect()->route('subject-categories.index')->with('success','New Subject has been created successfully.');
-    }
-
-    public function show(Subject $subject)
-    {
-        //
+      return redirect()->route('subjects.index')->with('success','New '. $request->subject_name . ' has been created successfully.');
     }
 
     public function edit(Subject $subject)
     {
-        //
+      return view('settings.subjects.edit',compact('subject'));
     }
 
 
     public function update(Request $request, Subject $subject)
     {
-        //
+      $request->validate([
+        'name' => 'required',
+      ]);
+      
+      $subject->fill($request->post())->save();
+
+      return redirect()->route('subjects.index')->with('success','Subject ' . $subject->name .' has been updated successfully.');
     }
 
     public function destroy(Subject $subject)
