@@ -6,7 +6,7 @@
   </x-slot>
 
   <div class="py-12">
-    <x-card>
+    <x-content.card>
 
       <div class="flex flex-col text-center w-full mb-4">
         <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">{{ $subjectCategory->name}}</h1>
@@ -14,7 +14,7 @@
       </div>
 
       <!-- Validation Errors -->
-      <x-auth-validation-errors class="mb-4" :errors="$errors" />
+      <x-forms.validation-errors class="mb-4" :errors="$errors" />
 
       <form method="POST" action="{{ route('subject-categories.update',$subjectCategory->id) }}" enctype="multipart/form-data">
         @csrf
@@ -24,27 +24,27 @@
             
             <div class="p-2 w-full">
               <div class="relative">
-                <x-input-label for="category_name" :value="__('Category Name')" />
+                <x-forms.input-label for="category_name" :value="__('Category Name')" />
 
-                <x-input-text id="category_name" class="block mt-1 w-full" type="text" name="name" 
+                <x-forms.input-text id="category_name" class="block mt-1 w-full" type="text" name="name" 
                 placeholder="E.g. Languages" :value="$subjectCategory->name" required autofocus />
               </div>
             </div>
 
             <div class="p-2 w-full flex justify-center">
-              <x-button-cancel class="mr-2 text-lg" :value="__('subject-categories.index')" >
+              <x-forms.button-cancel class="mr-2 text-lg" :value="__('subject-categories.index')" >
                 {{ __('Cancel') }}
-              </x-button-cancel>
+              </x-forms.button-cancel>
 
-              <x-button-primary class="text-lg">
+              <x-forms.button-primary class="text-lg">
                 {{ __('Update') }}
-              </x-button-primary>
+              </x-forms.button-primary>
             </div>
 
           </div>
         </div>
       
       </form>
-    </x-card>
+    </x-content.card>
   </div>
 </x-app-layout>

@@ -1,5 +1,5 @@
 @if ($message = Session::get('success'))
-  <x-success-alert :message="$message"/>
+  <x-alerts.success :message="$message"/>
 @endif
 @if ($message = Session::get('error'))
 
@@ -11,5 +11,5 @@
 
 @endif
 @if ($errors->any())
-  <x-errors-alert />
+  <x-alerts.errors />
 @endif

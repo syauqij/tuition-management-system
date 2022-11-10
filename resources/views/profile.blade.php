@@ -16,41 +16,41 @@
                       <div class="grid grid-cols-2 gap-2">
  
                         <div>
-                            <x-input-label for="first_name" :value="__('First Name')" />
-                            <x-input-text id="first_name" class="block mt-1 w-full" type="text" name="first_name" value="{{ auth()->user()->first_name }}" />
+                            <x-forms.input-label for="first_name" :value="__('First Name')" />
+                            <x-forms.input-text id="first_name" class="block mt-1 w-full" type="text" name="first_name" value="{{ auth()->user()->first_name }}" />
                             @error('first_name')
                               <x-alert-message type="error" :message="$message"/>
                             @enderror
                         </div>
                         
                         <div>
-                          <x-input-label for="last_name" :value="__('Last Name')" />
-                          <x-input-text id="last_name" class="block mt-1 w-full" type="text" name="last_name" value="{{ auth()->user()->last_name }}" />
+                          <x-forms.input-label for="last_name" :value="__('Last Name')" />
+                          <x-forms.input-text id="last_name" class="block mt-1 w-full" type="text" name="last_name" value="{{ auth()->user()->last_name }}" />
                             @error('last_name')
                               <x-alert-message type="error" :message="$message"/>
                             @enderror
                           </div>
                           
                           <div>
-                            <x-input-label for="email" :value="__('Email')" />
-                            <x-input-text id="email" class="block mt-1 w-full" type="email" name="email" value="{{ auth()->user()->email }}" />
+                            <x-forms.input-label for="email" :value="__('Email')" />
+                            <x-forms.input-text id="email" class="block mt-1 w-full" type="email" name="email" value="{{ auth()->user()->email }}" />
                             @error('email')
                               <x-alert-message type="error" :message="$message"/>
                             @enderror
                           </div>
 
                           <div>
-                              <x-input-label for="phone_no" :value="__('Phone Number')" />
-                              <x-input-text id="phone_no" class="block mt-1 w-full" type="text" name="phone_no" value="{{ auth()->user()->phone_no }}" />
+                              <x-forms.input-label for="phone_no" :value="__('Phone Number')" />
+                              <x-forms.input-text id="phone_no" class="block mt-1 w-full" type="text" name="phone_no" value="{{ auth()->user()->phone_no }}" />
                               @error('phone_no')
                                 <x-alert-message type="error" :message="$message"/>
                               @enderror
                           </div>
                       </div>
                       <div class="flex items-center justify-end mt-4">
-                          <x-button-primary class="ml-3">
+                          <x-forms.button-primary class="ml-3">
                               {{ __('Update') }}
-                          </x-button-primary>
+                          </x-forms.button-primary>
                       </div>
                   </form>
               </div>

@@ -6,8 +6,8 @@
     </x-slot>
 
     <div class="py-12">
-      <x-card>
+      <x-content.card>
           You're logged in!
-      </x-card>
+      </x-content.card>
     </div>
 </x-app-layout>

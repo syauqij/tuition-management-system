@@ -1,7 +1,7 @@
 <x-guest-layout>
   <section class="text-gray-600 body-font">
     <div class="container px-5 py-12 mx-auto flex flex-wrap items-top justify-between">
-      <x-column-text>
+      <x-content.column-text>
         <x-slot:title>
           Register an account
         </x-slot>
@@ -11,60 +11,60 @@
 
         <img class="object-cover object-center rounded-lg md:mt-4 mt-12" 
         src="https://dummyimage.com/1200x500" alt="step">
-      </x-column-text>
+      </x-content.column-text>
 
-      <x-auth-card>
+      <x-content.auth-card>
 
           <!-- Validation Errors -->
-          <x-auth-validation-errors class="mb-4" :errors="$errors" />
+          <x-forms.validation-errors class="mb-4" :errors="$errors" />
 
           <form method="POST" action="{{ route('register') }}">
               @csrf
               
-              <x-input-label class="mb-1" for="role" :value="__('Signing up as ')" />
+              <x-forms.input-label class="mb-1" for="role" :value="__('Signing up as ')" />
               <ul class="grid gap-2 grid-cols-2 mb-2">
                   <li>
                       {{-- <input type="checkbox" name="ielts" value="IELTS" {{ old('ielts') == "IELTS" ? 'checked' : '' }}> --}}
-                      <x-radio-input id="role-parent" class="hidden peer" type="radio" name="role" :value="__('parent')" checked required autofocus />
+                      <x-forms.radio-input id="role-parent" class="hidden peer" type="radio" name="role" :value="__('parent')" checked required autofocus />
                       
-                      <x-radio-label class="text-center" for="role-parent" :value="__('Parent')" />
+                      <x-forms.radio-label class="text-center" for="role-parent" :value="__('Parent')" />
                   </li>
                   <li>
-                      <x-radio-input id="role-student" class="hidden peer" type="radio" name="role" :value="__('student')" required autofocus />
+                      <x-forms.radio-input id="role-student" class="hidden peer" type="radio" name="role" :value="__('student')" required autofocus />
                         
-                      <x-radio-label class="text-center" for="role-student" :value="__('Student')" />
+                      <x-forms.radio-label class="text-center" for="role-student" :value="__('Student')" />
                   </li>
               </ul>
       
               <!-- First Name -->
               <div class="relative mb-4">
-                  <x-input-label for="first_name" :value="__('First Name')" />
+                  <x-forms.input-label for="first_name" :value="__('First Name')" />
 
-                  <x-input-text id="first_name" class="block mt-1 w-full" type="text" name="first_name" 
+                  <x-forms.input-text id="first_name" class="block mt-1 w-full" type="text" name="first_name" 
                   placeholder="E.g. Mohd Zaky" :value="old('first_name')" required autofocus />
               </div>
 
               <!-- Last Name -->
               <div class="relative mb-4">
-                  <x-input-label for="last_name" :value="__('Last Name')" />
+                  <x-forms.input-label for="last_name" :value="__('Last Name')" />
 
-                  <x-input-text id="last_name" class="block mt-1 w-full" type="text" name="last_name" 
+                  <x-forms.input-text id="last_name" class="block mt-1 w-full" type="text" name="last_name" 
                   placeholder="E.g. Yahaya" :value="old('last_name')" required autofocus />
               </div>
 
               <!-- Email Address -->
               <div class="relative mb-4">
-                  <x-input-label for="email" :value="__('Email')" />
+                  <x-forms.input-label for="email" :value="__('Email')" />
 
-                  <x-input-text id="email" class="block mt-1 w-full" type="email" name="email" 
+                  <x-forms.input-text id="email" class="block mt-1 w-full" type="email" name="email" 
                   placeholder="mohdzaky.yahaya@gmail.com" :value="old('email')" required />
               </div>
 
               <!-- Password -->
               <div class="relative mb-4">
-                  <x-input-label for="password" :value="__('Password')" />
+                  <x-forms.input-label for="password" :value="__('Password')" />
 
-                  <x-input-text id="password" class="block mt-1 w-full"
+                  <x-forms.input-text id="password" class="block mt-1 w-full"
                                 type="password"
                                 name="password"
                                 required autocomplete="new-password" />
@@ -72,21 +72,21 @@
 
               <!-- Phone Number -->
               <div class="relative mb-4">
-                <x-input-label for="phone_no" :value="__('Phone Number')" />
+                <x-forms.input-label for="phone_no" :value="__('Phone Number')" />
 
-                <x-input-text id="phone_no" class="block mt-1 w-full" type="text" name="phone_no" :value="old('phone_no')" required />
+                <x-forms.input-text id="phone_no" class="block mt-1 w-full" type="text" name="phone_no" :value="old('phone_no')" required />
               </div>
               
-              <x-button-primary class="w-full uppercase">
+              <x-forms.button-primary class="w-full uppercase">
                 {{ __('Register') }}
-              </x-button-primary>
+              </x-forms.button-primary>
 
               <p class="text-xs text-gray-500 mt-3"> Already have an account?  
-                <x-auth-link :value="__('Sign in')" href="{{ route('login') }}" />
+                <x-content.link :value="__('Sign in')" href="{{ route('login') }}" />
               </p>
 
           </form>
-      </x-auth-card>
+      </x-content.auth-card>
     </div>
   </section>
 </x-guest-layout>

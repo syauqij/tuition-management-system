@@ -20,7 +20,7 @@
 
           <!-- Logo -->
           <a href="/" class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
-            <x-application-logo />
+            <x-nav.application-logo />
             <span class="ml-3 text-xl">TMS</span>
           </a>
 
@@ -30,15 +30,15 @@
             @if (Route::has('login'))
                 @auth
                   <a href="{{ url('/dashboard') }}">
-                    <x-button-primary>
+                    <x-forms.button-primary>
                        Dashboard
-                    </x-button-primary>
+                    </x-forms.button-primary>
                   </a>
                 @else
                   <a href="{{ route('register') }}">
-                    <x-button-primary class="uppercase">
+                    <x-forms.button-primary class="uppercase">
                         Register
-                    </x-button-primary>
+                    </x-forms.button-primary>
                   </a>
                 @endauth
             @endif
