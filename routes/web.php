@@ -17,9 +17,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::view('/', 'home.welcome')->name('home');
+Route::view('/about', 'home.about')->name('about');
+Route::view('/pricing', 'home.pricing')->name('pricing');
+Route::view('/contact', 'home.contact')->name('contact');
 
 Route::group(['middleware' => 'auth'], function() {
   Route::get('/dashboard', function () {
@@ -40,6 +41,14 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('subjects', SubjectController::class);
     Route::resource('courses', CourseController::class);
   });
+
+});
+
+Route::prefix('/courses')->group(function () {
+  Route::get('/', [CourseController::class, 'list'])
+    ->name('courses');
+  Route::get('/search', [CourseController::class, 'search'])
+    ->name('course.search');
 });
 
 require __DIR__.'/auth.php';

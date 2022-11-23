@@ -14,43 +14,18 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body>
-      <div class="flex flex-col h-screen">
-        <header class="text-gray-600 body-font border">
-        <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+    
+      <!-- Navigation Menu -->
+      @include('layouts.guest-navigation')
+      
+      <!-- Page Content -->
+      {{ $slot }}
 
-          <!-- Logo -->
-          <a href="/" class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
-            <x-nav.application-logo />
-            <span class="ml-3 text-xl">TMS</span>
-          </a>
-
-          <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
-            <a class="mr-5 hover:text-gray-900">First Link</a>
-            <a class="mr-5 hover:text-gray-900">Second Link</a>
-            @if (Route::has('login'))
-                @auth
-                  <a href="{{ url('/dashboard') }}">
-                    <x-forms.button-primary>
-                       Dashboard
-                    </x-forms.button-primary>
-                  </a>
-                @else
-                  <a href="{{ route('register') }}">
-                    <x-forms.button-primary class="uppercase">
-                        Register
-                    </x-forms.button-primary>
-                  </a>
-                @endauth
-            @endif
-          </nav>
-        </div>
-        </header>
-
-        <!-- Page Content -->
-        <main class="flex-grow">
-              {{ $slot }}
-        </main>
-        @include('layouts.footer')
-      </div>
+      <!--Register Now-->
+      @include('layouts.register-now')
+        
+      <!--Footer-->
+      @include('layouts.footer')
+      
     </body>
 </html>

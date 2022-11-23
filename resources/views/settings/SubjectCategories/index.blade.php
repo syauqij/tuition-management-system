@@ -15,19 +15,12 @@
 
       @include('layouts.flash-message')
 
-      
-      <div class="container mb-10 mx-auto lg:px-10">
-        <div class="flex flex-wrap">
-            @foreach ($subjectCategories as $category)
-              <div class="lg:w-3/12 md:w-1/2 p-2 w-full text-center">
-                <a href="{{ route('subject-categories.edit', $category->id)}} ">
-                  <span class="py-1 px-2 rounded bg-neutral-100 text-indigo-500 text-base font-medium tracking-widest truncate block">
-                    {{ $category->name }}
-                  </span>
-                </a>
-              </div>
-            @endforeach
-        </div>
+      <div class="flex flex-wrap lg:px-10 sm:mx-auto sm:mb-2 -mx-2">
+        @foreach ($subjectCategories as $category)
+        <x-content.setting-card width="md:w-1/2 lg:w-1/4" align="p-2 justify-center">
+            <x-content.link :value="$category->name" href="{{ route('subject-categories.edit', $category->id)}}" />
+        </x-content.setting-card>
+        @endforeach
       </div>
       
     </x-content.card>
