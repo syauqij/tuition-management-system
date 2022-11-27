@@ -6,7 +6,7 @@
             Welcome Back
           </x-slot>
 
-          Poke slow-carb mixtape knausgaard, typewriter street art gentrify hammock starladder roathse. 
+          Poke slow-carb mixtape knausgaard, typewriter street art gentrify hammock starladder roathse.
           Craies vegan tousled etsy austin.
       </x-content.column-text>
 
@@ -48,16 +48,10 @@
               <x-forms.button-primary class="w-full uppercase">
                 {{ __('Login') }}
               </x-forms.button-primary>
-              
-              <p class="text-xs text-gray-500 mt-3"> Don't have an account? 
+
+              <p class="text-xs text-gray-500 mt-3"> Don't have an account?
                 <x-content.link :value="__('Create a new one')" href="{{ route('register') }}" />
               </p>
-
-              @if (Route::has('password.request'))
-                <p class="text-xs text-gray-500 mt-1">
-                  <x-content.link :value="__('Forgot your password?')" href="{{ route('password.request') }}" />
-                </p>
-              @endif
           </form>
       </x-content.auth-card>
     </div>
