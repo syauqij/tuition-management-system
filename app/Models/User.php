@@ -52,4 +52,32 @@ class User extends Authenticatable
           get: fn($value, $attributes) => $attributes['first_name']. ' ' . $attributes['last_name']
         );
     }
+
+    public function studentProfile()
+    {
+        return $this->hasOne(StudentProfile::class);
+    }
+
+    public function staffProfile()
+    {
+        return $this->hasOne(StaffProfile::class);
+    }
+
+    public function scopeGetUserProfile($query, $role, $userID)
+    {
+      if($role == 'student') {
+        $query
+          ->where('role', 'student')
+          ->with('studentProfile');
+      }      
+      else {
+        $query
+          ->whereIn('role', ['teacher', 'finance', 'admin'])
+          ->with('staffProfile');
+      }
+
+      $query->where('id', $userID);
+
+      return $query;
+    }
 }

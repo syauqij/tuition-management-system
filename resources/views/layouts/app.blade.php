@@ -26,6 +26,7 @@
 
             <!-- Page Content -->
             <main class="flex-grow">
+                @include('layouts.flash-message');
                 {{ $slot }}
             </main>
           </div>
