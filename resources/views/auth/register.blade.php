@@ -19,23 +19,7 @@
           <x-forms.validation-errors class="mb-4" :errors="$errors" />
 
           <form method="POST" action="{{ route('register') }}">
-              @csrf
-              
-              <x-forms.input-label class="mb-1" for="role" :value="__('Signing up as ')" />
-              <ul class="grid gap-2 grid-cols-2 mb-2">
-                  <li>
-                      {{-- <input type="checkbox" name="ielts" value="IELTS" {{ old('ielts') == "IELTS" ? 'checked' : '' }}> --}}
-                      <x-forms.radio-input id="role-parent" class="hidden peer" type="radio" name="role" :value="__('parent')" checked required autofocus />
-                      
-                      <x-forms.radio-label class="text-center" for="role-parent" :value="__('Parent')" />
-                  </li>
-                  <li>
-                      <x-forms.radio-input id="role-student" class="hidden peer" type="radio" name="role" :value="__('student')" required autofocus />
-                        
-                      <x-forms.radio-label class="text-center" for="role-student" :value="__('Student')" />
-                  </li>
-              </ul>
-      
+              @csrf    
               <!-- First Name -->
               <div class="relative mb-4">
                   <x-forms.input-label for="first_name" :value="__('First Name')" />
