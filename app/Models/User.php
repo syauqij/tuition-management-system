@@ -68,8 +68,9 @@ class User extends Authenticatable
       if($role == 'student') {
         $query
           ->where('role', 'student')
-          ->with('studentProfile');
-      }      
+          ->with('studentProfile')
+          ->with('studentProfile.parentProfile');
+      }
       else {
         $query
           ->whereIn('role', ['teacher', 'finance', 'admin'])

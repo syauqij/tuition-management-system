@@ -8,31 +8,28 @@ use App\Models\StudentProfile;
 use App\Models\ParentProfile;
 use App\Models\StaffProfile;
 class UserProfileController extends Controller
-{ 
+{
     public function show()
-    { 
+    {
       $role = auth()->user()->role;
       $userId = auth()->user()->id;
 
       $user = User::getUserProfile($role, $userId)->get()->first();
 
-      $parentProfileId = !empty($user->studentProfile->parent_profile_id) ? $user->studentProfile->parent_profile_id : '';
-      if($parentProfileId) {
-        $parentProfile = ParentProfile::where('id', $parentProfileId)
-          ->first();
+      if($role == 'student') {
+        return view('users.student-profile', [
+          'user' => $user,
+        ]);
       }
       else {
-        $parentProfile = null;
+        return view('users.staff-profile', [
+          'user' => $user
+        ]);
       }
-      
-      return view('profile', [
-        'user' => $user,
-        'parent' => $parentProfile
-      ]);
     }
 
     public function update(UpdateProfileRequest $request)
-    { 
+    {
       $userId = auth()->user()->id;
       $userRole = auth()->user()->role;
       $password = $request->password;
@@ -42,11 +39,11 @@ class UserProfileController extends Controller
       } else {
         $request['password'] = bcrypt($password);
       }
-      
+
       auth()->user()->update($request->all());
 
       $personalDetails = [
-        'mykad' => $request->mykad, 
+        'mykad' => $request->mykad,
         'birthdate' => $request->birthdate,
         'gender' => $request->gender,
         'street_1' => $request->street_1,
@@ -60,15 +57,15 @@ class UserProfileController extends Controller
 
       if($userRole == 'student') {
         $studentProfile = StudentProfile::updateOrCreate(
-          ['user_id' => $userId], 
+          ['user_id' => $userId],
           $personalDetails
         );
 
         $parentId = $studentProfile->parent_profile_id;
-  
+
         $parentProfile = ParentProfile::updateOrCreate(
           ['id' => $parentId],
-          [ 
+          [
             'first_name' => $request->parent_first_name,
             'last_name' => $request->parent_last_name,
             'email' => $request->parent_email,
@@ -76,6 +73,7 @@ class UserProfileController extends Controller
             'mykad' => $request->parent_mykad,
             'birthdate' => $request->parent_birthdate,
             'gender' => $request->parent_gender,
+            'relationship' => $request->parent_relationship,
             'street_1' => $request->parent_street_1,
             'street_2' => $request->parent_street_2,
             'postcode' => $request->parent_postcode,
@@ -89,10 +87,9 @@ class UserProfileController extends Controller
           $getStudentProfile->parent_profile_id = $parentProfile->id;
           $getStudentProfile->save();
       }
-      
       else {
         $staffProfile = StaffProfile::updateOrCreate(
-          ['user_id' => $userId], 
+          ['user_id' => $userId],
           $personalDetails
         );
       }

@@ -17,6 +17,7 @@ class ParentProfile extends Model
       'mykad',
       'gender',
       'birthdate',
+      'relationship',
       'street_1',
       'street_2',
       'postcode',
