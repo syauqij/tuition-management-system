@@ -27,7 +27,7 @@
 
         <div class="md:col-span-2">
           <x-forms.input-label for="parent_mykad" :value="__('MyKad')" />
-          <x-forms.input-text id="parent_mykad" class="block mt-1 w-full" type="parent_mykad" name="parent_mykad"
+          <x-forms.input-text id="parent_mykad" class="block mt-1 w-full" type="number" name="parent_mykad"
             value="{{ old('parent_mykad') ?? $user->studentProfile->parentProfile->mykad }}"  />
           @error('parent_mykad')
             <x-alerts.message type="error" :message="$message"/>
