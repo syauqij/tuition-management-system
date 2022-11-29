@@ -63,7 +63,7 @@
                 {{ __('Cancel') }}
               </x-forms.button-cancel>
 
-              <x-forms.button-primary">
+              <x-forms.button-primary>
                 {{ __('Create') }}
               </x-forms.button-primary>
             </div>

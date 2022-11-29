@@ -30,12 +30,12 @@
             </div>
           </div>
 
-          <div class="p-4 w-full flex justify-end">
+          <div class="pt-4 w-full flex justify-end">
             <x-forms.button-cancel class="mr-2" :value="__('subject-categories.index')" >
               {{ __('Cancel') }}
             </x-forms.button-cancel>
 
-            <x-forms.button-primary">
+            <x-forms.button-primary>
               {{ __('Update') }}
             </x-forms.button-primary>
           </div>
