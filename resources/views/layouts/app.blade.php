@@ -26,8 +26,10 @@
 
             <!-- Page Content -->
             <main class="flex-grow">
-                @include('layouts.flash-message');
+              <div class="container max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                <x-alerts.card/>
                 {{ $slot }}
+              </div>
             </main>
           </div>
           @include('layouts.footer')
