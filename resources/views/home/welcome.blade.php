@@ -24,13 +24,16 @@
             <div class="mb-12 text-xl xl:text-2xl font-medium">
               With TMS education no longer needs to be restricted by location and time
             </div>
-            <a class="inline-block px-7 py-3 mr-2 bg-indigo-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md 
-                  hover:bg-indigo-700 hover:shadow-lg focus:bg-indigo-700 focus:shadow-lg focus:outline-none focus:ring-0 
-                  active:bg-indigo-800 active:shadow-lg transition duration-150 ease-in-out"
-                  data-mdb-ripple="true" data-mdb-ripple-color="light" href="{{route('courses')}}" role="button">Get started</a>
-            <a class="inline-block px-7 py-3 bg-transparent text-indigo-600 font-medium text-sm leading-snug uppercase rounded 
-                  hover:text-indigo-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-0 active:bg-gray-200 transition duration-150 ease-in-out"
-                  data-mdb-ripple="true" data-mdb-ripple-color="light" href="javascript: scrollToStats();" role="button">Learn more</a>
+              <a href=" {{ route('courses') }} " >
+                <x-forms.button-primary class="py-4">
+                  {{ __('Get Started') }}
+                </x-forms.button-primary>
+              </a>
+              <a data-mdb-ripple="true" data-mdb-ripple-color="light" href="javascript: scrollToStats();" role="button">
+                <x-forms.button-secondary class="py-4">
+                  {{ __('Learn More') }}
+                </x-forms.button-secondary>
+              </a>
           </div>
           <div class="mb-12 lg:mb-0">
             <img src="{{url('/assets/intro.webp')}}"
@@ -44,7 +47,7 @@
     <!-- Statistics -->
     <div id="stats" class="text-center">
       <h1 class="text-3xl font-bold mb-12">
-        The <span class="text-indigo-800">FASTEST</span> Growing Online Tuition in Malaysia 
+        The <span class="text-indigo-800">FASTEST</span> Growing Online Tuition in Malaysia
         <br class="hidden lg:inline-block pt-1">with 59,658 active students and counting
       </h1>
       <div class="grid grid-cols-2 gap-x-6 lg:gap-x-12 md:grid-cols-4">
@@ -52,7 +55,7 @@
           <h2 class="text-5xl font-bold display-5 text-cyan-600 mb-4">570</h2>
           <h5 class="text-lg font-medium text-gray-500 mb-4">Classes Per Month</h5>
         </div>
-  
+
         <div class="mb-12 md:mb-0">
           <h2 class="text-5xl font-bold display-5 text-cyan-600 mb-4">1,209</h2>
           <h5 class="text-lg font-medium text-gray-500 mb-4">Professional Tutors</h5>
@@ -62,7 +65,7 @@
           <h2 class="text-5xl font-bold display-5 text-cyan-600 mb-4">59</h2>
           <h5 class="text-lg font-medium text-gray-500 mb-4">Professional Tutors</h5>
         </div>
-  
+
         <div class="mb-12 md:mb-0">
           <h2 class="text-5xl font-bold display-5 text-cyan-600 mb-4">125</h2>
           <h5 class="text-lg font-medium text-gray-500 mb-4">Dedicated Crews</h5>
@@ -192,7 +195,7 @@
               <p class="mb-6 2xl:w-4/5">
                 Looking for reliable tuition services to get exam ready? No more Googling “tuition centres near me”. One of the top online tuition centres in Malaysia is here to help you.
               </p>
-  
+
               <div class="grid md:grid-cols-2 gap-x-6">
                 <div class="mb-6">
                   <p class="flex items-center text-gray-900 title-font font-medium">
@@ -204,7 +207,7 @@
                     Live & Interactive Learning
                   </p>
                 </div>
-    
+
                 <div class="mb-6">
                   <p class="flex items-center text-gray-900 title-font font-medium">
                     <svg class="w-4 h-4 mr-2 text-indigo-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -215,7 +218,7 @@
                     Flexible Timings
                   </p>
                 </div>
-                
+
                 <div class="mb-6">
                   <p class="flex items-center text-gray-900 title-font font-medium">
                     <svg class="w-4 h-4 mr-2 text-indigo-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">

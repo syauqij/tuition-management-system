@@ -14,20 +14,20 @@
     <span class="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
       <ul class="navbar-nav mr-auto lg:flex lg:flex-row">
         <li class="nav-item">
-          <a class="nav-link block pr-2 lg:px-2 py-2 text-white hover:text-gray-700 focus:text-gray-700 transition duration-150 ease-in-out" 
-            href="/index.html" data-mdb-ripple="true" data-mdb-ripple-color="light">Home</a>
+          <a class="nav-link block pr-2 lg:px-2 py-2 text-white hover:text-indigo-700 focus:text-indigo-700 transition duration-150 ease-in-out"
+            href="{{route('home')}}" data-mdb-ripple="true" data-mdb-ripple-color="light">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link block pr-2 lg:px-2 py-2 text-white hover:text-gray-700 focus:text-gray-700 transition duration-150 ease-in-out" 
-            href="/about-us.html" data-mdb-ripple="true" data-mdb-ripple-color="light" >About Us</a>
+          <a class="nav-link block pr-2 lg:px-2 py-2 text-white hover:text-indigo-700 focus:text-indigo-700 transition duration-150 ease-in-out"
+            href="{{route('about')}}" data-mdb-ripple="true" data-mdb-ripple-color="light" >About Us</a>
         </li>
         <li class="nav-item mb-2 lg:mb-0">
-          <a class="nav-link block pr-2 lg:px-2 py-2 text-white hover:text-gray-700 focus:text-gray-700 transition duration-150 ease-in-out" 
-          href="/pricing.html" data-mdb-ripple="true" data-mdb-ripple-color="light" >Pricing</a>
+          <a class="nav-link block pr-2 lg:px-2 py-2 text-white hover:text-indigo-700 focus:text-indigo-700 transition duration-150 ease-in-out"
+          href="{{route('courses')}}" data-mdb-ripple="true" data-mdb-ripple-color="light" >Courses</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link block pr-2 lg:px-2 py-2 text-white hover:text-gray-700 focus:text-gray-700 transition duration-150 ease-in-out" 
-            href="/contact-us.html" data-mdb-ripple="true" data-mdb-ripple-color="light" >Contact Us</a>
+          <a class="nav-link block pr-2 lg:px-2 py-2 text-white hover:text-indigo-700 focus:text-indigo-700 transition duration-150 ease-in-out"
+            href="{{route('contact')}}" data-mdb-ripple="true" data-mdb-ripple-color="light" >Contact Us</a>
         </li>
       </ul>
     </span>
