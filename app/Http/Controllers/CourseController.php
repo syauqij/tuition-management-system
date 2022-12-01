@@ -22,11 +22,11 @@ class CourseController extends Controller
 
     public function show(Course $course)
     {
-      dd($course);
+      $course = $course
+      ->with('subject', 'subjectCategory')
+      ->first();
 
-        $course = $course
-          ->with('subject', 'subjectCategory')
-          ->first();
+      dd($course);
 
         return view('courses.show', [
           'course' => $course

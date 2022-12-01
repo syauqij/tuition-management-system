@@ -20,7 +20,10 @@
         @foreach ($courses as $course)
           <div class="p-6 border-2 border-gray-600 bg-white max-w-sm
             hover:shadow-inner hover:border-indigo-800 hover:border-l-8 hover:border-spacing-10 ease-in-out cursor-pointer">
-          <a href=" {{route('courses.show', $course->slug)}} " class="block">
+            <a href="{{ route('courses.show', [
+              'id' => $course->id,
+              'slug' => $course->slug,
+              ]) }}">
             <h5 class="text-gray-900 text-xl leading-tight font-semibold mb-2 hover:text-indigo-800 hover:underline decoration-double">
               {{$course->name}}
             </h5>

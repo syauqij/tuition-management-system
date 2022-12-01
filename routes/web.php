@@ -26,8 +26,8 @@ Route::view('/contact', 'home.contact')->name('contact');
 
 Route::controller(CourseController::class)->name('courses.')->group(function () {
   Route::get('/courses', 'list')->name('list');
-  Route::get('/courses/{id}/{type}', 'filter')->name('filter');
-  Route::get('/courses/{course:slug}', 'show')->name('show');
+  Route::get('/courses/filter/{id}/{type}', 'filter')->name('filter');
+  Route::get('/courses/view/{id}/{slug?}', 'show')->name('show');
 
   Route::post('/courses/search', 'search')->name('search');
 });
