@@ -13,9 +13,6 @@
         <span class="text-indigo-600">quality and certified</span> courses</p>
       <p class="lg:w-4/5 w-full leading-relaxed text-gray-500 text-xl">
         Enrol our Award Winning courses to Jump Start your child’s Learning Journey.
-      <br/>
-       Subject -  {{  $subject }} <br/>
-       Category -  {{  $category }} <br/>
       </p>
     </div>
 
@@ -28,12 +25,18 @@
               {{$course->name}}
             </h5>
             <object class="text-gray-700 text-base mb-1 font-mono hover:text-indigo-700 hover:underline decoration-solid">
-              {{-- <a href="{{route('courses.category', ['categoryId' => $course->subjectCategory->id])}}"> --}}
+              <a href="{{ route('courses.filter', [
+                  'id' => $course->subjectCategory->id,
+                  'type' => 'subjectCategory',
+                ]) }}">
                   {{$course->subjectCategory->name }}
               </a>
             </object>
             <object class="text-gray-700 text-base mb-4 font-light hover:text-indigo-700 hover:underline decoration-dotted">
-              <a href="{{route('courses.subject', ['subjectId' => $course->subject->id])}}">
+              <a href="{{ route('courses.filter', [
+                  'id' => $course->subject->id,
+                  'type' => 'subject',
+                ]) }}">
                   {{$course->subject->name }}
               </a>
             </object>
@@ -45,6 +48,7 @@
         @endforeach
     </div>
     <div class="py-4 pr-4">
+      {{ $courses->links() }}
     </div>
   </div>
 </x-guest-layout>

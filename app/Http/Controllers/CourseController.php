@@ -33,20 +33,23 @@ class CourseController extends Controller
         ]);
     }
 
-
-    public function listBySubject($subjectId = null)
+    public function filter($id = null, $type = null)
     {
-      $courses = Course::with('subject', 'subjectCategory')->paginate(6);
+      $courses = Course::with('subject', 'subjectCategory');
 
-      if($subjectId != null) {
-        $courses = $courses
-        ->where('subject_id', $subjectId);
+      if($id != null) {
+        if ($type == 'subjectCategory') {
+          $courses = $courses->where('subject_category_id', $id);
+        }
+        if ($type == 'subject') {
+          $courses = $courses->where('subject_id', $id);
+        }
       }
 
+      $courses = $courses->paginate(6);
+
       return view('courses', [
-        'courses' => $courses,
-        'category' => null,
-        'subject' => $subjectId,
+        'courses' => $courses
       ]);
     }
 
@@ -142,9 +145,4 @@ class CourseController extends Controller
     {
         //
     }
-
-    public function filter($id)
-    {
-        dd($id);
-    }
-}
+  }
