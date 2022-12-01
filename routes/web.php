@@ -1,13 +1,15 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SubjectCategoryController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\UserProfileController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Models\Course;
 
 /*
-|--------------------------------------------------------------------------
+|-------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
 |
@@ -21,6 +23,16 @@ Route::view('/', 'home.welcome')->name('home');
 Route::view('/about', 'home.about')->name('about');
 Route::view('/pricing', 'home.pricing')->name('pricing');
 Route::view('/contact', 'home.contact')->name('contact');
+
+
+Route::controller(CourseController::class)->name('courses.')->group(function () {
+  Route::get('/courses', 'list')->name('list');
+
+  Route::get('/courses/{subjectId}/subject', 'listBySubject')->name('subject');
+  Route::get('/courses/{course:slug}', 'show')->name('show');
+
+  Route::post('/courses/search', 'search')->name('search');
+});
 
 Route::group(['middleware' => 'auth'], function() {
   Route::get('/dashboard', function () {
@@ -39,17 +51,16 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::resource('subject-categories', SubjectCategoryController::class);
     Route::resource('subjects', SubjectController::class);
-    Route::resource('courses', CourseController::class);
+    Route::resource('courses', ResourceController::class)->except([
+      'show'
+    ]);
+
+    Route::get('/users/{user}', [UserController::class, 'show']);
+
   });
 
 });
 
-Route::prefix('/courses')->group(function () {
-  Route::get('/', [CourseController::class, 'list'])
-    ->name('courses');
-  Route::get('/search', [CourseController::class, 'search'])
-    ->name('course.search');
-});
 
 require __DIR__.'/auth.php';
 

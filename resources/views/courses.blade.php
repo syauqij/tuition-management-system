@@ -5,165 +5,46 @@
       </h2>
   </x-slot>
 
-  <div class="py-12">
-      <x-content.card>
-        <div class="container px-5 py-5 mx-auto">
+  <div class="container px-5 py-20 mx-auto">
 
-          <div class="flex flex-col text-center w-full mb-10">
-            <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Courses</h1>
-            <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Please select the type of setting to manage below</p>
+    <div class="flex flex-wrap w-full mb-20 flex-col items-center text-center">
+      <h1 class="text-5xl xl:text-6xl font-bold tracking-tight mb-12">Explore Our Courses</h1>
+      <p class="text-2xl font-medium mb-4">We offer
+        <span class="text-indigo-600">quality and certified</span> courses</p>
+      <p class="lg:w-4/5 w-full leading-relaxed text-gray-500 text-xl">
+        Enrol our Award Winning courses to Jump Start your child’s Learning Journey.
+      <br/>
+       Subject -  {{  $subject }} <br/>
+       Category -  {{  $category }} <br/>
+      </p>
+    </div>
+
+    <div class="grid grid-flow-row auto-rows-max md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-6 text-center justify-center">
+        @foreach ($courses as $course)
+          <div class="p-6 border-2 border-gray-600 bg-white max-w-sm
+            hover:shadow-inner hover:border-indigo-800 hover:border-l-8 hover:border-spacing-10 ease-in-out cursor-pointer">
+          <a href=" {{route('courses.show', $course->slug)}} " class="block">
+            <h5 class="text-gray-900 text-xl leading-tight font-semibold mb-2 hover:text-indigo-800 hover:underline decoration-double">
+              {{$course->name}}
+            </h5>
+            <object class="text-gray-700 text-base mb-1 font-mono hover:text-indigo-700 hover:underline decoration-solid">
+              {{-- <a href="{{route('courses.category', ['categoryId' => $course->subjectCategory->id])}}"> --}}
+                  {{$course->subjectCategory->name }}
+              </a>
+            </object>
+            <object class="text-gray-700 text-base mb-4 font-light hover:text-indigo-700 hover:underline decoration-dotted">
+              <a href="{{route('courses.subject', ['subjectId' => $course->subject->id])}}">
+                  {{$course->subject->name }}
+              </a>
+            </object>
+            <img src="https://mdbootstrap.com/img/new/standard/city/041.jpg"
+              class="mb-4"
+              alt="..."/>
+          </a>
           </div>
-
-          <div class="flex flex-wrap lg:w-4/5 sm:mx-auto sm:mb-2 -mx-2">
-
-            <form action="{{ route('course.search') }}" method="GET">
-              <label for="search" class="sr-only">
-                  Search
-              </label>
-              <input type="text" name="keywords"
-                  class="block w-full p-3 pl-10 text-sm border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 
-                  dark:text-gray-400"
-                  placeholder="Search..." />
-              <div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-400" fill="none"
-                      viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                      <path stroke-linecap="round" stroke-linejoin="round"
-                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-              </div>
-            </form>
-
-            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-              <thead
-                  class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                  <tr>
-                      <th scope="col" class="px-6 py-3">
-                          #
-                      </th>
-                      <th scope="col" class="px-6 py-3">
-                          Name
-                      </th>
-                      <th scope="col" class="px-6 py-3">
-                          Description
-                      </th>
-                      <th scope="col" class="px-6 py-3">
-                          Subject
-                      </th>
-                      </th>
-                      <th scope="col" class="px-6 py-3">
-                          Subject Category
-                      </th>
-                  </tr>
-              </thead>
-              <tbody>
-                  @foreach ($courses as $user)
-                  <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                      <th scope="row"
-                          class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                          {{$user->id}}
-                      </th>
-                      <td class="px-6 py-4">
-                          {{$user->name}}
-
-                      </td>
-                      <td class="px-6 py-4">
-                          {{$user->description}}
-
-                      </td>
-                      <td class="px-6 py-4">
-                          {{$user->subject->name}}
-
-                      </td>
-                      </td>
-                      <td class="px-6 py-4">
-                          {{$user->subjectCategory->name}}
-
-                      </td>
-                  </tr>
-                  @endforeach
-              </tbody>
-          </table>
-          {{ $courses->links() }}
-          </div>
-          
-        </div>
-      </x-content.card>
+        @endforeach
+    </div>
+    <div class="py-4 pr-4">
+    </div>
   </div>
 </x-guest-layout>
-
-
-{{-- <x-app-layout>
-  <x-slot name="header">
-      <h2 class="text-xl font-semibold leading-tight text-gray-800">
-          {{ __('Users') }}
-      </h2>
-  </x-slot>
-
-  <div class="py-12">
-      <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-          <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-              <div class="p-6 bg-white border-b border-gray-200">
-
-                  <div class="mt-1 mb-4">
-                      <div class="relative max-w-xs">
-                          <form action="{{ route('users.search') }}" method="GET">
-                              <label for="search" class="sr-only">
-                                  Search
-                              </label>
-                              <input type="text" name="s"
-                                  class="block w-full p-3 pl-10 text-sm border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
-                                  placeholder="Search..." />
-                              <div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
-                                  <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-400" fill="none"
-                                      viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                      <path stroke-linecap="round" stroke-linejoin="round"
-                                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                  </svg>
-                              </div>
-                          </form>
-                      </div>
-
-                  </div>
-                  <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                      <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                          <thead
-                              class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                              <tr>
-                                  <th scope="col" class="px-6 py-3">
-                                      #
-                                  </th>
-                                  <th scope="col" class="px-6 py-3">
-                                      Name
-                                  </th>
-                                  <th scope="col" class="px-6 py-3">
-                                      Email
-                                  </th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              @foreach ($users as $user)
-                              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                  <th scope="row"
-                                      class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                                      {{$user->id}}
-                                  </th>
-                                  <td class="px-6 py-4">
-                                      {{$user->name}}
-
-                                  </td>
-                                  <td class="px-6 py-4">
-                                      {{$user->email}}
-
-                                  </td>
-                              </tr>
-                              @endforeach
-                          </tbody>
-                      </table>
-                      {{ $users->links() }}
-                  </div>
-
-              </div>
-          </div>
-      </div>
-  </div>
-</x-app-layout> --}}

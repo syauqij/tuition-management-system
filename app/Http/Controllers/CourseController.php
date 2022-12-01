@@ -6,16 +6,47 @@ use App\Models\Course;
 use App\Models\Subject;
 use App\Models\SubjectCategory;
 use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\Builder;
 
 class CourseController extends Controller
 {
-    public function list()
+    public function list($subjectId = null, $subjectCetegoryId = null)
     {
-      $getCourses = Course::orderBy('created_at', 'desc')->paginate(6);
+      $courses = Course::with('subject', 'subjectCategory')->paginate(6);
 
       return view('courses', [
-        'courses' => $getCourses
+        'courses' => $courses,
+        'subject' => $subjectId,
+        'category' => $subjectCetegoryId,
+      ]);
+    }
+
+    public function show(Course $course)
+    {
+      dd($course);
+
+        $course = $course
+          ->with('subject', 'subjectCategory')
+          ->first();
+
+        return view('courses.show', [
+          'course' => $course
+        ]);
+    }
+
+
+    public function listBySubject($subjectId = null)
+    {
+      $courses = Course::with('subject', 'subjectCategory')->paginate(6);
+
+      if($subjectId != null) {
+        $courses = $courses
+        ->where('subject_id', $subjectId);
+      }
+
+      return view('courses', [
+        'courses' => $courses,
+        'category' => null,
+        'subject' => $subjectId,
       ]);
     }
 
@@ -48,7 +79,7 @@ class CourseController extends Controller
     }
 
     public function create()
-    { 
+    {
       $getSubjectCategories = SubjectCategory::orderBy('name', 'asc')->pluck('id','name');
       $getSubjects = Subject::orderBy('name', 'asc')->pluck('id', 'name');
 
@@ -69,21 +100,18 @@ class CourseController extends Controller
         'course_subject_category' => ['required'],
         'course_subject' => ['required'],
       ]);
-      
+
       Course::create([
         'name' => $request->course_name,
+        'slug' => $request->course_name,
         'description' => $request->course_description,
         'subject_category_id' => $request->course_subject_category,
-        'subject_id' => $request->course_subject,
+        'subject_id' => $request->course_subject
       ]);
 
       return redirect()->route('courses.index')->with('success','New course ' . $request->course_name .' has been created successfully.');
     }
 
-    public function show(Course $course)
-    {
-        //
-    }
 
     public function edit(Course $course)
     {
@@ -106,7 +134,7 @@ class CourseController extends Controller
         'subject_category_id' => ['required'],
         'subject_id' => ['required'],
       ]);
-      
+
       $course->fill($request->post())->save();
 
       return redirect()->route('courses.index')->with('success','Course ' . $course->name .' has been updated successfully.');
@@ -115,5 +143,10 @@ class CourseController extends Controller
     public function destroy(Course $course)
     {
         //
+    }
+
+    public function filter($id)
+    {
+        dd($id);
     }
 }

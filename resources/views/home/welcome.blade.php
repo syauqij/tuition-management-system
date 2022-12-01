@@ -24,7 +24,7 @@
             <div class="mb-12 text-xl xl:text-2xl font-medium">
               With TMS education no longer needs to be restricted by location and time
             </div>
-              <a href=" {{ route('courses') }} " >
+              <a href=" {{ route('courses.list') }} " >
                 <x-forms.button-primary class="py-4">
                   {{ __('Get Started') }}
                 </x-forms.button-primary>

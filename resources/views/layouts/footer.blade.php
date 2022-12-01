@@ -23,7 +23,7 @@
         </li>
         <li class="nav-item mb-2 lg:mb-0">
           <a class="nav-link block pr-2 lg:px-2 py-2 text-white hover:text-indigo-700 focus:text-indigo-700 transition duration-150 ease-in-out"
-          href="{{route('courses')}}" data-mdb-ripple="true" data-mdb-ripple-color="light" >Courses</a>
+          href="{{route('courses.list')}}" data-mdb-ripple="true" data-mdb-ripple-color="light" >Courses</a>
         </li>
         <li class="nav-item">
           <a class="nav-link block pr-2 lg:px-2 py-2 text-white hover:text-indigo-700 focus:text-indigo-700 transition duration-150 ease-in-out"
