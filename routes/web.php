@@ -6,7 +6,6 @@ use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\UserController;
-use App\Models\Course;
 
 /*
 |-------------------------------------------------------------------------
@@ -51,7 +50,7 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::resource('subject-categories', SubjectCategoryController::class);
     Route::resource('subjects', SubjectController::class);
-    Route::resource('courses', ResourceController::class)->except([
+    Route::resource('courses', CourseController::class)->except([
       'show'
     ]);
 

@@ -83,8 +83,6 @@ class CourseController extends Controller
       $getSubjectCategories = SubjectCategory::orderBy('name', 'asc')->pluck('id','name');
       $getSubjects = Subject::orderBy('name', 'asc')->pluck('id', 'name');
 
-      //dd($getSubjects);
-
       return view('settings.courses.create', [
         'categories' => $getSubjectCategories,
         'subjects' => $getSubjects,
