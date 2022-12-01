@@ -44,7 +44,7 @@ class UpdateProfileRequest extends FormRequest
             'parent_phone_no' => 'required|numeric|digits_between:10,12',
             'parent_mykad' => 'required|digits:12',
             'parent_birthdate' => 'required|date',
-            'parent_relation' => 'required',
+            'parent_relationship' => 'required',
             'parent_gender' => 'required',
             'parent_street_1' => 'required',
             'parent_street_2' => '',
