@@ -26,10 +26,11 @@ Route::view('/contact', 'home.contact')->name('contact');
 
 Route::controller(CourseController::class)->name('courses.')->group(function () {
   Route::get('/courses', 'list')->name('list');
-  Route::get('/courses/filter/{id}/{type}', 'filter')->name('filter');
+  Route::get('/courses/list/{id}/{type}/{name}', 'list')
+    ->where('name', '(.*)')
+    ->name('filter');
   Route::get('/courses/view/{id}/{slug?}', 'show')->name('show');
-
-  Route::post('/courses/search', 'search')->name('search');
+  Route::get('/courses/search', 'search')->name('search');
 });
 
 Route::group(['middleware' => 'auth'], function() {

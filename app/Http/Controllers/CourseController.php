@@ -9,14 +9,45 @@ use Illuminate\Http\Request;
 
 class CourseController extends Controller
 {
-    public function list($subjectId = null, $subjectCetegoryId = null)
+    public function list($id = null, $type = null, $name = null)
     {
-      $courses = Course::with('subject', 'subjectCategory')->paginate(6);
+      $getCourses = Course::with('subject', 'subjectCategory');
 
-      return view('courses', [
+      if($id != null) {
+        if ($type == 'subjectCategory') {
+          $getCourses->where('subject_category_id', $id);
+        }
+        if ($type == 'subject') {
+          $getCourses->where('subject_id', $id);
+        }
+      }
+
+      $courses = $getCourses->paginate(6);
+
+      return view('courses.list', [
         'courses' => $courses,
-        'subject' => $subjectId,
-        'category' => $subjectCetegoryId,
+        'keywords' => $name
+      ]);
+    }
+
+    public function search(Request $request)
+    {
+      $keywords = $request->keywords;
+
+      $searchCourses = Course::where(
+        'name', 'like', '%' . $keywords . '%'
+      )->orWhereRelation(
+          'subjectCategory', 'name', 'like', '%' . $keywords . '%'
+      )->orWhereRelation(
+          'subject', 'name', 'like', '%' . $keywords . '%'
+      )->paginate(6);
+
+      $courses = $searchCourses
+          ->appends(['keywords' => $keywords]);
+
+      return view('courses.list', [
+        'courses' => $courses,
+        'keywords' => $keywords
       ]);
     }
 
@@ -31,45 +62,6 @@ class CourseController extends Controller
         return view('courses.show', [
           'course' => $course
         ]);
-    }
-
-    public function filter($id = null, $type = null)
-    {
-      $courses = Course::with('subject', 'subjectCategory');
-
-      if($id != null) {
-        if ($type == 'subjectCategory') {
-          $courses = $courses->where('subject_category_id', $id);
-        }
-        if ($type == 'subject') {
-          $courses = $courses->where('subject_id', $id);
-        }
-      }
-
-      $courses = $courses->paginate(6);
-
-      return view('courses', [
-        'courses' => $courses
-      ]);
-    }
-
-    public function search(Request $request)
-    {
-      $searchCourses = Course::where([
-        ['name', '!=', Null],
-        ['description', '!=', Null],
-        [function ($query) use ($request) {
-            if (($keywords = $request->keywords)) {
-              $query->orWhere('name', 'LIKE', '%' . $keywords . '%')
-                ->orWhere('description', 'LIKE', '%' . $keywords . '%')
-                ->get();
-            }
-        }]
-      ])->paginate(6);
-
-      return view('courses', [
-        'courses' => $searchCourses
-      ]);
     }
 
     public function index()
@@ -139,10 +131,5 @@ class CourseController extends Controller
       $course->fill($request->post())->save();
 
       return redirect()->route('courses.index')->with('success','Course ' . $course->name .' has been updated successfully.');
-    }
-
-    public function destroy(Course $course)
-    {
-        //
     }
   }
