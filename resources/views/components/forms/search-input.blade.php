@@ -1,4 +1,4 @@
-@props(['width' => 'xl:w-5/12'])
+@props(['width' => 'xl:w-6/12'])
 
 <div class="flex justify-center">
   <div class="mb-10 mr-4 {{ $width }}">

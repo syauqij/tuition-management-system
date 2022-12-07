@@ -57,11 +57,9 @@ class CourseController extends Controller
       ->with('subject', 'subjectCategory')
       ->first();
 
-      dd($course);
-
-        return view('courses.show', [
-          'course' => $course
-        ]);
+      return view('courses.show', [
+        'course' => $course
+      ]);
     }
 
     public function index()
