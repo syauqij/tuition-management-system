@@ -17,15 +17,9 @@ class UserProfileController extends Controller
 
       $user = User::getUserProfile($role, $userId)->get()->first();
 
-      if($role == 'student') {
-        $view = 'users.student-profile';
-      }
-      else {
-        $view = 'users.staff-profile';
-      }
-
-      return view($view, [
-        'user' => $user
+      return view('users.profile', [
+        'user' => $user,
+        'role' => $role
       ]);
     }
 
