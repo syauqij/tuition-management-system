@@ -6,6 +6,7 @@ use App\Models\Course;
 use App\Models\Subject;
 use App\Models\SubjectCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class CourseController extends Controller
 {
@@ -24,10 +25,17 @@ class CourseController extends Controller
 
       $courses = $getCourses->paginate(6);
 
-      return view('courses.list', [
+      if (auth()->user()) {
+        $page = 'courses.index';
+      } else {
+        $page = 'courses.index-guest';
+      }
+
+      return view($page, [
         'courses' => $courses,
         'keywords' => $name
       ]);
+
     }
 
     public function search(Request $request)
@@ -45,7 +53,13 @@ class CourseController extends Controller
       $courses = $searchCourses
           ->appends(['keywords' => $keywords]);
 
-      return view('courses.list', [
+      if(auth()->user()) {
+        $page = 'courses.index';
+      } else {
+        $page = 'courses.index-guest';
+      }
+
+      return view($page, [
         'courses' => $courses,
         'keywords' => $keywords
       ]);
@@ -56,6 +70,8 @@ class CourseController extends Controller
       $course = $course
       ->with('subject', 'subjectCategory')
       ->first();
+
+      Session::put('enrol_course_id', $course->id);
 
       return view('courses.show', [
         'course' => $course

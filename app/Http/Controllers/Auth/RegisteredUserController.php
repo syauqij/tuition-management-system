@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -54,6 +55,11 @@ class RegisteredUserController extends Controller
       event(new Registered($user));
 
       Auth::login($user);
+
+      $enrolCourseId = $request->session()->get('enrol_course_id');
+      if ($enrolCourseId) {
+        return redirect()->route('enrolments.create', ['course_id' => $enrolCourseId]);
+      }
 
       return redirect(RouteServiceProvider::HOME);
     }

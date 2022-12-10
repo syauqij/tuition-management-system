@@ -5,7 +5,7 @@ use App\Http\Controllers\SubjectCategoryController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\UserProfileController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\EnrolmentController;
 
 /*
 |-------------------------------------------------------------------------
@@ -38,6 +38,8 @@ Route::group(['middleware' => 'auth'], function() {
     return view('dashboard');
   })->name('dashboard');
 
+  Route::resource('enrolments', EnrolmentController::class);
+
   Route::get('profile', [UserProfileController::class, 'show'])
     ->name('profile');
   Route::put('profile', [UserProfileController::class, 'update'])
@@ -53,9 +55,6 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('courses', CourseController::class)->except([
       'show'
     ]);
-
-    Route::get('/users/{user}', [UserController::class, 'show']);
-
   });
 
 });

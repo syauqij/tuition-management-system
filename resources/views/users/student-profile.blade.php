@@ -21,7 +21,7 @@
           <x-forms.input-text id="last_name" class="block mt-1 w-full" type="text" name="last_name"
             value="{{ $user->last_name ?? old('last_name')}}" />
           @error('last_name')
-
+            <x-alerts.message type="error" :message="$message"/>
           @enderror
         </div>
 
@@ -63,6 +63,24 @@
             <x-alerts.message type="error" :message="$message"/>
           @enderror
         </div>
+
+        @isset($enrol)
+        <div class="md:col-span-3">
+          <x-forms.input-label for="email" :value="__('Email')" />
+          <x-forms.input-text id="email" class="block mt-1 w-full" type="text" name="email" value="{{ auth()->user()->email }}" />
+          @error('email')
+            <x-alerts.message type="error" :message="$message"/>
+          @enderror
+        </div>
+
+        <div class="md:col-span-2">
+          <x-forms.input-label for="phone_no" :value="__('Phone No.')" />
+          <x-forms.input-text id="phone_no" class="block mt-1 w-full" type="text" name="phone_no" value="{{ auth()->user()->phone_no }}" />
+            @error('phone_no')
+              <x-alerts.message type="error" :message="$message"/>
+            @enderror
+        </div>
+        @endisset
 
         <div class="md:col-span-5">
           <x-forms.input-label for="street_1" :value="__('Address / Street 1')" />

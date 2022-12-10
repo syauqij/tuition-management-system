@@ -60,6 +60,16 @@ class UpdateProfileRequest extends FormRequest
         return $rules;
     }
 
+    public function inputsUser()
+    {
+      return [
+        'first_name' => $this->input('first_name'),
+        'last_name' => $this->input('last_name'),
+        'email' => $this->input('email'),
+        'phone_no' => $this->input('phone_no')
+      ];
+    }
+
     public function inputsUserProfile($userId)
     {
       return [

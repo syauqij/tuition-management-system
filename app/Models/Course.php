@@ -28,6 +28,11 @@ class Course extends Model
         return $this->belongsTo(SubjectCategory::class);
     }
 
+    public function enrolments()
+    {
+      return $this->hasMany(Enrollment::class, 'course_id');
+    }
+
     protected static function boot()
     {
         parent::boot();
