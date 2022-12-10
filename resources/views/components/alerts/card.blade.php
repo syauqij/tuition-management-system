@@ -6,18 +6,17 @@
     $txtColour = 'text-green-700';
   }
 
-  elseif ($message = Session::get('error') || $errors->any()) {
-    if($errors->any()){
-      $message = 'Whoops! Something went wrong. Please try again.';
-    }
+  elseif ($message = Session::get('error')) {
     $bgColour = 'bg-red-100';
     $txtColour = 'text-red-700';
   }
 
-  else {
-    $bgColour = 'bg-blue-100';
-    $txtColour = 'text-blue-700';
+  elseif($errors->any()) {
+    $message = 'Whoops! Something went wrong. Please try again.';
+    $bgColour = 'bg-red-100';
+    $txtColour = 'text-red-700';
   }
+
 @endphp
 
 @if ($message)
