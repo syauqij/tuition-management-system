@@ -15,7 +15,7 @@
           Learn the basics of Python 3, one of the most powerful, versatile, and in-demand programming languages today.
         </div>
         <div class="justify-bottom">
-          @if (isset($enrol) == false)
+          @if (isset($enrol) == true)
             <a href=" {{ route('enrolments.create', [
                 'course_id' => $course->id
               ]) }} " >

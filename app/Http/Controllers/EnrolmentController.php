@@ -10,13 +10,18 @@ use App\Models\User;
 use App\Models\ParentProfile;
 use App\Models\StudentProfile;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Collection;
 
 class EnrolmentController extends Controller
 {
     public function index()
     {
+      $getEnrolments = Enrolment::with('student', 'course', 'subject', 'subjectCategory');
 
+      $enrolments = $getEnrolments->paginate(6);
+
+      return view('enrolments.index', [
+        'enrolments' => $enrolments,
+      ]);
     }
 
     public function create(Request $request)
@@ -38,7 +43,7 @@ class EnrolmentController extends Controller
         Session::put('enrol_course_id', $course->id);
       }
       else {
-        return redirect()->route('courses.list')->with('error','You are not a student.');
+        return redirect()->route('courses.show', $course_id);
       }
 
       return view('courses.enrol', [
@@ -51,21 +56,19 @@ class EnrolmentController extends Controller
     {
       $course_id = $request->session()->get('enrol_course_id');
       $userId = auth()->user()->id;
-      $userDetails = $request->inputsUser();
-      $studentProfile = $request->inputsUserProfile($userId);
-      $parentProfile = $request->inputsParentProfile();
+      $userInputs = $request->inputsUser();
 
-      auth()->user()->update($userDetails);
+      auth()->user()->update($userInputs);
 
       $studentProfile = StudentProfile::updateOrCreate(
         ['user_id' => $userId],
-        $studentProfile
+        $request->inputsUserProfile($userId)
       );
 
       $parentId = $studentProfile->parent_profile_id;
       $parentProfile = ParentProfile::updateOrCreate(
         ['id' => $parentId],
-        $parentProfile
+        $request->inputsParentProfile()
       );
 
       $getStudentProfile = StudentProfile::find($studentProfile->id);
@@ -79,37 +82,45 @@ class EnrolmentController extends Controller
       Enrolment::create([
         'student_user_id' => $userId,
         'course_id' => $course->id,
-        'student_profile' => json_encode(collect($userDetails)->merge($studentProfile)),
-        'parent_profile' => json_encode($parentProfile),
+        'student_profile' => collect($userInputs)->merge($studentProfile)->toJson(),
+        'parent_profile' => $parentProfile->toJson(),
         'subject_category_id' => $course->subject_category_id,
         'subject_id' => $course->subject_id,
         'status' => 'applied'
       ]);
 
       return redirect()->route('dashboard')->with('success','Congrats. You have enroll');
-
     }
 
     public function show(Enrolment $enrolment)
     {
       $enrolment = $enrolment
-      ->with('student', 'course', 'subject', 'subjectCategory', 'staff')
+      ->with('student', 'course', 'staff')
       ->first();
 
+      $studentAddress = Enrolment::getAddress($enrolment->id, 'studentProfile');
+      $parentAddress = Enrolment::getAddress($enrolment->id, 'parentProfile');
+
+      return view('enrolments.show', [
+        'enrolment' => $enrolment,
+        'course' => $enrolment->course,
+        'studentAddress' => $studentAddress,
+        'parentAddress' => $parentAddress,
+      ]);
     }
 
-    public function edit(Enrolment $enrolment)
+    public function status($id, $status)
     {
-        //
-    }
+       $enrolmentId = $id;
+       $userId = auth()->user()->id;
+       $role = auth()->user()->role;
 
-    public function update(Request $request, Enrolment $enrolment)
-    {
-        //
-    }
-
-    public function destroy(Enrolment $enrolment)
-    {
-        //
+       if ($role == 'admin') {
+          Enrolment::where('id', $enrolmentId)
+            ->update(['status' => $status, 'updated_by' => $userId]);
+       } else {
+          return redirect()->route('enrolments.show', $enrolmentId)->with('error','You are not authorised.');
+       }
+       return redirect()->route('enrolments.show', $enrolmentId)->with('success','Status (' . $status .') has been updated successfully.');
     }
 }

@@ -38,6 +38,7 @@ Route::group(['middleware' => 'auth'], function() {
     return view('dashboard');
   })->name('dashboard');
 
+  Route::get('/enrolments/status/{id}/{status}', [EnrolmentController::class, 'status'])->name('enrolments.status');
   Route::resource('enrolments', EnrolmentController::class);
 
   Route::get('profile', [UserProfileController::class, 'show'])

@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Support\Address;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class StudentProfile extends Model
 {
@@ -33,4 +35,17 @@ class StudentProfile extends Model
         return $this->belongsTo(ParentProfile::class, 'parent_profile_id');
     }
 
+    protected function address(): Attribute
+    {
+      return Attribute::make(
+          get: fn ($value, $attributes) => new StudentProfile(
+              $attributes['street_1'],
+              $attributes['street_2'],
+              $attributes['postcode'],
+              $attributes['city'],
+              $attributes['state'],
+              $attributes['country'],
+          ),
+      );
+    }
 }

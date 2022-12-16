@@ -6,7 +6,7 @@
   </x-slot>
   <x-content.card>
     <div class="mx-auto lg:w-10/12">
-        @include('courses.info')
+        @include('courses.info', ['enrol' => true])
     </div>
   </x-content.card>
 </x-guest-layout>
