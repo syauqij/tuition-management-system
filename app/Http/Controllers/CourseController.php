@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
-use App\Models\Subject;
 use App\Models\SubjectCategory;
+use App\Models\Subject;
+use App\Models\CourseSubject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -42,12 +43,7 @@ class CourseController extends Controller
         'name', 'like', '%' . $keywords . '%'
       )->orWhereRelation(
           'subjectCategory', 'name', 'like', '%' . $keywords . '%'
-      )->orWhereRelation(
-          'subject', 'name', 'like', '%' . $keywords . '%'
       )->paginate(6);
-
-      $courses = $searchCourses
-          ->appends(['keywords' => $keywords]);
 
       if(auth()->user()) {
         $page = 'courses.index';
@@ -56,19 +52,17 @@ class CourseController extends Controller
       }
 
       return view($page, [
-        'courses' => $courses,
+        'courses' => $searchCourses->appends(['keywords' => $keywords]),
         'keywords' => $keywords
       ]);
     }
 
     public function show(Course $course)
     {
-      $course = $course->first();
-
       Session::put('enrol_course_id', $course->id);
 
       return view('courses.show', [
-        'course' => $course
+        'course' => $course->first()
       ]);
     }
 
@@ -83,12 +77,9 @@ class CourseController extends Controller
 
     public function create()
     {
-      $getSubjectCategories = SubjectCategory::orderBy('name', 'asc')->pluck('id','name');
-      $getSubjects = Subject::orderBy('name', 'asc')->pluck('id', 'name');
-
       return view('settings.courses.create', [
-        'categories' => $getSubjectCategories,
-        'subjects' => $getSubjects,
+        'categories' => SubjectCategory::orderBy('name', 'asc')->pluck('id','name'),
+        'subjects' => Subject::orderBy('name', 'asc')->pluck('id', 'name'),
       ]);
     }
 
@@ -99,16 +90,24 @@ class CourseController extends Controller
         'course_name' => ['required', 'string', 'max:255'],
         'course_description' => ['required', 'string', 'max:255'],
         'course_subject_category' => ['required'],
-        'course_subject' => ['required'],
+        'course_subjects' => ['required'],
+        'course_monthly_fee' => ['required'],
       ]);
 
-      Course::create([
+      $course = Course::create([
         'name' => $request->course_name,
         'slug' => $request->course_name,
         'description' => $request->course_description,
         'subject_category_id' => $request->course_subject_category,
-        'subject_id' => $request->course_subject
+        'monthly_fee' => $request->course_monthly_fee,
       ]);
+
+      foreach($request->course_subjects as $subject) {
+        CourseSubject::create([
+          'course_id' => $course->id,
+          'subject_id' => $subject,
+        ]);
+      }
 
       return redirect()->route('courses.index')->with('success','New course ' . $request->course_name .' has been created successfully.');
     }
@@ -116,13 +115,11 @@ class CourseController extends Controller
 
     public function edit(Course $course)
     {
-      $getSubjectCategories = SubjectCategory::orderBy('name', 'asc')->pluck('id','name');
-      $getSubjects = Subject::orderBy('name', 'asc')->pluck('id', 'name');
-
       return view('settings.courses.edit', [
-        'categories' => $getSubjectCategories,
-        'subjects' => $getSubjects,
-        'course' => $course
+        'course' => $course,
+        'categories' => SubjectCategory::orderBy('name', 'asc')->pluck('id','name'),
+        'subjects' => Subject::orderBy('name', 'asc')->pluck('id', 'name'),
+        'selectedSubjects' => $course->courseSubjects()->pluck('subject_id')->toArray()
       ]);
     }
 
@@ -133,10 +130,32 @@ class CourseController extends Controller
         'name' => ['required', 'string', 'max:255'],
         'description' => ['required', 'string', 'max:255'],
         'subject_category_id' => ['required'],
-        'subject_id' => ['required'],
+        'course_subjects' => ['required'],
       ]);
 
       $course->fill($request->post())->save();
+
+      $selectedSubjects = $request->course_subjects;
+      $existingSubjects = $course->courseSubjects()->pluck('subject_id')->toArray();
+
+      //add new selected subjects
+      foreach($selectedSubjects as $subject) {
+        if(!in_array($subject, $existingSubjects)) {
+          CourseSubject::create([
+            'course_id' => $course->id,
+            'subject_id' => $subject,
+          ]);
+        }
+      }
+
+      //remove unselected subjects
+      foreach($existingSubjects as $subject) {
+        if(!in_array($subject, $selectedSubjects)) {
+          CourseSubject::where('course_id', $course->id)
+            ->where('subject_id', $subject)
+            ->firstorfail()->delete();
+        }
+      }
 
       return redirect()->route('courses.index')->with('success','Course ' . $course->name .' has been updated successfully.');
     }

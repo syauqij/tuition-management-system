@@ -1,13 +1,17 @@
 <x-app-layout>
+  @push('styles')
+    <link rel="stylesheet" href="{{ asset('css/choices.css')}}"
+  @endpush
+
   <x-slot name="header">
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
           {{ __('Edit Course') }}
       </h2>
   </x-slot>
 
-  <x-content.card>
+  <x-content.card contentClasses='pb-20'>
 
-    <div class="flex flex-col text-center w-full mb-4">
+    <div class="flex flex-col text-center w-full mb-4 pb-">
       <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">{{ $course->name }}</h1>
       <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Enter the new course details below</p>
     </div>
@@ -51,23 +55,33 @@
 
           <div class="p-2 w-full">
             <div class="relative">
-              <x-forms.input-label for="course_subject" :value="__('Subject')" />
+              <x-forms.input-label for="course_subject" :value="__('Subjects')" />
 
-              <x-forms.select-input id="subjects" class="block mt-1 w-full" type="text" name="subject_id"
-                :options="$subjects" :title="__('Subject')" :value="$course->subject_id" required autofocus />
-
+              <x-forms.choices id="subjects" name="course_subjects[]"
+                multiple x-data="{}" x-init="function () { choices($el) }"
+                :options="$subjects" :title="__('Subjects')" :selected="$selectedSubjects"
+                required autofocus />
             </div>
           </div>
 
-            <div class="pt-4 w-full flex justify-end">
-              <x-forms.button-cancel class="mr-2" :value="__('courses.index')" >
-                {{ __('Cancel') }}
-              </x-forms.button-cancel>
+          <div class="p-2 w-full">
+            <div class="relative">
+              <x-forms.input-label for="course_subject" :value="__('Monthly Fee')" />
 
-              <x-forms.button-primary>
-                {{ __('Update') }}
-              </x-forms.button-primary>
+              <x-forms.input-text id="course_monthly_fee" class="block mt-1 w-full" type="text" name="course_monthly_fee"
+                placeholder="E.g. RM 150" :value="$course->monthly_fee" required autofocus />
             </div>
+          </div>
+
+          <div class="pt-4 w-full flex justify-end">
+            <x-forms.button-cancel class="mr-2" :value="__('courses.index')" >
+              {{ __('Cancel') }}
+            </x-forms.button-cancel>
+
+            <x-forms.button-primary>
+              {{ __('Update') }}
+            </x-forms.button-primary>
+          </div>
 
         </div>
       </div>

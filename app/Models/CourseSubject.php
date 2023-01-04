@@ -7,7 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class CourseSubject extends Model
 {
+    protected $table = 'course_subject';
     use HasFactory;
+
+    protected $fillable = [
+      'course_id',
+      'subject_id',
+    ];
 
     public function course()
     {

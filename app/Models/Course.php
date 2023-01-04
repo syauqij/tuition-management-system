@@ -14,7 +14,8 @@ class Course extends Model
       'name',
       'slug',
       'description',
-      'subject_category_id'
+      'subject_category_id',
+      'monthly_fee'
     ];
 
     public function subjectCategory()
@@ -25,6 +26,11 @@ class Course extends Model
     public function subjects()
     {
         return $this->belongsToMany(Subject::class);
+    }
+
+    public function courseSubjects()
+    {
+      return $this->hasMany(CourseSubject::class, 'course_id');
     }
 
     public function enrolments()
