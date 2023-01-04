@@ -30,16 +30,6 @@ class Enrolment extends Model
         return $this->belongsTo(Course::class);
     }
 
-    public function subject()
-    {
-        return $this->belongsTo(Subject::class);
-    }
-
-    public function subjectCategory()
-    {
-        return $this->belongsTo(SubjectCategory::class);
-    }
-
     public function staff()
     {
         return $this->belongsTo(User::class, 'updated_by');

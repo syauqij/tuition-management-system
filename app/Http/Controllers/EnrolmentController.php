@@ -15,7 +15,7 @@ class EnrolmentController extends Controller
 {
     public function index()
     {
-      $getEnrolments = Enrolment::with('student', 'course', 'subject', 'subjectCategory');
+      $getEnrolments = Enrolment::with('student', 'course');
 
       $enrolments = $getEnrolments->paginate(6);
 
@@ -36,9 +36,7 @@ class EnrolmentController extends Controller
         $student = User::getUserProfile($role, $userId)->get()->first();
 
         //get course info
-        $course = Course::with('subject', 'subjectCategory')
-        ->where('id', $course_id)
-        ->first();
+        $course = Course::where('id', $course_id)->first();
 
         Session::put('enrol_course_id', $course->id);
       }
@@ -75,17 +73,13 @@ class EnrolmentController extends Controller
       $getStudentProfile->parent_profile_id = $parentProfile->id;
       $getStudentProfile->save();
 
-      $course = Course::with('subject', 'subjectCategory')
-      ->where('id', $course_id)
-      ->first();
+      $course = Course::where('id', $course_id)->first();
 
       Enrolment::create([
         'student_user_id' => $userId,
         'course_id' => $course->id,
         'student_profile' => collect($userInputs)->merge($studentProfile)->toJson(),
         'parent_profile' => $parentProfile->toJson(),
-        'subject_category_id' => $course->subject_category_id,
-        'subject_id' => $course->subject_id,
         'status' => 'applied'
       ]);
 

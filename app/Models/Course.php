@@ -14,18 +14,17 @@ class Course extends Model
       'name',
       'slug',
       'description',
-      'subject_id',
       'subject_category_id'
     ];
-
-    public function subject()
-    {
-        return $this->belongsTo(Subject::class);
-    }
 
     public function subjectCategory()
     {
         return $this->belongsTo(SubjectCategory::class);
+    }
+
+    public function subjects()
+    {
+        return $this->belongsToMany(Subject::class);
     }
 
     public function enrolments()

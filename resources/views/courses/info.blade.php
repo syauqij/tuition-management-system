@@ -11,6 +11,9 @@
         <p class="text-4xl md:text-3xl title-font font-bold tracking-tight mt-4 mb-4">
           {{ $course->name }}
         </p>
+        <p class="text-3xl md:text-2xl title-font font-bold tracking-tight mt-4 mb-4">
+          {{ $course->subjectCategory->name }}
+        </p>
         <div class="lg:w-7/12 text-justify">
           Learn the basics of Python 3, one of the most powerful, versatile, and in-demand programming languages today.
         </div>
@@ -36,6 +39,7 @@
 </x-content.card>
 
 <x-content.card contentClasses="bg-gray-100">
-
-
+  @foreach ($course->subjects as $subject)
+    {{$subject->name}}
+  @endforeach
 </x-content.card>

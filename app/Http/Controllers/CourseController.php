@@ -12,14 +12,11 @@ class CourseController extends Controller
 {
     public function list($id = null, $type = null, $name = null)
     {
-      $getCourses = Course::with('subject', 'subjectCategory');
+      $getCourses = Course::with('subjectCategory');
 
       if($id != null) {
         if ($type == 'subjectCategory') {
           $getCourses->where('subject_category_id', $id);
-        }
-        if ($type == 'subject') {
-          $getCourses->where('subject_id', $id);
         }
       }
 
@@ -35,7 +32,6 @@ class CourseController extends Controller
         'courses' => $courses,
         'keywords' => $name
       ]);
-
     }
 
     public function search(Request $request)
@@ -67,9 +63,7 @@ class CourseController extends Controller
 
     public function show(Course $course)
     {
-      $course = $course
-      ->with('subject', 'subjectCategory')
-      ->first();
+      $course = $course->first();
 
       Session::put('enrol_course_id', $course->id);
 

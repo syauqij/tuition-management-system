@@ -42,16 +42,6 @@
                   {{$course->subjectCategory->name }}
               </a>
             </object>
-            <object class="text-gray-700 text-base mb-4 font-light truncate
-              hover:text-indigo-700 hover:underline decoration-dotted">
-              <a href="{{ route('courses.filter', [
-                  'id' => $course->subject->id,
-                  'type' => 'subject',
-                  'name' => $course->subject->name
-                ]) }}">
-                  {{$course->subject->name }}
-              </a>
-            </object>
             <img src="https://static.vecteezy.com/system/resources/previews/000/104/432/original/basic-math-symbols-vectors.jpg"
               class="mb-4"
               alt="..."/>
