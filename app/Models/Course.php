@@ -35,7 +35,13 @@ class Course extends Model
 
     public function enrolments()
     {
-      return $this->hasMany(Enrollment::class, 'course_id');
+      return $this->hasMany(Enrolment::class, 'course_id');
+    }
+
+    public function enroledStudents()
+    {
+      return $this->hasMany(Enrolment::class, 'course_id')
+        ->where('status', 'accepted');
     }
 
     protected static function boot()

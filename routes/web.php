@@ -6,6 +6,7 @@ use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\EnrolmentController;
+use App\Http\Controllers\ClassroomController;
 
 /*
 |-------------------------------------------------------------------------
@@ -40,6 +41,8 @@ Route::group(['middleware' => 'auth'], function() {
 
   Route::get('/enrolments/status/{id}/{status}', [EnrolmentController::class, 'status'])->name('enrolments.status');
   Route::resource('enrolments', EnrolmentController::class);
+
+  Route::resource('classrooms', ClassroomController::class);
 
   Route::get('profile', [UserProfileController::class, 'show'])
     ->name('profile');

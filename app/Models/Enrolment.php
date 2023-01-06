@@ -22,7 +22,8 @@ class Enrolment extends Model
 
     public function student()
     {
-        return $this->belongsTo(User::class, 'student_user_id');
+        return $this->belongsTo(User::class, 'student_user_id')
+        ->with('studentProfile');
     }
 
     public function course()
@@ -61,5 +62,13 @@ class Enrolment extends Model
               $val->state . ', ' . $val->country;
 
       return $address;
+    }
+
+    public function scopeEnroledStudents($query, $courseId)
+    {
+      return $query
+        ->with('student', 'student.studentProfile')
+        ->where('course_id', $courseId)
+        ->where('status', 'accepted');
     }
 }

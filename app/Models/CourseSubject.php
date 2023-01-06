@@ -19,4 +19,9 @@ class CourseSubject extends Model
     {
         return $this->belongsTo(Course::class);
     }
+
+    public function subject()
+    {
+        return $this->belongsTo(Subject::class);
+    }
 }
