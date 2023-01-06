@@ -57,12 +57,10 @@ class CourseController extends Controller
       ]);
     }
 
-    public function show(Course $course)
+    public function show($courseId)
     {
-      Session::put('enrol_course_id', $course->id);
-
       return view('courses.show', [
-        'course' => $course->first()
+        'course' => Course::where('id', $courseId)->first()
       ]);
     }
 

@@ -17,8 +17,9 @@ return new class extends Migration
           $table->id()->autoIncrement();
           $table->string('name', 120);
           $table->string('room_no', 50);
-          $table->foreignId('course_subject_id')->constrained('course_subjects');
+          $table->foreignId('course_subject_id')->constrained('course_subject');
           $table->foreignId('school_grade_id')->constrained('school_grades');
+          $table->foreignId('teacher_user_id')->constrained('users');
           $table->smallInteger('min_students');
           $table->smallInteger('max_students');
           $table->timestamps();
