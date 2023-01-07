@@ -39,7 +39,7 @@
               <x-forms.input-label for="name" :value="__('Course Photo')" />
 
               <x-forms.input-text id="name" class="block mt-1 w-full" type="file" name="main_photo"
-              placeholder="Choose a photo" :value="old('main_photo')" required autofocus />
+              placeholder="Choose a photo" :value="old('main_photo')" autofocus />
             </div>
           </div>
 

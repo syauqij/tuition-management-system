@@ -142,7 +142,7 @@ class CourseController extends Controller
         'subject_category_id' => ['required'],
         'course_subjects' => ['required'],
         'monthly_fee' => 'required',
-        'main_photo' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+        'main_photo' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
       ]);
 
       $photoPath = null;
@@ -153,8 +153,8 @@ class CourseController extends Controller
           $fileName . '.' . $request->file('main_photo')->getClientOriginalExtension(),
           'public'
         );
+        $request['main_photo_path'] = $photoPath;
       }
-      $request['main_photo_path'] = $photoPath;
 
       $course->fill($request->post())->save();
 
