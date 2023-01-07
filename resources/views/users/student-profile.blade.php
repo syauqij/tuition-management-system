@@ -1,7 +1,7 @@
 <x-content.card>
   <div class="grid gap-4 gap-y-2 px-4 grid-cols-1 lg:grid-cols-3">
     <div class="text-gray-600">
-      <p class="font-medium text-lg">Personal Details</p>
+      <p class="font-bold text-lg">Personal Details</p>
       <p>Please fill out your personal details here.</p>
     </div>
 
