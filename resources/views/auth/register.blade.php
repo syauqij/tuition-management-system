@@ -1,16 +1,12 @@
 <x-guest-layout>
   <section class="text-gray-600 body-font">
-    <div class="container px-5 py-12 mx-auto flex flex-wrap items-top justify-between">
+    <div class="container px-5 py-12 mx-auto flex flex-wrap items-center justify-between">
       <x-content.column-text>
         <x-slot:title>
           Register an account
         </x-slot>
 
-        Poke slow-carb mixtape knausgaard, typewriter street art gentrify hammock starladder roathse. 
-        Craies vegan tousled etsy austin.
-
-        <img class="object-cover object-center rounded-lg md:mt-4 mt-12" 
-        src="https://dummyimage.com/1200x500" alt="step">
+        Creating an account is quick and free. Create yours today.
       </x-content.column-text>
 
       <x-content.auth-card>
@@ -19,12 +15,12 @@
           <x-forms.validation-errors class="mb-4" :errors="$errors" />
 
           <form method="POST" action="{{ route('register') }}">
-              @csrf    
+              @csrf
               <!-- First Name -->
               <div class="relative mb-4">
                   <x-forms.input-label for="first_name" :value="__('First Name')" />
 
-                  <x-forms.input-text id="first_name" class="block mt-1 w-full" type="text" name="first_name" 
+                  <x-forms.input-text id="first_name" class="block mt-1 w-full" type="text" name="first_name"
                   placeholder="E.g. Mohd Zaky" :value="old('first_name')" required autofocus />
               </div>
 
@@ -32,7 +28,7 @@
               <div class="relative mb-4">
                   <x-forms.input-label for="last_name" :value="__('Last Name')" />
 
-                  <x-forms.input-text id="last_name" class="block mt-1 w-full" type="text" name="last_name" 
+                  <x-forms.input-text id="last_name" class="block mt-1 w-full" type="text" name="last_name"
                   placeholder="E.g. Yahaya" :value="old('last_name')" required autofocus />
               </div>
 
@@ -40,7 +36,7 @@
               <div class="relative mb-4">
                   <x-forms.input-label for="email" :value="__('Email')" />
 
-                  <x-forms.input-text id="email" class="block mt-1 w-full" type="email" name="email" 
+                  <x-forms.input-text id="email" class="block mt-1 w-full" type="email" name="email"
                   placeholder="mohdzaky.yahaya@gmail.com" :value="old('email')" required />
               </div>
 
@@ -60,12 +56,12 @@
 
                 <x-forms.input-text id="phone_no" class="block mt-1 w-full" type="text" name="phone_no" :value="old('phone_no')" required />
               </div>
-              
+
               <x-forms.button-primary class="w-full uppercase">
                 {{ __('Register') }}
               </x-forms.button-primary>
 
-              <p class="text-xs text-gray-500 mt-3"> Already have an account?  
+              <p class="text-xs text-gray-500 mt-3"> Already have an account?
                 <x-content.link :value="__('Sign in')" href="{{ route('login') }}" />
               </p>
 

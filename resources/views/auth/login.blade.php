@@ -6,8 +6,7 @@
             Welcome Back
           </x-slot>
 
-          Poke slow-carb mixtape knausgaard, typewriter street art gentrify hammock starladder roathse.
-          Craies vegan tousled etsy austin.
+          Sign in to your existing account or create a new account to get started
       </x-content.column-text>
 
       <x-content.auth-card>
