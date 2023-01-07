@@ -33,7 +33,7 @@ class EnrolmentController extends Controller
       if($role == 'student') {
 
         //get student and parent info
-        $student = User::getUserProfile($role, $userId)->get()->first();
+        $user = User::getUserProfile($role, $userId)->get()->first();
 
         //get course info
         $course = Course::where('id', $course_id)->first();
