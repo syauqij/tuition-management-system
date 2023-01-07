@@ -49,7 +49,7 @@ class EnrolmentController extends Controller
 
     public function store(UpdateProfileRequest $request)
     {
-      $course_id = $request->session()->get('enrol_course_id');
+      $courseId = $request->session()->get('enrol_course_id');
       $userId = auth()->user()->id;
       $userInputs = $request->inputsUser();
 
@@ -70,7 +70,15 @@ class EnrolmentController extends Controller
       $getStudentProfile->parent_profile_id = $parentProfile->id;
       $getStudentProfile->save();
 
-      $course = Course::where('id', $course_id)->first();
+      $course = Course::where('id', $courseId)->first();
+
+      //validate duplicate submission
+      $request->request->add(['student_user_id' => $userId]);
+      $request->validate([
+        'student_user_id' => 'required|unique:enrolments,student_user_id,NULL,id,course_id,' . $courseId,
+      ],[
+        'unique' => 'You have already submitted an application for this course.',
+      ]);
 
       Enrolment::create([
         'student_user_id' => $userId,
@@ -80,7 +88,7 @@ class EnrolmentController extends Controller
         'status' => 'applied'
       ]);
 
-      return redirect()->route('dashboard')->with('success','Congrats. You have enroll');
+      return redirect()->route('dashboard')->with('success','Congrats! You have successfully submitted an application');
     }
 
     public function show(Enrolment $enrolment)
