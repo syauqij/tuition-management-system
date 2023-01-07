@@ -7,6 +7,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\EnrolmentController;
 use App\Http\Controllers\ClassroomController;
+use App\Http\Controllers\SchoolGradeController;
 
 /*
 |-------------------------------------------------------------------------
@@ -60,6 +61,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('courses', CourseController::class)->except([
       'show'
     ]);
+    Route::resource('school-grades', SchoolGradeController::class);
   });
 
 });
