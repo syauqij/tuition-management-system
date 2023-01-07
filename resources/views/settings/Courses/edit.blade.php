@@ -36,6 +36,15 @@
 
           <div class="p-2 w-full">
             <div class="relative">
+              <x-forms.input-label for="name" :value="__('Course Photo')" />
+
+              <x-forms.input-text id="name" class="block mt-1 w-full" type="file" name="main_photo"
+              placeholder="Choose a photo" :value="old('main_photo')" required autofocus />
+            </div>
+          </div>
+
+          <div class="p-2 w-full">
+            <div class="relative">
               <x-forms.input-label for="course_description" :value="__('Course Description')" />
 
               <x-forms.textarea-input id="course_description" class="block mt-1 w-full" type="text" name="description"
@@ -66,10 +75,10 @@
 
           <div class="p-2 w-full">
             <div class="relative">
-              <x-forms.input-label for="course_subject" :value="__('Monthly Fee')" />
+              <x-forms.input-label for="monthly_fee" :value="__('Monthly Fee (RM)')" />
 
-              <x-forms.input-text id="course_monthly_fee" class="block mt-1 w-full" type="text" name="course_monthly_fee"
-                placeholder="E.g. RM 150" :value="$course->monthly_fee" required autofocus />
+              <x-forms.input-text id="monthly_fee" class="block mt-1 w-full" type="text" name="monthly_fee"
+                placeholder="E.g. 150" :value="$course->monthly_fee" required autofocus />
             </div>
           </div>
 

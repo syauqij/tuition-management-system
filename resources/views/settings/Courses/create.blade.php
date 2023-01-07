@@ -16,7 +16,7 @@
       <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Enter the new course details below</p>
     </div>
 
-    <form method="POST" action="{{ route('courses.store') }}">
+    <form method="POST" action="{{ route('courses.store') }}" enctype="multipart/form-data">
       @csrf
 
       <div class="lg:w-1/2 md:w-2/3 mx-auto">
@@ -24,27 +24,37 @@
 
           <div class="p-2 w-full">
             <div class="relative">
-              <x-forms.input-label for="course_name" :value="__('Course Name')" />
+              <x-forms.input-label for="name" :value="__('Course Name')" />
 
-              <x-forms.input-text id="course_name" class="block mt-1 w-full" type="text" name="course_name"
-              placeholder="E.g. Geography" :value="old('course_name')" required autofocus />
+              <x-forms.input-text id="name" class="block mt-1 w-full" type="text" name="name"
+              placeholder="E.g. Form 3 Plus" :value="old('name')" required autofocus />
             </div>
           </div>
 
           <div class="p-2 w-full">
             <div class="relative">
-              <x-forms.input-label for="course_description" :value="__('Course Description')" />
+              <x-forms.input-label for="name" :value="__('Course Photo')" />
 
-              <x-forms.textarea-input id="course_description" class="block mt-1 w-full" type="text" name="course_description"
-              placeholder="Describe the course details" :value="old('course_description')" required autofocus />
+              <x-forms.input-text id="name" class="block mt-1 w-full" type="file" name="main_photo"
+              placeholder="Choose a photo" :value="old('main_photo')" required autofocus />
             </div>
           </div>
 
           <div class="p-2 w-full">
             <div class="relative">
-              <x-forms.input-label for="course_subject_category" :value="__('Subject Category')" />
+              <x-forms.input-label for="description" :value="__('Course Description')" />
 
-              <x-forms.select-input id="subject_categories" class="block mt-1 w-full" type="text" name="course_subject_category"
+              <x-forms.textarea-input id="description" class="block mt-1 w-full" type="text" name="description"
+              placeholder="Describe the course details" :value="old('description')" required autofocus />
+            </div>
+          </div>
+
+          <div class="p-2 w-full">
+            <div class="relative">
+              <x-forms.input-label for="subject_category" :value="__('Subject Category')" />
+
+              <x-forms.select-input id="subject_categories" class="block mt-1 w-full" type="text" name="subject_category"
+                :value="old('subject_category')"
                 :options="$categories" :title="__('Subject Category')" required autofocus />
 
             </div>
@@ -52,7 +62,7 @@
 
           <div class="p-2 w-full">
             <div class="relative">
-              <x-forms.input-label for="course_subject" :value="__('Subject')" />
+              <x-forms.input-label for="course_subjects" :value="__('Subject')" />
 
             <x-forms.choices id="subjects" name="course_subjects[]"
                 multiple x-data="{}" x-init="function () { choices($el) }"
@@ -63,10 +73,10 @@
 
           <div class="p-2 w-full">
             <div class="relative">
-              <x-forms.input-label for="course_subject" :value="__('Monthly Fee')" />
+              <x-forms.input-label for="month_fee" :value="__('Monthly Fee (RM)')" />
 
-              <x-forms.input-text id="course_monthly_fee" class="block mt-1 w-full" type="text" name="course_monthly_fee"
-                placeholder="E.g. RM 150" :value="old('course_monthly_fees')" required autofocus />
+              <x-forms.input-text id="monthly_fee" class="block mt-1 w-full" type="text" name="monthly_fee"
+                placeholder="E.g. 150" :value="old('monthly_fee')" required autofocus />
             </div>
           </div>
 

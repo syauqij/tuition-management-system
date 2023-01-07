@@ -42,9 +42,8 @@
                   {{$course->subjectCategory->name }}
               </a>
             </object>
-            <img src="https://static.vecteezy.com/system/resources/previews/000/104/432/original/basic-math-symbols-vectors.jpg"
-              class="mb-4"
-              alt="..."/>
+            <img src="{{ asset('storage/' . $course->main_photo_path) }}" class="my-2"
+              alt="course-main-photo" title="{{ $course->main_photo_path }}" >
           </a>
           </div>
         @endforeach

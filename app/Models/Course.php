@@ -15,7 +15,8 @@ class Course extends Model
       'slug',
       'description',
       'subject_category_id',
-      'monthly_fee'
+      'monthly_fee',
+      'main_photo_path'
     ];
 
     public function subjectCategory()

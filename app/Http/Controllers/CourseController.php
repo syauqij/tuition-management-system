@@ -7,7 +7,7 @@ use App\Models\SubjectCategory;
 use App\Models\Subject;
 use App\Models\CourseSubject;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Carbon;
 
 class CourseController extends Controller
 {
@@ -85,19 +85,31 @@ class CourseController extends Controller
     public function store(Request $request)
     {
       $request->validate([
-        'course_name' => ['required', 'string', 'max:255'],
-        'course_description' => ['required', 'string', 'max:255'],
-        'course_subject_category' => ['required'],
+        'name' => ['required', 'string', 'max:255'],
+        'description' => ['required', 'string', 'max:255'],
+        'subject_category' => ['required'],
         'course_subjects' => ['required'],
-        'course_monthly_fee' => ['required'],
+        'monthly_fee' => ['required'],
+        'main_photo' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
       ]);
 
+      $photoPath = null;
+      $fileName = Carbon::now()->timestamp . '-' . auth()->user()->id;
+      if ($request->hasFile('main_photo')) {
+        $photoPath = $request->file('main_photo')->storeAs(
+          'photos',
+          $fileName . '.' . $request->file('main_photo')->getClientOriginalExtension(),
+          'public'
+        );
+      }
+
       $course = Course::create([
-        'name' => $request->course_name,
-        'slug' => $request->course_name,
-        'description' => $request->course_description,
-        'subject_category_id' => $request->course_subject_category,
-        'monthly_fee' => $request->course_monthly_fee,
+        'name' => $request->name,
+        'slug' => $request->name,
+        'description' => $request->description,
+        'subject_category_id' => $request->subject_category,
+        'monthly_fee' => $request->monthly_fee,
+        'main_photo_path' => $photoPath
       ]);
 
       foreach($request->course_subjects as $subject) {
@@ -129,7 +141,20 @@ class CourseController extends Controller
         'description' => ['required', 'string', 'max:255'],
         'subject_category_id' => ['required'],
         'course_subjects' => ['required'],
+        'monthly_fee' => 'required',
+        'main_photo' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
       ]);
+
+      $photoPath = null;
+      $fileName = Carbon::now()->timestamp . '-' . auth()->user()->id;
+      if ($request->hasFile('main_photo')) {
+        $photoPath = $request->file('main_photo')->storeAs(
+          'photos',
+          $fileName . '.' . $request->file('main_photo')->getClientOriginalExtension(),
+          'public'
+        );
+      }
+      $request['main_photo_path'] = $photoPath;
 
       $course->fill($request->post())->save();
 

@@ -24,9 +24,8 @@
       </div>
       </div>
       <div class="">
-        <img src="https://mdbootstrap.com/img/new/standard/city/041.jpg"
-                class=""
-                alt="..."/>
+        <img src="{{ asset('storage/' . $course->main_photo_path) }}" class="mb-2"
+          alt="course-main-photo" title="{{ $course->main_photo_path }}" >
       </div>
     </div>
   </div>
