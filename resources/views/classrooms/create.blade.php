@@ -19,11 +19,11 @@
 
           <div class="p-2 w-full">
             <div class="relative">
-              <x-forms.input-label for="class_name" :value="__('Course')" />
+              <x-forms.input-label for="course_name" :value="__('Course')" />
               <x-content.link class="font-semibold" :value="$classroom->course->name"
                 href="{{ route('courses.show', $classroom->course->id) }}" />
 
-              <x-forms.input-label class="pt-2" for="class_name" :value="__('Subject')" />
+              <x-forms.input-label class="pt-2" for="subject_name" :value="__('Subject')" />
               <p class="text-violet-600 font-semibold">
                 {{ $classroom->subject->name }}
               </p>

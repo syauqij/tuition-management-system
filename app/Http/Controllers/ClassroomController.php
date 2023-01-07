@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Classroom;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Builder;
 use App\Http\Requests\StoreClassroomRequest;
 use App\Http\Requests\UpdateClassroomRequest;
 use App\Models\Course;
@@ -17,9 +18,19 @@ class ClassroomController extends Controller
 {
     public function index()
     {
-      $courses = Course::with(['subjectCategory', 'courseSubjects.subject', 'courseSubjects.classrooms'])
+      $courses = Course::select(['id','name', 'created_at'])
+        ->with([
+          'subjectCategory',
+          'courseSubjects' => [
+              'subject',
+              'classrooms',
+            ],
+          ])
+        ->withCount(['enrolments' => function (Builder $query) {
+            $query->where('status', '=', 'accepted');
+          }])
         ->orderBy('created_at', 'desc')
-        ->get();
+        ->paginate(5);
 
       return view('classrooms.index', compact('courses'));
     }
@@ -32,7 +43,7 @@ class ClassroomController extends Controller
 
       $classrooms = Classroom::with(['courseSubject', 'classStudents', 'schoolGrade', 'teacher'])
         ->where('course_subject_id', $courseSubjectId)
-        ->get();
+        ->paginate(5);
 
       return view('classrooms.list', compact('courseSubject', 'classrooms'));
     }

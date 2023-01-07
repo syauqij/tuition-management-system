@@ -7,14 +7,14 @@
     </h2>
   </x-slot>
   <x-content.card>
-    <div class="mb-80">
+    <div class="mb-2">
       <div class="pb-2">
         <a href="{{ route('classrooms.create', [
             'courseSubjectId' => $courseSubject->id
           ]) }}">
-          <x-forms.button-secondary>
-            {{ __('Create New') }}
-          </x-forms.button-secondary>
+          <x-forms.button-primary>
+            {{ __('Create') }}
+          </x-forms.button-primary>
         </a>
       </div>
       <table class="w-full">
@@ -31,17 +31,18 @@
         <tbody>
           @if($classrooms->isEmpty())
               <tr>
-                <x-table.cell :value="__('No classroom records found. Please create at least one.')" colspan="6" class="text-lg text-red-500 font-semibold text-center" />
+                <x-table.cell :value="__('No classroom records found. Please create at least one.')"
+                  colspan="6" class="text-lg text-red-500 font-semibold text-center" />
               </tr>
           @endif
           @foreach ($classrooms as $class)
             <tr class="border-b">
-              <x-table.cell :value="$loop->index+1" />
+              <x-table.cell :value="($classrooms->currentPage() - 1) * $classrooms->perPage() + $loop->iteration" />
               <x-table.cell :value="$class->name" />
               <x-table.cell :value="$class->room_no" />
               <x-table.cell :value="$class->teacher->fullName" />
               <x-table.cell :value="$class->classStudents->count()" class="text-center"/>
-              <td class="text-center">
+              <td>
                 <div class="flex justify-center">
                 <a href="{{ route('classrooms.edit', $class->id)}}">
                   <x-forms.button-primary class="text-xs">
@@ -64,6 +65,9 @@
           @endforeach
         </tbody>
       </table>
+      <div class="pt-4">
+        {{ $classrooms->links() }}
+      </div>
     </div>
   </x-content.card>
 </x-app-layout>
