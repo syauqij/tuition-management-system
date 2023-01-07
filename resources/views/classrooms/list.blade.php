@@ -22,6 +22,7 @@
           <tr>
             <x-table.heading :value="__('#')" />
             <x-table.heading :value="__('Class Name')" />
+            <x-table.heading :value="__('School Grade')" />
             <x-table.heading :value="__('Room No')" />
             <x-table.heading :value="__('Teacher')" />
             <x-table.heading :value="__('Total Students')" class="text-center"/>
@@ -39,9 +40,10 @@
             <tr class="border-b">
               <x-table.cell :value="($classrooms->currentPage() - 1) * $classrooms->perPage() + $loop->iteration" />
               <x-table.cell :value="$class->name" />
+              <x-table.cell :value="$class->schoolGrade->name" />
               <x-table.cell :value="$class->room_no" />
               <x-table.cell :value="$class->teacher->fullName" />
-              <x-table.cell :value="$class->classStudents->count()" class="text-center"/>
+              <x-table.cell :value="$class->class_students_count" class="text-center"/>
               <td>
                 <div class="flex justify-center">
                 <a href="{{ route('classrooms.edit', $class->id)}}">

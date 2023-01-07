@@ -18,7 +18,7 @@ class ClassroomController extends Controller
 {
     public function index()
     {
-      $courses = Course::select(['id','name', 'created_at'])
+      $courses = Course::select(['id','name','created_at'])
         ->with([
           'subjectCategory',
           'courseSubjects' => [
@@ -41,7 +41,8 @@ class ClassroomController extends Controller
         ->where('id', $courseSubjectId)
         ->first();
 
-      $classrooms = Classroom::with(['courseSubject', 'classStudents', 'schoolGrade', 'teacher'])
+      $classrooms = Classroom::with(['schoolGrade', 'teacher'])
+        ->withCount('classStudents')
         ->where('course_subject_id', $courseSubjectId)
         ->paginate(5);
 
