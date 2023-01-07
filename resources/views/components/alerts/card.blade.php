@@ -6,6 +6,11 @@
     $txtColour = 'text-green-700';
   }
 
+  elseif ($message = Session::get('info')) {
+    $bgColour = 'bg-blue-100';
+    $txtColour = 'text-blue-700';
+  }
+
   elseif ($message = Session::get('error')) {
     $bgColour = 'bg-red-100';
     $txtColour = 'text-red-700';

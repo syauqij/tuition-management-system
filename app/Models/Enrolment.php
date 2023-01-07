@@ -36,6 +36,11 @@ class Enrolment extends Model
         return $this->belongsTo(User::class, 'updated_by');
     }
 
+    public function classStudents()
+    {
+        return $this->hasMany(ClassStudent::class, 'enrolment_id');
+    }
+
     protected function studentProfile(): Attribute
     {
         return Attribute::make(

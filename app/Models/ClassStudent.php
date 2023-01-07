@@ -13,4 +13,14 @@ class ClassStudent extends Model
       'enrolment_id',
       'classroom_id',
     ];
+
+    public function enrolment()
+    {
+        return $this->belongsTo(Enrolment::class);
+    }
+
+    public function classroom()
+    {
+        return $this->belongsTo(Classroom::class);
+    }
 }

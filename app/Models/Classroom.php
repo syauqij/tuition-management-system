@@ -18,4 +18,24 @@ class Classroom extends Model
       'min_students',
       'max_students'
     ];
+
+    public function courseSubject()
+    {
+        return $this->belongsTo(CourseSubject::class);
+    }
+
+    public function schoolGrade()
+    {
+        return $this->belongsTo(SchoolGrade::class);
+    }
+
+    public function teacher()
+    {
+        return $this->belongsTo(User::class, 'teacher_user_id');
+    }
+
+    public function classStudents()
+    {
+        return $this->hasMany(ClassStudent::class);
+    }
 }

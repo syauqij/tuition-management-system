@@ -11,8 +11,8 @@
           <tr>
             <x-table.heading :value="__('#')" />
             <x-table.heading :value="__('Course')" />
-            <x-table.heading :value="__('Subject Category')" />
             <x-table.heading :value="__('Subjects')" />
+            <x-table.heading :value="__('Total Classroom')" class="text-center"/>
             <x-table.heading :value="__('Action')" class="text-center"/>
           </tr>
         </thead>
@@ -21,19 +21,17 @@
             <tr class="border-b">
               <x-table.cell :value="$loop->index+1" />
               <x-table.cell :value="$course->name" />
-              <x-table.cell :value="$course->subjectCategory->name" />
 
-              <td colspan="2">
+              <td colspan="3" class="text-sm">
                 @if($course->courseSubjects->isNotEmpty())
                   @foreach ($course->courseSubjects as $courseSubject)
-                    <div class="flex">
-                      <span class="mt-2">{{$courseSubject->subject->name}}</span>
-                      <div class="flex ml-auto my-1">
-                        <a href="{{ route('classrooms.create', [
-                            'courseSubjectId' => $courseSubject->id
-                          ])}}">
+                  <div class="h-12 grid grid-cols-3 gap-4 content-center">
+                      <div>{{ $courseSubject->subject->name }}</div>
+                      <div class="text-center">{{ $courseSubject->classrooms->count() }}</div>
+                      <div class="text-right">
+                        <a href="{{ route('classrooms.list', $courseSubject->id) }}">
                           <x-forms.button-primary class="text-xs">
-                            {{ __('Create') }}
+                            {{ __('View') }}
                           </x-forms.button-primary>
                         </a>
                       </div>
@@ -41,7 +39,7 @@
                   @endforeach
                 @else
                   <div class="flex">
-                    <span class="text-red-600">Subjects Unassigned</span>
+                    <span class="text-red-600 py-2">Subjects Unassigned</span>
                     <div class="flex ml-auto my-1">
                       <a href="{{ route('courses.edit', $course->id)}}">
                         <x-forms.button-primary class="text-xs">

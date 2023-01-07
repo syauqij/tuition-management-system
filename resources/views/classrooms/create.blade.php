@@ -1,7 +1,7 @@
 <x-app-layout>
   <x-slot name="header">
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-          {{ __('Classroom') }}
+          {{ __('Create Classroom') . ' - ' . $classroom->subject->name}}
       </h2>
   </x-slot>
 
@@ -36,7 +36,7 @@
               <x-forms.input-label for="class_name" :value="__('Class Name')" />
 
               <x-forms.input-text id="classroom_name" class="block mt-1 w-full" type="text" name="class_name"
-                value="{{old('classroom_name')}}"
+                value="{{old('class_name')}}"
                 placeholder="E.g. English F5B G1" required autofocus />
             </div>
           </div>
@@ -56,6 +56,7 @@
               <x-forms.input-label for="class_school_grade" :value="__('School Grade')" />
 
               <x-forms.select-input id="class_school_grade" class="block mt-1 w-full" type="text" name="class_grade_id"
+                :value="old('class_grade_id')"
                 :options="$schoolGrades" :title="__('School Grade')" required autofocus />
             </div>
           </div>
@@ -64,7 +65,8 @@
             <div class="relative">
               <x-forms.input-label for="class_teacher" :value="__('Class Teacher')" />
 
-              <x-forms.select-input id="class_teacher" class="block mt-1 w-full" type="text" name="class_teacher"
+              <x-forms.select-input id="class_teacher" class="block mt-1 w-full" type="text" name="class_teacher_id"
+                :value="old('class_teacher_id')"
                 :options="$teachers" :title="__('Teacher')" required autofocus />
             </div>
           </div>
@@ -112,9 +114,13 @@
           </div>
 
           <div class="pt-4 w-full flex justify-end">
-            <x-forms.button-cancel class="mr-2" :value="__('classrooms.index')" >
-              {{ __('Cancel') }}
-            </x-forms.button-cancel>
+            <a href="{{ route('classrooms.list', [
+                'courseSubjectId' => $classroom->id
+              ]) }}">
+              <x-forms.button-secondary type='button'>
+                {{ __('Cancel') }}
+              </x-forms.button-secondary>
+            </a>
 
             <x-forms.button-primary>
               {{ __('Create') }}

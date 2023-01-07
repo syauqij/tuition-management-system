@@ -42,6 +42,7 @@ Route::group(['middleware' => 'auth'], function() {
   Route::get('/enrolments/status/{id}/{status}', [EnrolmentController::class, 'status'])->name('enrolments.status');
   Route::resource('enrolments', EnrolmentController::class);
 
+  Route::get('/classrooms/{courseSubjectId}/list', [ClassroomController::class, 'list'])->name('classrooms.list');
   Route::resource('classrooms', ClassroomController::class);
 
   Route::get('profile', [UserProfileController::class, 'show'])
