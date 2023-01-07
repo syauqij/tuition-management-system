@@ -111,6 +111,9 @@
                   </div>
                 </div>
               @endforeach
+              @if($existingStudents->isEmpty())
+                No records of assigned students. Please assign them.
+              @endif
             </div>
           </div>
 
@@ -133,6 +136,9 @@
                   </div>
                 </div>
               @endforeach
+              @if($enrolments->isEmpty())
+                No records of unassigned enroled students. Please try again later.
+              @endif
             </div>
           </div>
 

@@ -110,6 +110,9 @@
                   </div>
                 </div>
               @endforeach
+              @if($enrolments->isEmpty())
+                No records of enroled students. Please try again later.
+              @endif
             </div>
           </div>
 

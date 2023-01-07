@@ -17,14 +17,11 @@ class ClassroomController extends Controller
 {
     public function index()
     {
-      //get all subjects from course subject table
       $courses = Course::with(['subjectCategory', 'courseSubjects.subject', 'courseSubjects.classrooms'])
         ->orderBy('created_at', 'desc')
         ->get();
 
-      return view('classrooms.index', [
-        'courses' => $courses
-      ]);
+      return view('classrooms.index', compact('courses'));
     }
 
     public function list($courseSubjectId)
@@ -37,21 +34,20 @@ class ClassroomController extends Controller
         ->where('course_subject_id', $courseSubjectId)
         ->get();
 
-      return view('classrooms.list', [
-        'courseSubject' => $courseSubject,
-        'classrooms' => $classrooms
-      ]);
+      return view('classrooms.list', compact('courseSubject', 'classrooms'));
     }
 
     public function create(Request $request)
     {
+      $courseSubjectId = $request->courseSubjectId;
+
       $classroom = CourseSubject::with(['course', 'subject'])
-        ->where('id', $request->courseSubjectId)
+        ->where('id', $courseSubjectId)
         ->first();
 
       $existingStudents = ClassStudent::with('classroom')
         ->whereRelation('classroom',
-          'course_subject_id', '=', $request->courseSubjectId)
+          'course_subject_id', '=', $courseSubjectId)
         ->pluck('enrolment_id');
 
       $enrolments = Enrolment::enroledStudents($classroom->course->id)
@@ -61,7 +57,7 @@ class ClassroomController extends Controller
       if($enrolments->isEmpty()) {
         return redirect()->route('classrooms.list', $classroom->id)
           ->with('info',
-          'All enrolled students has been assigned to their respective classroom. Please try again later.'
+          'No records of enroled students for this course or all has been assigned to their respective classroom. Please try again later.'
         );
       }
 
@@ -70,13 +66,9 @@ class ClassroomController extends Controller
         ->where('role', 'teacher')
         ->pluck('id','fullName');
 
-      return view('classrooms.create', [
-        'classroom' => $classroom,
-        'enrolments' => $enrolments,
-        'schoolGrades' => $schoolGrades,
-        'courseSubjectId' => $request->courseSubjectId,
-        'teachers' => $teachers
-      ]);
+      return view('classrooms.create', compact(
+        'classroom','enrolments','schoolGrades','courseSubjectId','teachers'
+      ));
     }
 
     public function store(StoreClassroomRequest $request)
@@ -99,7 +91,8 @@ class ClassroomController extends Controller
         ]);
       }
 
-      return redirect()->route('classrooms.index')->with('success','New classroom ' . $request->class_name .' has been created successfully.');
+      return redirect()->route('classrooms.index')
+        ->with('success','New classroom ' . $request->class_name .' has been created successfully.');
     }
 
     public function edit(Classroom $classroom)
@@ -124,14 +117,9 @@ class ClassroomController extends Controller
         ->where('role', 'teacher')
         ->pluck('id','fullName');
 
-      return view('classrooms.edit', [
-        'classroom' => $classroom,
-        'existingStudents' => $existingStudents,
-        'enrolments' => $enrolments,
-        'schoolGrades' => $schoolGrades,
-        'courseSubjectId' => $classroom,
-        'teachers' => $teachers
-      ]);
+      return view('classrooms.edit', compact(
+        'classroom', 'existingStudents', 'enrolments', 'schoolGrades', 'teachers'
+      ));
     }
 
     public function update(UpdateClassroomRequest $request, Classroom $classroom)
@@ -159,7 +147,7 @@ class ClassroomController extends Controller
       }
 
       return redirect()->route('classrooms.list', $classroom->course_subject_id)
-        ->with('success','Classroom saved successfully');
+        ->with('success','Classroom ' . $classroom->name . ' details updated successfully');
     }
 
     public function destroy(Classroom $classroom)
