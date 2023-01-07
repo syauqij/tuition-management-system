@@ -44,10 +44,7 @@ class EnrolmentController extends Controller
         return redirect()->route('courses.show', $course_id);
       }
 
-      return view('courses.enrol', [
-        'course' => $course,
-        'user' => $student
-      ]);
+      return view('courses.enrol', compact('course', 'user'));
     }
 
     public function store(UpdateProfileRequest $request)
@@ -88,19 +85,17 @@ class EnrolmentController extends Controller
 
     public function show(Enrolment $enrolment)
     {
-      $enrolment = $enrolment
-      ->with('student', 'course', 'staff')
-      ->first();
+      $enrolment
+        ->with('student', 'course', 'staff')
+        ->get();
 
+      $course = $enrolment->course;
       $studentAddress = Enrolment::getAddress($enrolment->id, 'studentProfile');
       $parentAddress = Enrolment::getAddress($enrolment->id, 'parentProfile');
 
-      return view('enrolments.show', [
-        'enrolment' => $enrolment,
-        'course' => $enrolment->course,
-        'studentAddress' => $studentAddress,
-        'parentAddress' => $parentAddress,
-      ]);
+      return view('enrolments.show', compact(
+        'enrolment','course','studentAddress','parentAddress'
+      ));
     }
 
     public function status($id, $status)
