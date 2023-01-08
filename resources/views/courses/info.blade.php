@@ -9,7 +9,7 @@
           {{ $course->subjectCategory->name }} {{-- To add new Price data --}}
         </span>
         <div class="lg:w-7/12 text-justify mt-4">
-          Learn the basics of Python 3, one of the most powerful, versatile, and in-demand programming languages today.
+          {{ $course->description }}
         </div>
         <div class="justify-bottom">
           @if (isset($enrol) == true)
