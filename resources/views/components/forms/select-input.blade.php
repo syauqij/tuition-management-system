@@ -1,4 +1,4 @@
-@props(['options', 'title' => '', 'value' => ''])
+@props(['options', 'title' => '', 'value' => '', 'enum' => 'falase'])
 
 <select {{ $attributes
   ->class([
@@ -10,8 +10,13 @@
 
   <option value=""> Choose the {{$title}} </option>
 
-  @foreach($options as $item_name => $item_id)
-    <option value="{{ $item_id }}" {{ ( $item_id == $value) ? 'selected' : '' }}> {{ $item_name }} </option>
-  @endforeach
-
+  @if($enum)
+    @foreach($options as $itemName)
+      <option value="{{ $itemName }}" {{ ( $itemName == $value) ? 'selected' : '' }}> {{ $itemName }} </option>
+    @endforeach
+  @else
+    @foreach($options as $itemName => $itemId)
+      <option value="{{ $itemId }}" {{ ( $itemId == $value) ? 'selected' : '' }}> {{ $itemName }} </option>
+    @endforeach
+  @endif
 </select>

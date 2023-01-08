@@ -33,6 +33,8 @@ class UpdateProfileRequest extends FormRequest
           'city' => 'required',
           'state' => 'required',
           'country' => 'required',
+          'role' => 'sometimes|required',
+          'is_active' => 'numeric|sometimes|required',
         ];
 
         $parentProfile = [];
@@ -66,7 +68,9 @@ class UpdateProfileRequest extends FormRequest
         'first_name' => $this->input('first_name'),
         'last_name' => $this->input('last_name'),
         'email' => $this->input('email'),
-        'phone_no' => $this->input('phone_no')
+        'phone_no' => $this->input('phone_no'),
+        'role' => $this->input('role'),
+        'is_active' => $this->input('is_active'),
       ];
     }
 

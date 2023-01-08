@@ -23,6 +23,42 @@
             @enderror
         </div>
 
+        @if ($role == 'admin')
+          <div class="md:col-span-3">
+            <x-forms.input-label for="role" :value="__('Role')" />
+            <x-forms.select-input id="role" class="block mt-1 w-full" type="text" name="role"
+              :options="$roles" :title="__('Role')" :enum="true"
+              :value="auth()->user()->role ?? old('role')"
+              required autofocus />
+
+            @error('role')
+              <x-alerts.message type="error" :message="$message"/>
+            @enderror
+          </div>
+
+          <div class="md:col-span-3">
+            <x-forms.input-label class="mb-1" for="status" :value="__('Account status')" />
+            <ul class="grid gap-2 grid-cols-2 mb-2">
+                <li>
+                    <x-forms.radio-input id="active-status" class="hidden peer" type="radio" name="is_active"
+                      :selected="$user->is_active ?? old('is_active') "
+                      value="1" autofocus />
+                    <x-forms.radio-label class="text-center" for="active-status" :value="__('Active')" />
+                </li>
+                <li>
+                    <x-forms.radio-input id="disable-status" class="hidden peer" type="radio" name="is_active"
+                      :selected="$user->is_active ?? old('is_active') "
+                      value="0" autofocus />
+                    <x-forms.radio-label class="text-center peer-checked:text-red-700 peer-checked:border-red-600 peer-checked:red-blue-600"
+                      for="disable-status" :value="__('Disable')" />
+                </li>
+            </ul>
+            @error('is_active')
+              <x-alerts.message type="error" :message="$message"/>
+            @enderror
+          </div>
+        @endif
+
         <div class="md:col-start-1 md:col-span-3">
           <x-forms.input-label for="password" :value="__('Password')" />
           <x-forms.input-text id="password" class="block mt-1 w-full" type="password" name="password" value="" />

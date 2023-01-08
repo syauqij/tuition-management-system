@@ -19,7 +19,8 @@ class UserProfileController extends Controller
 
       return view('users.profile', [
         'user' => $user,
-        'role' => $role
+        'role' => $role,
+        'roles' => ['student', 'teacher', 'admin']
       ]);
     }
 
@@ -34,7 +35,6 @@ class UserProfileController extends Controller
       } else {
         $request['password'] = bcrypt($password);
       }
-
       auth()->user()->update($request->all());
 
       if($userRole == 'student') {

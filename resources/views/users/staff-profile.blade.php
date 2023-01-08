@@ -48,13 +48,13 @@
           <ul class="grid gap-2 grid-cols-2 mb-2">
               <li>
                   <x-forms.radio-input id="gender_male" class="hidden peer" type="radio" name="gender"
-                    :selectedGender="$user->studentProfile->gender ?? old('gender') "
+                    :selected="$user->studentProfile->gender ?? old('gender') "
                     value="male" autofocus />
                   <x-forms.radio-label class="text-center" for="gender_male" :value="__('Male')" />
               </li>
               <li>
                   <x-forms.radio-input id="gender_female" class="hidden peer" type="radio" name="gender"
-                    :selectedGender="$user->studentProfile->gender ?? old('gender') "
+                    :selected="$user->studentProfile->gender ?? old('gender') "
                     value="female" autofocus />
                   <x-forms.radio-label class="text-center" for="gender_female" :value="__('Female')" />
               </li>
