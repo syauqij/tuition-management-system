@@ -12,12 +12,10 @@
   <!-- Personal Details -->
   @if($role == 'student')
     @include('users.student-profile')
+    @include('users.parent-profile')
   @else
     @include('users.staff-profile')
   @endif
-
-  <!-- Parent Details -->
-  @includeIf('users.parent-profile', [$role => 'student'])
 
   <!-- Account Details -->
   @include('users.account')
