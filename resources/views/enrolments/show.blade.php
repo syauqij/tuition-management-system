@@ -18,14 +18,32 @@
           <div class="flex flex-row">
             <div class="basis-2/6 pr-2 font-semibold text-gray-600">Status</div>
             <div class="basis-4/6">
-              <x-forms.button-dropdown name="{{$enrolment->status}}" id="updateStatusBtn">
-                <x-slot name="menu">
-                  <x-forms.dropdown-link link="{{route('enrolments.status', [$enrolment->id, 'accepted'])}}"
-                    :value="__('Accept Application')" />
-                  <x-forms.dropdown-link link="{{route('enrolments.status', [$enrolment->id, 'rejected'])}}"
-                    :value="__('Reject Application')" />
-                </x-slot>
-              </x-forms.button-dropdown>
+              @if (auth()->user()->role == 'admin')
+                <x-forms.button-dropdown name="{{$enrolment->status}}" id="updateStatusBtn">
+                  <x-slot name="menu">
+                    <x-forms.dropdown-link link="{{route('enrolments.status', [$enrolment->id, 'accepted'])}}"
+                      :value="__('Accept Application')" />
+                    <x-forms.dropdown-link link="{{route('enrolments.status', [$enrolment->id, 'rejected'])}}"
+                      :value="__('Reject Application')" />
+                  </x-slot>
+                </x-forms.button-dropdown>
+
+                @else
+                  @php
+                    $status = $enrolment->status;
+                    $colour = 'text-blue-700';
+                    if ($status == "accepted") {
+                      $colour = 'text-green-700';
+                    }
+
+                    if ($status == "rejected") {
+                      $colour = 'text-red-700';
+                    }
+                  @endphp
+                  <div class="uppercase font-semibold {{ $colour }} "}>
+                    {{$enrolment->status}}
+                  </div>
+                @endif
             </div>
           </div>
 

@@ -27,7 +27,7 @@
               <td colspan="3" class="text-sm">
                 @if($course->courseSubjects->isNotEmpty())
                   @foreach ($course->courseSubjects as $courseSubject)
-                  <div class="h-12 grid grid-cols-3 gap-4 content-center">
+                  <div class="h-12 grid grid-cols-3 gap-4 content-center border-b">
                       <div>{{ $courseSubject->subject->name }}</div>
                       <div class="text-center">{{ $courseSubject->classrooms->count() }}</div>
                       <div class="text-right">

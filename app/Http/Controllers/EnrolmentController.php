@@ -17,6 +17,12 @@ class EnrolmentController extends Controller
     {
       $getEnrolments = Enrolment::with('student', 'course');
 
+      $role = auth()->user()->role;
+      if($role == 'student') {
+        $getEnrolments->where('student_user_id', auth()->user()->id);
+      }
+
+      $getEnrolments->orderby('created_at', 'desc');
       $enrolments = $getEnrolments->paginate(6);
 
       return view('enrolments.index', [
@@ -41,7 +47,8 @@ class EnrolmentController extends Controller
         Session::put('enrol_course_id', $course->id);
       }
       else {
-        return redirect()->route('courses.show', $course_id);
+        return redirect()->route('courses.list')
+          ->with('error','You are not a student to enrol courses');
       }
 
       return view('courses.enrol', compact('course', 'user'));

@@ -28,10 +28,12 @@
                   <x-slot name="menu">
                     <x-forms.dropdown-link link="{{route('enrolments.show', [$enrolment->id])}}"
                       :value="__('View Application')" />
-                    <x-forms.dropdown-link link="{{route('enrolments.status', [$enrolment->id, 'accepted'])}}"
-                      :value="__('Accept Application')" />
-                    <x-forms.dropdown-link link="{{route('enrolments.status', [$enrolment->id, 'rejected'])}}"
-                      :value="__('Reject Application')" />
+                    @if (auth()->user()->role == 'admin')
+                      <x-forms.dropdown-link link="{{route('enrolments.status', [$enrolment->id, 'accepted'])}}"
+                        :value="__('Accept Application')" />
+                      <x-forms.dropdown-link link="{{route('enrolments.status', [$enrolment->id, 'rejected'])}}"
+                        :value="__('Reject Application')" />
+                    @endif
                   </x-slot>
                 </x-forms.button-dropdown>
               </td>

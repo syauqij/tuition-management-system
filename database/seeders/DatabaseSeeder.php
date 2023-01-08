@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
      * @return void
      */
     public function run()
-    {   
+    {
         // Subject Categories Default Data
 
         DB::table('subject_categories')->insert([
@@ -84,9 +84,9 @@ class DatabaseSeeder extends Seeder
           'created_at' => Carbon::now(),
         ]);
 
-        $description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-          Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+        $description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
           Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 
         // Courses Default Data
@@ -95,7 +95,6 @@ class DatabaseSeeder extends Seeder
           'description' => $description,
           'type' => 'class',
           'subject_category_id' => 1,
-          'subject_id' => 3,
           'created_at' => Carbon::now(),
         ]);
 
@@ -104,7 +103,6 @@ class DatabaseSeeder extends Seeder
           'description' => $description,
           'type' => 'class',
           'subject_category_id' => 1,
-          'subject_id' => 1,
           'created_at' => Carbon::now(),
         ]);
 
@@ -113,7 +111,6 @@ class DatabaseSeeder extends Seeder
           'description' => $description,
           'type' => 'online',
           'subject_category_id' => 6,
-          'subject_id' => 6,
           'created_at' => Carbon::now(),
         ]);
 
@@ -122,7 +119,6 @@ class DatabaseSeeder extends Seeder
           'description' => $description,
           'type' => 'home',
           'subject_category_id' => 5,
-          'subject_id' => 2,
           'created_at' => Carbon::now(),
         ]);
     }

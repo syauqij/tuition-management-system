@@ -30,7 +30,7 @@ class ClassroomController extends Controller
             $query->where('status', '=', 'accepted');
           }])
         ->orderBy('created_at', 'desc')
-        ->paginate(5);
+        ->paginate(4);
 
       return view('classrooms.index', compact('courses'));
     }
