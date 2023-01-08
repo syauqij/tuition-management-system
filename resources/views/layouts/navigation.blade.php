@@ -28,6 +28,9 @@
                       </x-nav.link>
                     @endif
                     @if (auth()->user()->role == 'admin')
+                      <x-nav.link :href="route('users.index')" :active="request()->is('users*')">
+                        {{ __('Users') }}
+                      </x-nav.link>
                       <x-nav.link :href="route('settings')" :active="request()->is('settings*')">
                         {{ __('Settings') }}
                       </x-nav.link>

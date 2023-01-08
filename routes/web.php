@@ -8,6 +8,7 @@ use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\EnrolmentController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\SchoolGradeController;
+use App\Http\Controllers\UserController;
 
 /*
 |-------------------------------------------------------------------------
@@ -46,6 +47,7 @@ Route::group(['middleware' => 'auth'], function() {
   Route::get('/classrooms/{courseSubjectId}/list', [ClassroomController::class, 'list'])->name('classrooms.list');
   Route::resource('classrooms', ClassroomController::class);
 
+  Route::resource('users', UserController::class);
   Route::get('profile', [UserProfileController::class, 'show'])
     ->name('profile');
   Route::put('profile', [UserProfileController::class, 'update'])

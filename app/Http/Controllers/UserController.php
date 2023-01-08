@@ -2,84 +2,86 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateProfileRequest;
 use App\Models\User;
+use App\Models\StudentProfile;
+use App\Models\ParentProfile;
+use App\Models\StaffProfile;
+
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        //
+      $users = User::paginate(6);
+
+      return view('users.index', compact('users'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
+    public function edit(User $user)
     {
-        dd($user);
+      $role = $user->role;
+      $userId = $user->id;
+
+      $user = User::getUserProfile($role, $userId)->get()->first();
+
+      return view('users.edit', [
+        'user' => $user,
+        'role' => $role,
+        'roles' => ['student', 'teacher', 'admin']
+      ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function update(UpdateProfileRequest $request, User $user)
     {
-        //
+      $userId = $user->id;
+      $userRole = $user->role;
+      $password = $request->password;
+
+      if(empty($password)) {
+        $request->request->remove('password');
+      } else {
+        $request['password'] = bcrypt($password);
+      }
+
+      $user->update($request->all());
+
+      if($userRole == 'student') {
+        $studentProfile = StudentProfile::updateOrCreate(
+          ['user_id' => $userId],
+          $request->inputsUserProfile($userId)
+        );
+
+        $parentId = $studentProfile->parent_profile_id;
+        $parentProfile = ParentProfile::updateOrCreate(
+          ['id' => $parentId],
+          $request->inputsParentProfile()
+        );
+
+          $getStudentProfile = StudentProfile::find($studentProfile->id);
+          $getStudentProfile->parent_profile_id = $parentProfile->id;
+          $getStudentProfile->save();
+      }
+      else {
+        StaffProfile::updateOrCreate(
+          ['user_id' => $userId],
+          $request->inputsUserProfile($userId)
+        );
+      }
+
+      return redirect()->route('users.index')->with('success', $user->fullName . ' Profile saved successfully');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

@@ -5,7 +5,7 @@
     </h2>
   </x-slot>
   <x-content.card>
-    <div class="mb-80">
+    <div class="mb-4">
       <table class="min-w-full">
         <thead class="border-b">
           <tr>

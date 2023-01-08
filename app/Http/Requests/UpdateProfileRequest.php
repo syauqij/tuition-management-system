@@ -20,7 +20,7 @@ class UpdateProfileRequest extends FormRequest
         $userProfile = [
           'first_name' => 'required',
           'last_name' => 'required',
-          'email' => 'required|email|unique:users,email,'.$this->user()->id,
+          'email' => 'required|email|unique:users,email,'.$this->input('user_id'),
           'phone_no' => 'required|numeric|digits_between:10,12',
           'password' => 'sometimes|nullable|confirmed|min:8',
           'password_confirmation' => 'sometimes|required_with:password|same:password',
