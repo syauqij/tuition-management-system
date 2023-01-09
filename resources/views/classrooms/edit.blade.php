@@ -152,12 +152,12 @@
                 </x-forms.button-secondary>
               </a>
             </td>
-
-            <x-forms.button-primary>
-              {{ __('Update') }}
-            </x-forms.button-primary>
-          </div>
-
+              @if (auth()->user()->role == 'admin' || auth()->user()->role == 'teacher')
+                <x-forms.button-primary>
+                  {{ __('Update') }}
+                </x-forms.button-primary>
+              @endif
+            </div>
         </div>
       </div>
 
