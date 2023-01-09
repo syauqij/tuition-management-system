@@ -72,6 +72,7 @@
             <x-alerts.message type="error" :message="$message"/>
           @enderror
         </div>
+        <input type="hidden" name="user_id" value="{{$user->id}}">
 
         <div class="md:col-span-2">
           <x-forms.input-label for="phone_no" :value="__('Phone No.')" />
