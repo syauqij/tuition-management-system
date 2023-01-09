@@ -8,6 +8,8 @@
   </x-slot>
   <x-content.card>
     <div class="mb-2">
+      @if (auth()->user()->role == 'admin' ||
+        auth()->user()->role == 'teacher')
       <div class="pb-2">
         <a href="{{ route('classrooms.create', [
             'courseSubjectId' => $courseSubject->id
@@ -17,6 +19,7 @@
           </x-forms.button-primary>
         </a>
       </div>
+      @endif
       <table class="w-full">
         <thead class="border-b">
           <tr>

@@ -6,7 +6,7 @@
   </x-slot>
   <x-content.card>
     <div class="mb-4">
-      <form method="get" action="{{ route('classrooms-search') }}">
+      <form method="get" action="{{ route('classrooms.search') }}">
         <x-forms.search-input  name="keywords" value="{{ $keywords ?? null }}"
           position="justify-left" class="xl:w-7/12" marginBtm='mb-2'
           placeholder="Enter a course or subject name"/>
@@ -46,13 +46,16 @@
                       <div>{{ $courseSubject->subject->name }}</div>
                       <div class="text-center">{{ $courseSubject->classrooms->count() }}</div>
                       <div class="text-right">
-                        <a href="{{ route('classrooms.create', [
-                            'courseSubjectId' => $courseSubject->id
-                          ]) }}">
-                          <x-forms.button-primary class="text-xs">
-                            {{ __('Create') }}
-                          </x-forms.button-primary>
-                        </a>
+                        @if (auth()->user()->role == 'admin' ||
+                            auth()->user()->role == 'teacher')
+                          <a href="{{ route('classrooms.create', [
+                              'courseSubjectId' => $courseSubject->id
+                            ]) }}">
+                            <x-forms.button-primary class="text-xs">
+                              {{ __('Create') }}
+                            </x-forms.button-primary>
+                          </a>
+                        @endif
                         <a href="{{ route('classrooms.list', $courseSubject->id) }}">
                           <x-forms.button-secondary class="text-xs">
                             {{ __('View') }}
