@@ -1,4 +1,4 @@
-@props(['options', 'title' => '', 'value' => '', 'enum' => 'falase'])
+@props(['options', 'title' => '', 'value' => '', 'enum' => null])
 
 <select {{ $attributes
   ->class([
@@ -10,7 +10,7 @@
 
   <option value=""> Choose the {{$title}} </option>
 
-  @if($enum)
+  @if($enum )
     @foreach($options as $itemName)
       <option value="{{ $itemName }}" {{ ( $itemName == $value) ? 'selected' : '' }}> {{ $itemName }} </option>
     @endforeach
