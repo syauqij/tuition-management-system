@@ -6,7 +6,7 @@
   </x-slot>
   <x-content.card>
     <div class="mb-4">
-      <form method="get" action="{{ route('classrooms.search') }}">
+      <form method="get" action="{{ route('classrooms-search') }}">
         <x-forms.search-input  name="keywords" value="{{ $keywords ?? null }}"
           position="justify-left" class="xl:w-7/12" marginBtm='mb-2'
           placeholder="Enter a course or subject name"/>

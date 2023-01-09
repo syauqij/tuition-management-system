@@ -20,6 +20,31 @@ class UserController extends Controller
       return view('users.index', compact('users'));
     }
 
+    public function search(Request $request)
+    {
+      $keywords = $request->keywords;
+
+      $searchUsers = User::with('studentProfile', 'staffProfile')
+      ->whereRaw(
+        "concat(first_name, ' ', last_name) like '%" . $keywords . "%' "
+      )->orWhere(
+        'email', 'like', '%' . $keywords . '%'
+      )->orWhere(
+        'last_name', 'like', '%' . $keywords . '%'
+      )->orWhere(
+        'email', 'like', '%' . $keywords . '%'
+      )->orWhereRelation(
+          'studentProfile', 'mykad', '=', $keywords
+      )->orWhereRelation(
+          'staffProfile', 'mykad', '=', $keywords
+      )->paginate(6);
+
+      return view('users.index', [
+        'users' => $searchUsers->appends(['keywords' => $keywords]),
+        'keywords' => $keywords,
+      ]);
+    }
+
     public function create()
     {
         //

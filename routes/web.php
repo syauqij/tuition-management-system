@@ -50,6 +50,9 @@ Route::group(['middleware' => 'auth'], function() {
   });
   Route::resource('classrooms', ClassroomController::class);
 
+  Route::controller(UserController::class)->name('users.')->group(function () {
+    Route::get('/users/search', 'search')->name('search');
+  });
   Route::resource('users', UserController::class);
   Route::get('profile', [UserProfileController::class, 'show'])
     ->name('profile');
