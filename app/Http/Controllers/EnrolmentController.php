@@ -64,7 +64,6 @@ class EnrolmentController extends Controller
       $course_id = $request->course_id;
 
       if($role == 'student') {
-
         //get student and parent info
         $user = User::getUserProfile($role, $userId)->get()->first();
 
@@ -86,6 +85,7 @@ class EnrolmentController extends Controller
       $courseId = $request->session()->get('enrol_course_id');
       $userId = auth()->user()->id;
       $userInputs = $request->inputsUser();
+      unset($userInputs['role'], $userInputs['is_active']);
 
       auth()->user()->update($userInputs);
 
