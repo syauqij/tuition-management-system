@@ -43,6 +43,8 @@ class CourseController extends Controller
         'name', 'like', '%' . $keywords . '%'
       )->orWhereRelation(
           'subjectCategory', 'name', 'like', '%' . $keywords . '%'
+      )->orWhereRelation(
+          'subjects', 'name', 'like', '%' . $keywords . '%'
       )->paginate(6);
 
       if(auth()->user()) {
