@@ -49,6 +49,40 @@ class ClassroomController extends Controller
       return view('classrooms.list', compact('courseSubject', 'classrooms'));
     }
 
+    public function search(Request $request)
+    {
+      $keywords = $request->keywords;
+      $filterSubject = $request->subject_only;
+
+      $callback = function($query) use($keywords, $filterSubject){
+        $filterSubject ? $query->where('name', 'like', '%' . $keywords . '%') : '';
+      };
+
+      $searchCourses = Course::where(
+        'name', 'like', '%' . $keywords . '%'
+      )->orWhereRelation(
+          'subjects', 'name', 'like', '%' . $keywords . '%'
+      )
+        ->with([
+          'subjectCategory',
+          'courseSubjects' => [
+              'classrooms',
+              'subject' => $callback
+            ],
+          ])
+        ->withCount(['enrolments' => function (Builder $query) {
+            $query->where('status', '=', 'accepted');
+          }])
+        ->orderBy('created_at', 'desc')
+        ->paginate(4);
+
+      return view('classrooms.index', [
+        'courses' => $searchCourses,
+        'subjectOnly' => $filterSubject,
+        'keywords' => $keywords
+      ]);
+    }
+
     public function create(Request $request)
     {
       $courseSubjectId = $request->courseSubjectId;

@@ -44,7 +44,10 @@ Route::group(['middleware' => 'auth'], function() {
   Route::get('/enrolments/status/{id}/{status}', [EnrolmentController::class, 'status'])->name('enrolments.status');
   Route::resource('enrolments', EnrolmentController::class);
 
-  Route::get('/classrooms/{courseSubjectId}/list', [ClassroomController::class, 'list'])->name('classrooms.list');
+  Route::controller(ClassroomController::class)->name('classrooms.')->group(function () {
+    Route::get('/classrooms/list/{courseSubjectId}/', 'list')->name('list');
+    Route::get('/classrooms/search', 'search')->name('search');
+  });
   Route::resource('classrooms', ClassroomController::class);
 
   Route::resource('users', UserController::class);

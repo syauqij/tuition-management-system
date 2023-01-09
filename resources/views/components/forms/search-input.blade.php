@@ -1,7 +1,7 @@
-@props(['width' => 'xl:w-6/12'])
+@props(['width' => 'xl:w-6/12', 'marginBtm' => 'mb-10', 'position' => 'justify-center'])
 
-<div class="flex justify-center">
-  <div class="mb-10 mr-4 {{ $width }}">
+<div class="flex {{ $position }}">
+  <div class="mr-4 {{ $width }} {{ $marginBtm }}">
     <div class="input-group relative flex flex-wrap items-stretch w-full">
       <input type="search" {{ $attributes }}
         class="form-control relative flex-auto block w-full px-3 py-1.5 border-2 font-normal text-blue-700

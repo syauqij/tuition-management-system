@@ -6,6 +6,19 @@
   </x-slot>
   <x-content.card>
     <div class="mb-4">
+      <form method="get" action="{{ route('classrooms.search') }}">
+        <x-forms.search-input  name="keywords" value="{{ $keywords ?? null }}"
+          position="justify-left" class="xl:w-7/12" marginBtm='mb-2'
+          placeholder="Enter a course or subject name"/>
+          <div class="form-check">
+            <x-forms.checkbox-input type="checkbox" name="subject_only" value="1"
+              :selected="$subjectOnly ?? old('subject_only')" />
+
+            <label class="form-check-label inline-block">
+              Subjects Only
+            </label>
+          </div>
+      </form>
       <table class="min-w-full">
         <thead class="border-b">
           <tr>
@@ -27,7 +40,9 @@
               <td colspan="3" class="text-sm">
                 @if($course->courseSubjects->isNotEmpty())
                   @foreach ($course->courseSubjects as $courseSubject)
-                  <div class="h-12 grid grid-cols-3 gap-4 content-center border-b">
+
+                    @if (!empty($courseSubject->subject->name ))
+                    <div class="h-12 grid grid-cols-3 gap-4 content-center border-b">
                       <div>{{ $courseSubject->subject->name }}</div>
                       <div class="text-center">{{ $courseSubject->classrooms->count() }}</div>
                       <div class="text-right">
@@ -45,6 +60,7 @@
                         </a>
                       </div>
                     </div>
+                    @endif
                   @endforeach
                 @else
                   <div class="h-12 grid grid-cols-2 gap-4 content-center">
