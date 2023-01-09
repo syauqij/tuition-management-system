@@ -71,7 +71,17 @@
             </div>
           </div>
 
-          <div class="p-2 w-full">
+          <div class="p-2 w-1/2">
+            <div class="relative">
+              <x-forms.input-label for="course_type" :value="__('Course Type')" />
+
+                <x-forms.select-input id="course_type" class="block mt-1 w-full" type="text" name="type"
+                :options="$courseTypes" :title="__('Course Type')" :value="old('type')"
+                :enum="true" required autofocus />
+            </div>
+          </div>
+
+          <div class="p-2 w-1/2">
             <div class="relative">
               <x-forms.input-label for="month_fee" :value="__('Monthly Fee (RM)')" />
 

@@ -58,7 +58,6 @@
 
               <x-forms.select-input id="subject_categories" class="block mt-1 w-full" type="text" name="subject_category_id"
                 :options="$categories" :title="__('Subject Category')" :value="$course->subject_category_id" required autofocus />
-
             </div>
           </div>
 
@@ -73,7 +72,17 @@
             </div>
           </div>
 
-          <div class="p-2 w-full">
+          <div class="p-2 w-1/2">
+            <div class="relative">
+              <x-forms.input-label for="course_type" :value="__('Course Type')" />
+
+                <x-forms.select-input id="course_type" class="block mt-1 w-full" type="text" name="type"
+                :options="$courseTypes" :title="__('Course Type')" :value="$course->type"
+                :enum="true" required autofocus />
+            </div>
+          </div>
+
+          <div class="p-2 w-1/2">
             <div class="relative">
               <x-forms.input-label for="monthly_fee" :value="__('Monthly Fee (RM)')" />
 

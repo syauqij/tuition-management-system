@@ -80,6 +80,7 @@ class CourseController extends Controller
       return view('settings.courses.create', [
         'categories' => SubjectCategory::orderBy('name', 'asc')->pluck('id','name'),
         'subjects' => Subject::orderBy('name', 'asc')->pluck('id', 'name'),
+        'courseTypes' => ['class', 'home', 'online']
       ]);
     }
 
@@ -91,6 +92,7 @@ class CourseController extends Controller
         'description' => ['required', 'string', 'max:255'],
         'subject_category' => ['required'],
         'course_subjects' => ['required'],
+        'type' => 'required',
         'monthly_fee' => ['required'],
         'main_photo' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
       ]);
@@ -111,6 +113,7 @@ class CourseController extends Controller
         'description' => $request->description,
         'subject_category_id' => $request->subject_category,
         'monthly_fee' => $request->monthly_fee,
+        'type' => $request->type,
         'main_photo_path' => $photoPath
       ]);
 
@@ -121,7 +124,8 @@ class CourseController extends Controller
         ]);
       }
 
-      return redirect()->route('courses.index')->with('success','New course ' . $request->course_name .' has been created successfully.');
+      return redirect()->route('courses.index')
+        ->with('success','New course ' . $request->course_name .' has been created successfully.');
     }
 
 
@@ -131,6 +135,7 @@ class CourseController extends Controller
         'course' => $course,
         'categories' => SubjectCategory::orderBy('name', 'asc')->pluck('id','name'),
         'subjects' => Subject::orderBy('name', 'asc')->pluck('id', 'name'),
+        'courseTypes' => ['class', 'home', 'online'],
         'selectedSubjects' => $course->courseSubjects()->pluck('subject_id')->toArray()
       ]);
     }
