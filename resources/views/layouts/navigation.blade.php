@@ -43,7 +43,10 @@
                 <x-nav.dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
-                            <div>{{ Auth::user()->full_name }}</div>
+                            <div class="font-semibold">
+                              {{ Auth::user()->full_name }}
+                              <span class="text-xs uppercase text-blue-600"> ({{Auth::user()->role}})</span>
+                            </div>
 
                             <div class="ml-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -90,13 +93,32 @@
             <x-nav.responsive-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-nav.responsive-link>
+              <x-nav.responsive-link :href="route('enrolments.index')" :active="request()->routeIs('enrolments.*')">
+                  {{ __('Enrolments') }}
+              </x-nav.responsive-link>
+              <x-nav.responsive-link :href="route('courses.list')" :active="request()->routeIs('courses.*')">
+                  {{ __('Courses') }}
+              </x-nav.responsive-link>
+              @if(auth()->user()->role == 'admin' || 'teacher')
+                <x-nav.responsive-link :href="route('classrooms.index')" :active="request()->routeIs('classrooms.*')">
+                  {{ __('Classroom') }}
+                </x-nav.responsive-link>
+              @endif
+              @if (auth()->user()->role == 'admin')
+                <x-nav.responsive-link :href="route('users.index')" :active="request()->is('users*')">
+                  {{ __('Users') }}
+                </x-nav.responsive-link>
+                <x-nav.responsive-link :href="route('settings')" :active="request()->is('settings*')">
+                  {{ __('Settings') }}
+                </x-nav.responsive-link>
+              @endif
         </div>
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="px-4">
-                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                <div class="font-medium text-base text-gray-800">{{ Auth::user()->fullName }}</div>
+                <span class="font-medium text-sm text-blue-600 uppercase"> ({{Auth::user()->role}})</span>
             </div>
 
             <div class="mt-3 space-y-1">
