@@ -77,8 +77,8 @@ class ClassroomController extends Controller
         ->paginate(4);
 
       return view('classrooms.index', [
-        'courses' => $searchCourses,
-        'subjectOnly' => $filterSubject,
+        'courses' => $searchCourses->appends(['keywords' => $keywords]),
+        'filterSubject' => $filterSubject,
         'keywords' => $keywords
       ]);
     }
