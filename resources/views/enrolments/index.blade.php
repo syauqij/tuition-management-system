@@ -6,11 +6,18 @@
   </x-slot>
   <x-content.card>
     <div class="mb-4">
+      <form method="get" action="{{ route('enrolments.search') }}">
+        <x-forms.search-input  name="keywords" value="{{ $keywords ?? null }}"
+          position="justify-left" class="xl:w-7/12" marginBtm='mb-2'
+          placeholder="Enter a name, email or mykad"/>
+      </form>
       <table class="min-w-full">
         <thead class="border-b">
           <tr>
             <x-table.heading :value="__('#')" />
-            <x-table.heading :value="__('Student')" />
+            <x-table.heading :value="__('Student Name')" />
+            <x-table.heading :value="__('Email')" />
+            <x-table.heading :value="__('MyKad')" />
             <x-table.heading :value="__('Course')" />
             <x-table.heading :value="__('Created on')" class="text-center" />
             <x-table.heading :value="__('Status')" class="text-center" />
@@ -21,6 +28,8 @@
             <tr class="border-b">
               <x-table.cell :value="$loop->index+1" />
               <x-table.cell :value="$enrolment->student->fullName" class="truncate"/>
+              <x-table.cell :value="$enrolment->student->email" />
+              <x-table.cell :value="$enrolment->student->studentProfile->mykad" />
               <x-table.cell :value="$enrolment->course->name" />
               <x-table.cell :value="$enrolment->created_at->format('d/m/Y h:i A')" class="uppercase text-center"/>
               <td class="text-center">
@@ -41,6 +50,9 @@
           @endforeach
         </tbody>
       </table>
+      <div class="py-4">
+        {{ $enrolments->links() }}
+      </div>
     </div>
   </x-content.card>
 </x-app-layout>

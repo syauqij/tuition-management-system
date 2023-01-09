@@ -30,6 +30,33 @@ class EnrolmentController extends Controller
       ]);
     }
 
+    public function search(Request $request)
+    {
+      $keywords = $request->keywords;
+
+      $searchEnrolments = Enrolment::with('student', 'course')
+      ->whereRelation(
+        'student', 'first_name', 'like', '%' . $keywords . '%'
+      )->orWhereRelation(
+        'student', 'last_name', 'like', '%' . $keywords . '%'
+      )->orWhereRelation(
+        'student.studentProfile', 'mykad', '=', $keywords
+      )->orWhereRelation(
+        'student', 'email', 'like', '%' . $keywords . '%'
+      );
+
+      $role = auth()->user()->role;
+      if($role == 'student') {
+        $searchEnrolments = $searchEnrolments->where('student_user_id', auth()->user()->id);
+      }
+      $searchEnrolments = $searchEnrolments->paginate(5);
+
+      return view('enrolments.index', [
+        'enrolments' => $searchEnrolments->appends(['keywords' => $keywords]),
+        'keywords' => $keywords,
+      ]);
+    }
+
     public function create(Request $request)
     {
       $role = auth()->user()->role;

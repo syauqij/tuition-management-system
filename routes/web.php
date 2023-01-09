@@ -41,7 +41,10 @@ Route::group(['middleware' => 'auth'], function() {
     return view('dashboard');
   })->name('dashboard');
 
-  Route::get('/enrolments/status/{id}/{status}', [EnrolmentController::class, 'status'])->name('enrolments.status');
+  Route::controller(EnrolmentController::class)->name('enrolments.')->group(function () {
+    Route::get('/enrolments/status/{id}/{status}', 'status')->name('status');
+    Route::get('/enrolments/search', 'search')->name('search');
+  });
   Route::resource('enrolments', EnrolmentController::class);
 
   Route::controller(ClassroomController::class)->name('classrooms.')->group(function () {
