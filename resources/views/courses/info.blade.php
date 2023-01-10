@@ -12,7 +12,7 @@
         </span>
 
         <span class="text-xs pl-2 py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold
-          bg-gray-200 text-gray-700">
+          bg-gray-200 text-gray-700 capitalize">
           {{ $course->type . ' Class'}}
         </span>
 
