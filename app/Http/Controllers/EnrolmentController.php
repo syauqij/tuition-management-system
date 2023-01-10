@@ -122,7 +122,7 @@ class EnrolmentController extends Controller
         'status' => 'applied'
       ]);
 
-      return redirect()->route('dashboard')->with('success','Congrats! You have successfully submitted an application');
+      return redirect()->route('enrolments.index')->with('success','Congrats! You have successfully submitted an application. We will get back to you as soon as possible.');
     }
 
     public function show(Enrolment $enrolment)
