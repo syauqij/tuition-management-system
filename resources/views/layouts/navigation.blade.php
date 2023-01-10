@@ -87,9 +87,6 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-nav.responsive-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-nav.responsive-link>
               <x-nav.responsive-link :href="route('enrolments.index')" :active="request()->routeIs('enrolments.*')">
                   {{ __('Enrolments') }}
               </x-nav.responsive-link>

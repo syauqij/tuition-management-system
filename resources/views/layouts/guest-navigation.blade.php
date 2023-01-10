@@ -46,9 +46,9 @@
     <div class="flex items-center lg:ml-auto">
       @if (Route::has('login'))
         @auth
-          <a href="{{ route('dashboard') }}">
+          <a href="{{ route('enrolments.index') }}">
             <x-forms.button-primary>
-              Dashboard
+              Enrolments
             </x-forms.button-primary>
           </a>
         @else
