@@ -1,6 +1,6 @@
 @props(['value'])
 
-<span {{ $attributes->merge(['class' => 'px-4 py-2 rounded-full border border-gray-300 text-white
-    bg-blue-500 font-semibold text-sm flex align-center w-max']) }}>
+<span {{ $attributes->merge(['class' => '  <span class="text-xs inline-block py-1 px-2.5 leading-none text-center
+  whitespace-nowrap align-baseline font-bold bg-blue-600 text-white rounded-full']) }}>
   {{ $value ?? $slot }}
 </span>
