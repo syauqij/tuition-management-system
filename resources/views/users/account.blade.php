@@ -1,7 +1,7 @@
 <x-content.card>
   <div class="grid gap-4 gap-y-2 px-4 grid-cols-1 lg:grid-cols-3">
     <div class="text-gray-600">
-      <p class="font-medium text-lg">Account Details</p>
+      <p class="font-bold text-lg">Account Details</p>
       <p>You may change your user account details here.</p>
       <input type="hidden" name="user_id" value="{{$user->id}}">
     </div>

@@ -1,13 +1,16 @@
 <x-app-layout>
   <x-slot name="header">
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-          {{ __('My Profile') }}
+          {{ __('Edit User - ') . $user->fullName}}
       </h2>
   </x-slot>
 
   <form method="POST" action="{{ route('users.update', $user->id) }}">
     @csrf
     @method('PUT')
+
+  <!-- Account Details -->
+  @include('users.account')
 
   <!-- Personal Details -->
   @if($role == 'student')
@@ -16,9 +19,6 @@
   @else
     @include('users.staff-profile')
   @endif
-
-  <!-- Account Details -->
-  @include('users.account')
 
   <div class="text-right py-5">
     <x-forms.button-primary class="uppercase">
