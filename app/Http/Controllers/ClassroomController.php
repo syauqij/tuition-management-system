@@ -152,7 +152,7 @@ class ClassroomController extends Controller
         ]);
       }
 
-      return redirect()->route('classrooms.index')
+      return redirect()->route('classrooms.list', $classroom->course_subject_id)
         ->with('success','New classroom ' . $request->class_name .' has been created successfully.');
     }
 
