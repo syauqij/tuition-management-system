@@ -49,21 +49,28 @@
               <x-table.cell :value="$class->class_students_count" class="text-center"/>
               <td>
                 <div class="flex justify-center">
-                <a href="{{ route('classrooms.edit', $class->id)}}">
-                  <x-forms.button-primary class="text-xs">
-                    {{ __('Edit') }}
-                  </x-forms.button-primary>
-                </a>
-
-                @if ($class->classStudents->count() == 0)
-                  <form method="post" action="{{route('classrooms.destroy',$class->id)}}">
-                    @method('delete')
-                    @csrf
+                  @if (auth()->user()->role == 'teacher' || auth()->user()->role == 'admin')
+                    <a href="{{ route('classrooms.edit', $class->id)}}">
                       <x-forms.button-primary class="text-xs">
-                        {{ __('Delete') }}
+                        {{ __('Edit') }}
                       </x-forms.button-primary>
-                  </form>
-                @endif
+                    </a>
+                  @endif
+                  <a href="{{ route('classrooms.show', $class->id) }}">
+                    <x-forms.button-secondary class="text-xs">
+                      {{ __('View') }}
+                    </x-forms.button-secondary>
+                  </a>
+
+                  @if ($class->classStudents->count() == 0)
+                    <form method="post" action="{{route('classrooms.destroy',$class->id)}}">
+                      @method('delete')
+                      @csrf
+                        <x-forms.button-primary class="text-xs">
+                          {{ __('Delete') }}
+                        </x-forms.button-primary>
+                    </form>
+                  @endif
                 </div>
               </td>
             </tr>

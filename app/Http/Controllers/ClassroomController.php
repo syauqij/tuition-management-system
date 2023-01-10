@@ -218,4 +218,11 @@ class ClassroomController extends Controller
       return redirect()->route('classrooms.list', $classroom->course_subject_id)
         ->with('success','Classroom deleted successfully');
     }
+
+    public function show(Classroom $classroom)
+    {
+      $classroom->with('course', 'subject', 'classStudent', 'teacher');
+
+      return view('classrooms.show', compact('classroom'));
+    }
 }
