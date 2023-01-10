@@ -7,7 +7,11 @@
 
   <x-content.card>
     <div class="mx-auto lg:w-11/12">
-      @include('courses.list', ['enrol' => true])
+      @if(auth()->user()->role == 'student')
+        @include('courses.list', ['enrol' => true])
+      @else
+        @include('courses.list')
+      @endif
     </div>
   </x-content.card>
 </x-app-layout>
