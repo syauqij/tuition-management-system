@@ -48,6 +48,17 @@
               </td>
             </tr>
           @endforeach
+          @if($enrolments->isEmpty())
+          <tr>
+            <x-table.cell colspan="7" class="text-lg text-blue-500 font-semibold text-center" >
+                No enrolment records found.
+                @if (auth()->user()->role == "student")
+                  Click <x-content.link :value="__('here')" href="{{ route('courses.list') }}" />
+                  to apply our courses.
+                @endif
+          </x-table.cell>
+          </tr>
+        @endif
         </tbody>
       </table>
       <div class="py-4">

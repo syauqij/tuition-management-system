@@ -61,6 +61,6 @@ class RegisteredUserController extends Controller
         return redirect()->route('enrolments.create', ['course_id' => $enrolCourseId]);
       }
 
-      return redirect(RouteServiceProvider::HOME);
+      return redirect(RouteServiceProvider::HOME)->with('success', 'Thank you for registering with us! Please update your profile to get started.' );
     }
   }
