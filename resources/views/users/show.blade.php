@@ -2,7 +2,7 @@
   <h1 class="text-xl font-bold">
     Student Details
   </h1>
-  <div class="grid gap-4 gap-y-6 text-sm grid-cols-1 md:grid-cols-5 pt-4">
+  <div class="grid gap-4 gap-y-6 grid-cols-1 md:grid-cols-5 pt-4">
     <div class="md:col-span-2">
       <x-content.profile-detail :label="__('First Name')" :value="$student->first_name"/>
     </div>
@@ -20,7 +20,7 @@
     </div>
 
     <div class="md:col-span-1 capitalize">
-      <x-content.profile-detail :label="__('Gender')" :value="$student->phone_no"/>
+      <x-content.profile-detail :label="__('Gender')" :value="$student->gender"/>
     </div>
 
     <div class="md:col-span-2">
@@ -43,7 +43,7 @@
   <h1 class="text-xl font-bold">
     Parent Details
   </h1>
-  <div class="grid gap-4 gap-y-6 text-sm grid-cols-1 md:grid-cols-5 pt-4">
+  <div class="grid gap-4 gap-y-6 grid-cols-1 md:grid-cols-5 pt-4">
     <div class="md:col-span-2">
       <x-content.profile-detail :label="__('First Name')" :value="$parent->first_name"/>
     </div>
@@ -61,7 +61,7 @@
     </div>
 
     <div class="md:col-span-1 capitalize">
-      <x-content.profile-detail :label="__('Gender')" :value="$parent->phone_no"/>
+      <x-content.profile-detail :label="__('Gender')" :value="$parent->gender"/>
     </div>
 
     <div class="md:col-span-2">
