@@ -12,7 +12,7 @@
           placeholder="Enter a course or subject name"/>
           <div class="form-check">
             <x-forms.checkbox-input type="checkbox" name="subject_only" value="1"
-              :selected="$subjectOnly ?? old('subject_only')" />
+              :selected="$filterSubject ?? old('subject_only')" />
 
             <label class="form-check-label inline-block">
               Subjects Only

@@ -18,6 +18,8 @@ class ClassroomController extends Controller
 {
     public function index()
     {
+      $role = auth()->user()->role;
+
       $courses = Course::select(['id','name','created_at'])
         ->with([
           'subjectCategory',
@@ -28,9 +30,16 @@ class ClassroomController extends Controller
           ])
         ->withCount(['enrolments' => function (Builder $query) {
             $query->where('status', '=', 'accepted');
-          }])
-        ->orderBy('created_at', 'desc')
-        ->paginate(4);
+          }]);
+
+        if($role == 'student') {
+          $courses = $courses->whereRelation(
+            'enrolments', 'student_user_id', '=', auth()->user()->id
+          );
+        }
+
+        $courses = $courses->orderBy('created_at', 'desc')
+          ->paginate(4);
 
       return view('classrooms.index', compact('courses'));
     }
@@ -51,6 +60,7 @@ class ClassroomController extends Controller
 
     public function search(Request $request)
     {
+      $role = auth()->user()->role;
       $keywords = $request->keywords;
       $filterSubject = $request->subject_only;
 
@@ -62,18 +72,23 @@ class ClassroomController extends Controller
         'name', 'like', '%' . $keywords . '%'
       )->orWhereRelation(
           'subjects', 'name', 'like', '%' . $keywords . '%'
-      )
-        ->with([
-          'subjectCategory',
-          'courseSubjects' => [
-              'classrooms',
-              'subject' => $callback
-            ],
-          ])
-        ->withCount(['enrolments' => function (Builder $query) {
-            $query->where('status', '=', 'accepted');
-          }])
-        ->orderBy('created_at', 'desc')
+      )->with([
+        'subjectCategory',
+        'courseSubjects' => [
+            'classrooms',
+            'subject' => $callback
+          ],
+      ])->withCount(['enrolments' => function (Builder $query) {
+          $query->where('status', '=', 'accepted');
+      }]);
+
+      if($role == 'student') {
+        $searchCourses = $searchCourses->whereRelation(
+          'enrolments', 'student_user_id', '=', auth()->user()->id
+        );
+      }
+
+      $searchCourses = $searchCourses->orderBy('created_at', 'desc')
         ->paginate(4);
 
       return view('classrooms.index', [
