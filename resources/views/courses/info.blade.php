@@ -17,7 +17,7 @@
         </span>
 
         <div class="lg:w-9/12 text-justify mt-4">
-          {{ $course->description }}
+          {!! nl2br(e($course->description)) !!}
         </div>
 
         <div class="py-4">
