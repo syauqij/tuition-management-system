@@ -80,7 +80,7 @@ class CourseController extends Controller
       return view('settings.courses.create', [
         'categories' => SubjectCategory::orderBy('name', 'asc')->pluck('id','name'),
         'subjects' => Subject::orderBy('name', 'asc')->pluck('id', 'name'),
-        'courseTypes' => ['class', 'home', 'online']
+        'courseTypes' => ['physical', 'home', 'online']
       ]);
     }
 
@@ -135,7 +135,7 @@ class CourseController extends Controller
         'course' => $course,
         'categories' => SubjectCategory::orderBy('name', 'asc')->pluck('id','name'),
         'subjects' => Subject::orderBy('name', 'asc')->pluck('id', 'name'),
-        'courseTypes' => ['class', 'home', 'online'],
+        'courseTypes' => ['physical', 'home', 'online'],
         'selectedSubjects' => $course->courseSubjects()->pluck('subject_id')->toArray()
       ]);
     }
