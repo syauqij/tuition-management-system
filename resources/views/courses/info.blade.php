@@ -16,8 +16,8 @@
           {{ $course->type . ' Class'}}
         </span>
 
-        <div class="lg:w-9/12 text-justify mt-4">
-          {{ $course->description }}
+        <div class="text-justify lg:mr-4 mt-4">
+          {!! nl2br(e($course->description)) !!}
         </div>
 
         <div class="py-4">
