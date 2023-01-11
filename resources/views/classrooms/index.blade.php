@@ -10,14 +10,6 @@
         <x-forms.search-input  name="keywords" value="{{ $keywords ?? null }}"
           position="justify-left" class="xl:w-7/12" marginBtm='mb-2'
           placeholder="Enter a course or subject name"/>
-          <div class="form-check">
-            <x-forms.checkbox-input type="checkbox" name="subject_only" value="1"
-              :selected="$filterSubject ?? old('subject_only')" />
-
-            <label class="form-check-label inline-block">
-              Subjects Only
-            </label>
-          </div>
       </form>
       <table class="min-w-full">
         <thead class="border-b">
@@ -34,7 +26,13 @@
           @foreach ($courses as $course)
             <tr class="border-b">
               <x-table.cell :value="($courses->currentPage() - 1) * $courses->perPage() + $loop->iteration" />
-              <x-table.cell :value="$course->name" />
+              <x-table.cell>
+                <x-content.link href="{{ route('classrooms.search', [
+                  'keywords' => $course->name,
+                  ]) }}" >
+                  {{ $course->name }}
+                </x-content.link>
+              </x-table.cell>
               <x-table.cell :value="$course->enrolments_count" class="text-center"/>
 
               <td colspan="3" class="text-sm">
@@ -43,7 +41,14 @@
 
                     @if (!empty($courseSubject->subject->name ))
                     <div class="h-12 grid grid-cols-3 gap-4 content-center border-b">
-                      <div>{{ $courseSubject->subject->name }}</div>
+                      <div>
+                        <x-content.link href="{{ route('classrooms.search', [
+                          'keywords' => $courseSubject->subject->name,
+                          'subject_only' => 1
+                        ]) }}" >
+                          {{ $courseSubject->subject->name }}
+                        </x-content.link>
+                      </div>
                       <div class="text-center">{{ $courseSubject->classrooms->count() }}</div>
                       <div class="text-right">
                         @if (auth()->user()->role == 'admin' ||
