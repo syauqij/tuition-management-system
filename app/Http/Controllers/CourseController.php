@@ -89,7 +89,7 @@ class CourseController extends Controller
     {
       $request->validate([
         'name' => ['required', 'string', 'max:255'],
-        'description' => ['required', 'string', 'max:255'],
+        'description' => ['required', 'size:1000'],
         'subject_category' => ['required'],
         'course_subjects' => ['required'],
         'type' => 'required',
@@ -145,7 +145,7 @@ class CourseController extends Controller
     {
       $request->validate([
         'name' => ['required', 'string', 'max:255'],
-        'description' => ['required', 'string', 'max:255'],
+        'description' => ['required', 'string', 'max:1000'],
         'subject_category_id' => ['required'],
         'course_subjects' => ['required'],
         'monthly_fee' => 'required',
