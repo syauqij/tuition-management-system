@@ -12,9 +12,6 @@
       <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Please update the subject category details below</p>
     </div>
 
-    <!-- Validation Errors -->
-    <x-forms.validation-errors class="mb-4" :errors="$errors" />
-
     <form method="POST" action="{{ route('subject-categories.update',$subjectCategory->id) }}" enctype="multipart/form-data">
       @csrf
       @method('PUT')

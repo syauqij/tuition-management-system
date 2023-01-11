@@ -16,9 +16,6 @@
       <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Enter the new course details below</p>
     </div>
 
-    <!-- Validation Errors -->
-    <x-forms.validation-errors class="mb-4" :errors="$errors" />
-
     <form method="POST" action="{{ route('courses.update',$course->id) }}" enctype="multipart/form-data">
       @csrf
       @method('PUT')
