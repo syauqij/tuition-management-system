@@ -16,7 +16,11 @@
           {{ $course->type . ' Class'}}
         </span>
 
+<<<<<<< HEAD
         <div class="text-justify lg:mr-4 mt-4">
+=======
+        <div class="lg:w-9/12 text-justify mt-4">
+>>>>>>> 3cc126506aa5e92c4cf78dd7f385c495706259dc
           {!! nl2br(e($course->description)) !!}
         </div>
 
