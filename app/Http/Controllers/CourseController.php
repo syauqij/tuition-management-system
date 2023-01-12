@@ -89,7 +89,7 @@ class CourseController extends Controller
     {
       $request->validate([
         'name' => ['required', 'string', 'max:255'],
-        'description' => ['required', 'size:1000'],
+        'description' => ['required', 'max:1000'],
         'subject_category' => ['required'],
         'course_subjects' => ['required'],
         'type' => 'required',
@@ -125,7 +125,7 @@ class CourseController extends Controller
       }
 
       return redirect()->route('courses.index')
-        ->with('success','New course ' . $request->course_name .' has been created successfully.');
+        ->with('success','New course ' . $course->name .' has been created successfully.');
     }
 
 
