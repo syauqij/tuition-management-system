@@ -9,6 +9,7 @@
     @csrf
 
     @include('courses.info', ['enrol' => true])
+    <input type="hidden" name="course_id" value="{{ $course->id }}" >
 
     @include('users.student-profile', ['enrol' => true])
 

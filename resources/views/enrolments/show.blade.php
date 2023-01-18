@@ -7,10 +7,12 @@
   <div>
     <div class="grid md:grid-cols-3 gap-4">
       <div class="col-span-2">
-        @include('courses.info')
+        @include('courses.info', [
+          'course' => $enrolment->course
+        ])
         @include('users.show', [
-          'student' => $enrolment->studentProfile,
-          'parent' => $enrolment->parentProfile
+          'student' => $enrolment->student_profile,
+          'parent' => $enrolment->parent_profile
         ])
       </div>
       <div class="">
