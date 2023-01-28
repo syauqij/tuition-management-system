@@ -4,7 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Casts\AsCollection;
+
 class Enrolment extends Model
 {
     use HasFactory;
@@ -20,7 +21,7 @@ class Enrolment extends Model
     ];
 
     protected $casts = [
-      'student_profile' => 'array',
+      'student_profile' => AsCollection::class,
       'parent_profile' => 'array',
     ];
 
@@ -55,7 +56,6 @@ class Enrolment extends Model
     public function scopeEnroledStudents($query, $courseId)
     {
       return $query
-        ->with('student', 'student.studentProfile')
         ->where('course_id', $courseId)
         ->where('status', 'accepted');
     }

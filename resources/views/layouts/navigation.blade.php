@@ -19,19 +19,17 @@
                     <x-nav.link :href="route('courses.list')" :active="request()->routeIs('courses.*')">
                         {{ __('Courses') }}
                     </x-nav.link>
-                    @if (auth()->user()->role == 'admin' || 'teacher')
-                      <x-nav.link :href="route('classrooms.index')" :active="request()->routeIs('classrooms.*')">
-                        {{ __('Classroom') }}
-                      </x-nav.link>
-                    @endif
-                    @if (auth()->user()->role == 'admin')
+                    <x-nav.link :href="route('classrooms.index')" :active="request()->routeIs('classrooms.*')">
+                      {{ __('Classroom') }}
+                    </x-nav.link>
+                    @can('manage_users')
                       <x-nav.link :href="route('users.index')" :active="request()->is('users*')">
                         {{ __('Users') }}
                       </x-nav.link>
                       <x-nav.link :href="route('settings')" :active="request()->is('settings*')">
                         {{ __('Settings') }}
                       </x-nav.link>
-                    @endif
+                    @endcan
                 </div>
             </div>
 

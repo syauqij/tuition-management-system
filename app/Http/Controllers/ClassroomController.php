@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
 use App\Http\Requests\StoreClassroomRequest;
 use App\Http\Requests\UpdateClassroomRequest;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Collection;
 use App\Models\Course;
 use App\Models\CourseSubject;
 use App\Models\ClassStudent;
@@ -158,29 +160,31 @@ class ClassroomController extends Controller
 
     public function edit(Classroom $classroom)
     {
-      $classroom::with(['courseSubject.course', 'courseSubject.subject']);
+      if (Gate::denies('manage_classrooms')) {
+        abort(403);
+      }
 
-      $existingStudents = ClassStudent::with(['enrolment.student'])
-        ->where('classroom_id', $classroom->id)
-        ->get();
+      $enrolments = Enrolment::enroledStudents($classroom->courseSubject->course_id)
+      ->select('student_profile')
+      ->get();
 
-      $assignedStudents = ClassStudent::with('classroom')
-        ->whereRelation('classroom',
-          'course_subject_id', '=', $classroom->courseSubject->id)
-        ->pluck('enrolment_id');
 
-      $enrolments = Enrolment::enroledStudents($classroom->courseSubject->course->id)
-       ->whereNotIn('id', $assignedStudents)
-       ->get();
+      $plucked = $enrolments->pluck('student_profile.first_name', 'student_profile.last_name');
+
+      dd($plucked->all());
+
 
       $schoolGrades = SchoolGrade::orderBy('name', 'asc')->pluck('id','name');
       $teachers = User::orderBy('first_name', 'asc')->get()
         ->where('role', 'teacher')
         ->pluck('id','fullName');
 
-      return view('classrooms.edit', compact(
-        'classroom', 'existingStudents', 'enrolments', 'schoolGrades', 'teachers'
-      ));
+      return view('classrooms.edit', [
+        'classroom' => $classroom,
+        'enrolments' => $enrolments,
+        'schoolGrades' => $schoolGrades,
+        'teachers' => $teachers
+      ]);
     }
 
     public function update(UpdateClassroomRequest $request, Classroom $classroom)

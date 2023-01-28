@@ -56,7 +56,7 @@ Route::group(['middleware' => 'auth'], function() {
   Route::controller(UserController::class)->name('users.')->group(function () {
     Route::get('/users/search', 'search')->name('search');
   });
-  Route::resource('users', UserController::class);
+  Route::resource('users', UserController::class)->middleware('can:manage_users');
   Route::get('profile', [UserProfileController::class, 'show'])
     ->name('profile');
   Route::put('profile', [UserProfileController::class, 'update'])

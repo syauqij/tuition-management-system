@@ -1,4 +1,8 @@
 <x-app-layout>
+  @push('styles')
+    <link rel="stylesheet" href="{{ asset('css/choices.css')}}" />
+  @endpush
+
   <x-slot name="header">
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
           {{ __('Edit Classroom') }}
@@ -22,7 +26,7 @@
             <div class="relative">
               <x-forms.input-label for="class_name" :value="__('Course')" />
               <x-content.link class="font-semibold" :value="$classroom->courseSubject->course->name"
-                href="{{ route('courses.show', $classroom->courseSubject->course->id) }}" />
+                href="{{ route('courses.show', $classroom->courseSubject->course_id) }}" />
 
               <x-forms.input-label class="pt-2" for="class_name" :value="__('Subject')" />
               <p class="text-violet-600 font-semibold">
@@ -94,51 +98,19 @@
 
           <div class="p-2 w-full">
             <div class="relative">
-              <x-forms.input-label for="enroled_students" :value="__('Existing Students')" />
+              <x-forms.input-label for="enroled_students" :value="__('Assigned Students')" />
 
-              @foreach ($existingStudents as $existing)
-                <div class="flex">
-                  <div class="form-check">
-                    <x-forms.checkbox-input type="checkbox" name="selected_students[]"
-                      value="{{ $existing->enrolment->id }}" checked />
+              <x-forms.choices id="selected_students" name="selected_students[]"
+                multiple x-data="{}" x-init="function () { choices($el) }"
+                :options="$enrolments" :title="__('students')"
+                :selected="old('selected_students') ??
+                  $classroom->classStudents->pluck('enrolment_id')->toArray() ?? 'default'"
+                required autofocus />
 
-                    <label class="form-check-label inline-block">
-                      {{$existing->enrolment->student->fullName . ' - ' . $existing->enrolment->student_profile->mykad}}
-                      <x-content.link class="font-semibold"
-                        :value="__('View Application')"
-                        href="{{ route('enrolments.show', $existing->enrolment->id) }}" />
-                    </label>
-                  </div>
-                </div>
-              @endforeach
-              @if($existingStudents->isEmpty())
+              @if($classroom->classStudents->isEmpty())
                 No records of assigned students. Please assign them.
               @endif
-            </div>
-          </div>
 
-          <div class="p-2 w-full">
-            <div class="relative">
-              <x-forms.input-label for="enroled_students" :value="__('Assign New Students')" />
-
-              @foreach ($enrolments as $enrolment)
-                <div class="flex">
-                  <div class="form-check">
-                    <x-forms.checkbox-input type="checkbox" name="selected_students[]"
-                      value="{{ $enrolment->id }}" />
-
-                    <label class="form-check-label inline-block">
-                      {{$enrolment->student->fullName . ' - ' . $enrolment->student_profile->mykad}}
-                      <x-content.link class="font-semibold"
-                        :value="__('View Application')"
-                        href="{{ route('enrolments.show', $enrolment->id) }}" />
-                    </label>
-                  </div>
-                </div>
-              @endforeach
-              @if($enrolments->isEmpty())
-                No records of unassigned enroled students. Please try again later.
-              @endif
             </div>
           </div>
 
@@ -152,11 +124,9 @@
                 </x-forms.button-secondary>
               </a>
             </td>
-              @if (auth()->user()->role == 'admin' || auth()->user()->role == 'teacher')
                 <x-forms.button-primary>
                   {{ __('Update') }}
                 </x-forms.button-primary>
-              @endif
             </div>
         </div>
       </div>
