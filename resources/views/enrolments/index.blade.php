@@ -9,14 +9,13 @@
       <form method="get" action="{{ route('enrolments.search') }}">
         <x-forms.search-input  name="keywords" value="{{ $keywords ?? null }}"
           position="justify-left" class="xl:w-7/12" marginBtm='mb-2'
-          placeholder="Enter a name, email or mykad"/>
+          placeholder="Enter a name, mykad or course"/>
       </form>
       <table class="min-w-full">
         <thead class="border-b">
           <tr>
             <x-table.heading :value="__('#')" />
             <x-table.heading :value="__('Student Name')" />
-            <x-table.heading :value="__('Email')" />
             <x-table.heading :value="__('MyKad')" />
             <x-table.heading :value="__('Course')" />
             <x-table.heading :value="__('Created on')" />
@@ -28,12 +27,10 @@
             <tr class="border-b">
               <x-table.cell :value="$loop->index+1" />
               <x-table.cell class="truncate" >
-                {{ $enrolment->student_profile['first_name'] . ' ' .
-                  $enrolment->student_profile['last_name'] }}
+                {{ $enrolment->studentName }}
               </x-table.cell>
-              <x-table.cell :value="$enrolment->student_profile['email']" />
               <x-table.cell :value="$enrolment->student_profile['mykad']" />
-              <x-table.cell :value="$enrolment->course->name" />
+              <x-table.cell :value="$enrolment->course->name" class="truncate" />
               <x-table.cell>
                 <span class="font-semibold">
                   {{ $enrolment->created_at->diffForHumans(['parts' => 2]) }}

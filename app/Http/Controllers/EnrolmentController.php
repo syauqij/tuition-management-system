@@ -32,16 +32,12 @@ class EnrolmentController extends Controller
     {
       $keywords = $request->keywords;
 
-      $query = Enrolment::with('student', 'course')
-      ->whereRelation(
-        'student', 'first_name', 'like', '%' . $keywords . '%'
-      )->orWhereRelation(
-        'student', 'last_name', 'like', '%' . $keywords . '%'
-      )->orWhereRelation(
-        'student.studentProfile', 'mykad', '=', $keywords
-      )->orWhereRelation(
-        'student', 'email', 'like', '%' . $keywords . '%'
-      );
+      $query = Enrolment::with('course')
+        ->studentName($keywords)
+        ->studentProfile('mykad', $keywords)
+        ->orWhereRelation(
+          'course', 'name', 'like', '%' . $keywords . '%'
+        )->orderBy('created_at', 'desc');
 
       $role = auth()->user()->role;
       if($role == 'student') {
@@ -80,7 +76,7 @@ class EnrolmentController extends Controller
       $courseId = $request->session()->get('enrol_course_id');
       $userId = auth()->user()->id;
 
-      auth()->user()->update($request->userColumns());
+      User::find($userId)->update($request->userColumns());
 
       $studentProfile = StudentProfile::updateOrCreate(
         ['user_id' => $userId],

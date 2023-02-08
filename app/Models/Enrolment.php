@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+
 class Enrolment extends Model
 {
     use HasFactory;
@@ -23,6 +24,17 @@ class Enrolment extends Model
       'student_profile' => 'array',
       'parent_profile' => 'array',
     ];
+
+    protected $appends = ['studentName'];
+
+    protected function studentName(): Attribute
+    {
+        return Attribute::make(
+          get: fn($value, $attributes) =>
+            json_decode($attributes['student_profile'])->first_name . ' ' .
+            json_decode($attributes['student_profile'])->last_name
+        );
+    }
 
     public function student()
     {
@@ -55,8 +67,23 @@ class Enrolment extends Model
     public function scopeEnroledStudents($query, $courseId)
     {
       return $query
-        ->with('student', 'student.studentProfile')
         ->where('course_id', $courseId)
         ->where('status', 'accepted');
+    }
+
+    public function scopeStudentName($query, $name)
+    {
+      return $query->whereRaw("CONCAT(
+          json_unquote(json_extract(student_profile, '$.first_name')),
+          ' ',
+          json_unquote(json_extract(student_profile, '$.last_name'))
+        ) LIKE ?", ['%' . $name . '%']
+      );
+    }
+
+    public function scopeStudentProfile($query, $key, $value)
+    {
+      return
+        $query->orWhere('student_profile->' . $key, 'like', '%' . $value . '%');
     }
 }
