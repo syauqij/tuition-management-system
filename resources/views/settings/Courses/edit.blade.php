@@ -1,6 +1,6 @@
 <x-app-layout>
   @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/choices.css')}}"
+    <link rel="stylesheet" href="{{ asset('css/choices.css')}}" />
   @endpush
 
   <x-slot name="header">
@@ -68,7 +68,7 @@
 
               <x-forms.choices id="subjects" name="course_subjects[]"
                 multiple x-data="{}" x-init="function () { choices($el) }"
-                :options="$subjects" :title="__('Subjects')" :selected="$selectedSubjects"
+                :options="$subjects" :title="__('Subjects')"
                 :selected="old('course_subjects') ?? $selectedSubjects ?? 'default'"
                 required autofocus />
             </div>

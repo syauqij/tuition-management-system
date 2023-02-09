@@ -1,4 +1,8 @@
 <x-app-layout>
+  @push('styles')
+    <link rel="stylesheet" href="{{ asset('css/choices.css')}}" />
+  @endpush
+
   <x-slot name="header">
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
           {{ __('Edit Classroom') }}
@@ -20,11 +24,11 @@
 
           <div class="p-2 w-full">
             <div class="relative">
-              <x-forms.input-label for="class_name" :value="__('Course')" />
+              <x-forms.input-label for="course-name" :value="__('Course')" />
               <x-content.link class="font-semibold" :value="$classroom->courseSubject->course->name"
-                href="{{ route('courses.show', $classroom->courseSubject->course->id) }}" />
+                href="{{ route('courses.show', $classroom->courseSubject->course_id) }}" />
 
-              <x-forms.input-label class="pt-2" for="class_name" :value="__('Subject')" />
+              <x-forms.input-label class="pt-2" for="subject-name" :value="__('Subject')" />
               <p class="text-violet-600 font-semibold">
                 {{ $classroom->courseSubject->subject->name }}
               </p>
@@ -33,112 +37,79 @@
 
           <div class="p-2 w-full">
             <div class="relative">
-              <x-forms.input-label for="class_name" :value="__('Class Name')" />
+              <x-forms.input-label for="class-name" :value="__('Class Name')" />
 
-              <x-forms.input-text id="classroom_name" class="block mt-1 w-full" type="text" name="name"
-                value="{{ $classroom->name ?? old('classroom_name')}}"
+              <x-forms.input-text id="class-name" class="block mt-1 w-full" type="text" name="name"
+                value="{{ old('name') ?? $classroom->name }}"
                 placeholder="E.g. English F5B G1" required autofocus />
             </div>
           </div>
 
           <div class="p-2 w-1/2">
             <div class="relative">
-              <x-forms.input-label for="class_room_no" :value="__('Room No')" />
+              <x-forms.input-label for="class-room_no" :value="__('Room No')" />
 
-              <x-forms.input-text id="class_room_no" class="block mt-1 w-full" type="text" name="room_no"
-                value="{{ $classroom->room_no ?? old('class_room_no')}}"
+              <x-forms.input-text id="class-room-no" class="block mt-1 w-full" type="text" name="room_no"
+                value="{{ old('room_no') ?? $classroom->room_no }}"
                 placeholder="E.g. B1-L1-R03" required autofocus />
             </div>
           </div>
 
           <div class="p-2 w-1/2">
             <div class="relative">
-              <x-forms.input-label for="class_school_grade" :value="__('School Grade')" />
+              <x-forms.input-label for="class-school-grade" :value="__('School Grade')" />
 
-              <x-forms.select-input id="class_school_grade" class="block mt-1 w-full" type="text" name="school_grade_id"
+              <x-forms.select-input id="class-school-grade" class="block mt-1 w-full" type="text" name="school_grade_id"
                 :options="$schoolGrades" :title="__('School Grade')"
-                :value="$classroom->school_grade_id ?? old('class_school_grade')"
+                :value="old('school_grade_id') ?? $classroom->school_grade_id "
                 required autofocus />
             </div>
           </div>
 
           <div class="p-2 w-full">
             <div class="relative">
-              <x-forms.input-label for="class_teacher" :value="__('Class Teacher')" />
+              <x-forms.input-label for="class-teacher" :value="__('Class Teacher')" />
 
-              <x-forms.select-input id="class_teacher" class="block mt-1 w-full" type="text" name="teacher_user_id"
-                :value="$classroom->teacher_user_id ?? old('class_teacher')"
+              <x-forms.select-input id="class-teacher" class="block mt-1 w-full" type="text" name="teacher_user_id"
+                :value=" old('teacher_user_id') ?? $classroom->teacher_user_id "
                 :options="$teachers" :title="__('Teacher')" required autofocus />
             </div>
           </div>
 
           <div class="p-2 w-1/2">
             <div class="relative">
-              <x-forms.input-label for="class_min_student" :value="__('Min. Student')" />
+              <x-forms.input-label for="class-min-student" :value="__('Min. Students')" />
 
-              <x-forms.input-text id="class_min_student" class="block mt-1 w-full" type="text" name="min_students"
-                :value="$classroom->min_students ?? old('class_min_student')"
+              <x-forms.input-text id="class-min-student" class="block mt-1 w-full" type="text" name="min_students"
+                :value="old('min_students') ?? $classroom->min_students"
                 placeholder="E.g. 5" required autofocus />
             </div>
           </div>
 
           <div class="p-2 w-1/2">
             <div class="relative">
-              <x-forms.input-label for="class_max_student" :value="__('Max. Student')" />
+              <x-forms.input-label for="class-max-student" :value="__('Max. Students')" />
 
-              <x-forms.input-text id="class_max_student" class="block mt-1 w-full" type="text" name="max_students"
-                :value="$classroom->max_students ?? old('class_max_student')"
+              <x-forms.input-text id="max-students" class="block mt-1 w-full" type="text" name="max_students"
+                :value="old('max_students') ?? $classroom->max_students"
                 placeholder="E.g. 30" required autofocus />
             </div>
           </div>
 
           <div class="p-2 w-full">
             <div class="relative">
-              <x-forms.input-label for="enroled_students" :value="__('Existing Students')" />
+              <x-forms.input-label for="class-students" :value="__('Assigned Students')" />
+              <x-forms.choices id="class-students" name="selected_students[]"
+                multiple x-init="function () { studentChoices($el) }"
+                :options="$enrolments" :title="__('students')"
+                :selected="old('selected_students') ??
+                  $classroom->classStudents->pluck('enrolment_id')->toArray() ?? 'default'"
+                required autofocus />
 
-              @foreach ($existingStudents as $existing)
-                <div class="flex">
-                  <div class="form-check">
-                    <x-forms.checkbox-input type="checkbox" name="selected_students[]"
-                      value="{{ $existing->enrolment->id }}" checked />
-
-                    <label class="form-check-label inline-block">
-                      {{$existing->enrolment->student->fullName . ' - ' . $existing->enrolment->student_profile->mykad}}
-                      <x-content.link class="font-semibold"
-                        :value="__('View Application')"
-                        href="{{ route('enrolments.show', $existing->enrolment->id) }}" />
-                    </label>
-                  </div>
-                </div>
-              @endforeach
-              @if($existingStudents->isEmpty())
+              @if($classroom->classStudents->isEmpty())
                 No records of assigned students. Please assign them.
               @endif
-            </div>
-          </div>
 
-          <div class="p-2 w-full">
-            <div class="relative">
-              <x-forms.input-label for="enroled_students" :value="__('Assign New Students')" />
-
-              @foreach ($enrolments as $enrolment)
-                <div class="flex">
-                  <div class="form-check">
-                    <x-forms.checkbox-input type="checkbox" name="selected_students[]"
-                      value="{{ $enrolment->id }}" />
-
-                    <label class="form-check-label inline-block">
-                      {{$enrolment->student->fullName . ' - ' . $enrolment->student_profile->mykad}}
-                      <x-content.link class="font-semibold"
-                        :value="__('View Application')"
-                        href="{{ route('enrolments.show', $enrolment->id) }}" />
-                    </label>
-                  </div>
-                </div>
-              @endforeach
-              @if($enrolments->isEmpty())
-                No records of unassigned enroled students. Please try again later.
-              @endif
             </div>
           </div>
 
@@ -152,11 +123,9 @@
                 </x-forms.button-secondary>
               </a>
             </td>
-              @if (auth()->user()->role == 'admin' || auth()->user()->role == 'teacher')
                 <x-forms.button-primary>
                   {{ __('Update') }}
                 </x-forms.button-primary>
-              @endif
             </div>
         </div>
       </div>

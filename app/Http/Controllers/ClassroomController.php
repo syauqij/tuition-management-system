@@ -20,17 +20,15 @@ class ClassroomController extends Controller
     {
       $role = auth()->user()->role;
 
-      $courses = Course::select(['id','name','created_at'])
-        ->with([
-          'subjectCategory',
-          'courseSubjects' => [
-              'subject',
-              'classrooms',
-            ],
-          ])
-        ->withCount(['enrolments' => function (Builder $query) {
-            $query->where('status', '=', 'accepted');
-          }]);
+      $courses = Course::select(['id','name'])
+      ->with([
+        'courseSubjects' => [
+          'subject',
+          'classrooms',
+        ]
+      ])->withCount(['enrolments' => function (Builder $query) {
+          $query->where('status', '=', 'accepted');
+      }]);
 
         if($role == 'student') {
           $courses = $courses->whereRelation(
@@ -50,10 +48,17 @@ class ClassroomController extends Controller
         ->where('id', $courseSubjectId)
         ->first();
 
-      $classrooms = Classroom::with(['schoolGrade', 'teacher'])
-        ->withCount('classStudents')
-        ->where('course_subject_id', $courseSubjectId)
-        ->paginate(5);
+      $classrooms = Classroom::select(
+        'id','name','room_no',
+        'school_grade_id', 'teacher_user_id'
+      )
+      ->with([
+        'schoolGrade:id,name',
+        'teacher:id,first_name,last_name'
+      ])
+      ->withCount('classStudents')
+      ->where('course_subject_id', $courseSubjectId)
+      ->paginate(5);
 
       return view('classrooms.list', compact('courseSubject', 'classrooms'));
     }
@@ -112,8 +117,8 @@ class ClassroomController extends Controller
         ->pluck('enrolment_id');
 
       $enrolments = Enrolment::enroledStudents($classroom->course->id)
-       ->whereNotIn('id', $existingStudents)
-       ->get();
+      ->whereNotIn('id', $existingStudents)
+      ->get()->pluck('id', 'studentName');
 
       if($enrolments->isEmpty()) {
         return redirect()->route('classrooms.list', $classroom->id)
@@ -140,8 +145,8 @@ class ClassroomController extends Controller
         'course_subject_id' => $request->course_subject_id,
         'school_grade_id' => $request->class_grade_id,
         'teacher_user_id' => $request->class_teacher_id,
-        'min_students' => $request->class_min_student,
-        'max_students' => $request->class_max_student,
+        'min_students' => $request->class_min_students,
+        'max_students' => $request->class_max_students,
       ]);
 
       $selectedStudents = $request->selected_students;
@@ -158,20 +163,8 @@ class ClassroomController extends Controller
 
     public function edit(Classroom $classroom)
     {
-      $classroom::with(['courseSubject.course', 'courseSubject.subject']);
-
-      $existingStudents = ClassStudent::with(['enrolment.student'])
-        ->where('classroom_id', $classroom->id)
-        ->get();
-
-      $assignedStudents = ClassStudent::with('classroom')
-        ->whereRelation('classroom',
-          'course_subject_id', '=', $classroom->courseSubject->id)
-        ->pluck('enrolment_id');
-
-      $enrolments = Enrolment::enroledStudents($classroom->courseSubject->course->id)
-       ->whereNotIn('id', $assignedStudents)
-       ->get();
+      $enrolments = Enrolment::enroledStudents($classroom->courseSubject->course_id)
+      ->get()->pluck('id', 'studentName');
 
       $schoolGrades = SchoolGrade::orderBy('name', 'asc')->pluck('id','name');
       $teachers = User::orderBy('first_name', 'asc')->get()
@@ -179,7 +172,7 @@ class ClassroomController extends Controller
         ->pluck('id','fullName');
 
       return view('classrooms.edit', compact(
-        'classroom', 'existingStudents', 'enrolments', 'schoolGrades', 'teachers'
+        'classroom', 'enrolments', 'schoolGrades', 'teachers',
       ));
     }
 

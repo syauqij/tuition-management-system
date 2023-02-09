@@ -3,12 +3,14 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
+
 
 class StoreClassroomRequest extends FormRequest
 {
     public function authorize()
     {
-        return true;
+      return Gate::allows('manage_classrooms');
     }
 
     public function rules()
@@ -18,13 +20,13 @@ class StoreClassroomRequest extends FormRequest
           'class_room_no' => 'required|string|max:50',
           'selected_students' => [
             'required', 'array',
-            'min:' . $this->input('class_min_student'),
-            'max:' . $this->input('class_max_student')
+            'min:' . $this->input('class_min_students'),
+            'max:' . $this->input('class_max_students')
           ],
           'class_grade_id' => 'required',
           'class_teacher_id' => 'required',
-          'class_min_student' => 'required|min:1|max:10',
-          'class_max_student' => 'required|min:1|max:50'
+          'class_min_students' => 'required|min:1|max:10',
+          'class_max_students' => 'required|min:1|max:50'
         ];
     }
 

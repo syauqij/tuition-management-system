@@ -53,14 +53,14 @@
           <h2 class="text-gray-500 font-normalt">
             Class Students
           </h2>
-          @foreach ($classroom->classStudents as $existing)
+          @foreach ($classroom->classStudents as $student)
           <ol class="list-decimal text-gray-900 font-semibold">
             <li>
-              {{$existing->enrolment->student->fullName }}
+              {{ $student->enrolment->studentName }}
               @if (auth()->user()->role == 'teacher' || auth()->user()->role == 'admin')
                 <x-content.link class="font-semibold"
-                value="{{$existing->enrolment->student_profile->mykad}}"
-                href="{{ route('enrolments.show', $existing->enrolment->id) }}" />
+                value="{{$student->enrolment->student_profile['mykad']}}"
+                href="{{ route('enrolments.show', $student->enrolment->id) }}" />
               @endif
             </li>
           </ul>

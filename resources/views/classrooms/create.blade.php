@@ -1,4 +1,7 @@
 <x-app-layout>
+  @push('styles')
+    <link rel="stylesheet" href="{{ asset('css/choices.css')}}" />
+  @endpush
   <x-slot name="header">
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
           {{ __('Create Classroom') . ' - ' . $classroom->subject->name}}
@@ -19,11 +22,11 @@
 
           <div class="p-2 w-full">
             <div class="relative">
-              <x-forms.input-label for="course_name" :value="__('Course')" />
+              <x-forms.input-label for="course-name" :value="__('Course')" />
               <x-content.link class="font-semibold" :value="$classroom->course->name"
                 href="{{ route('courses.show', $classroom->course->id) }}" />
 
-              <x-forms.input-label class="pt-2" for="subject_name" :value="__('Subject')" />
+              <x-forms.input-label class="pt-2" for="subject-name" :value="__('Subject')" />
               <p class="text-violet-600 font-semibold">
                 {{ $classroom->subject->name }}
               </p>
@@ -33,9 +36,9 @@
 
           <div class="p-2 w-full">
             <div class="relative">
-              <x-forms.input-label for="class_name" :value="__('Class Name')" />
+              <x-forms.input-label for="class-name" :value="__('Class Name')" />
 
-              <x-forms.input-text id="classroom_name" class="block mt-1 w-full" type="text" name="class_name"
+              <x-forms.input-text id="class-name" class="block mt-1 w-full" type="text" name="class_name"
                 value="{{old('class_name')}}"
                 placeholder="E.g. English F5B G1" required autofocus />
             </div>
@@ -43,9 +46,9 @@
 
           <div class="p-2 w-1/2">
             <div class="relative">
-              <x-forms.input-label for="class_room_no" :value="__('Room No')" />
+              <x-forms.input-label for="class-room-no" :value="__('Room No')" />
 
-              <x-forms.input-text id="class_room_no" class="block mt-1 w-full" type="text" name="class_room_no"
+              <x-forms.input-text id="class-room-no" class="block mt-1 w-full" type="text" name="class_room_no"
                 value="{{old('class_room_no')}}"
                 placeholder="E.g. B1-L1-R03" required autofocus />
             </div>
@@ -53,9 +56,9 @@
 
           <div class="p-2 w-1/2">
             <div class="relative">
-              <x-forms.input-label for="class_school_grade" :value="__('School Grade')" />
+              <x-forms.input-label for="class-school-grade" :value="__('School Grade')" />
 
-              <x-forms.select-input id="class_school_grade" class="block mt-1 w-full" type="text" name="class_grade_id"
+              <x-forms.select-input id="class-school-grade" class="block mt-1 w-full" type="text" name="class_grade_id"
                 :value="old('class_grade_id')"
                 :options="$schoolGrades" :title="__('School Grade')" required autofocus />
             </div>
@@ -63,9 +66,9 @@
 
           <div class="p-2 w-full">
             <div class="relative">
-              <x-forms.input-label for="class_teacher" :value="__('Class Teacher')" />
+              <x-forms.input-label for="class-teacher" :value="__('Class Teacher')" />
 
-              <x-forms.select-input id="class_teacher" class="block mt-1 w-full" type="text" name="class_teacher_id"
+              <x-forms.select-input id="class-teacher" class="block mt-1 w-full" type="text" name="class_teacher_id"
                 :value="old('class_teacher_id')"
                 :options="$teachers" :title="__('Teacher')" required autofocus />
             </div>
@@ -73,46 +76,33 @@
 
           <div class="p-2 w-1/2">
             <div class="relative">
-              <x-forms.input-label for="class_min_student" :value="__('Min. Student')" />
+              <x-forms.input-label for="class-min-students" :value="__('Min. Students')" />
 
-              <x-forms.input-text id="class_min_student" class="block mt-1 w-full" type="text" name="class_min_student"
-                value="{{old('class_min_student')}}"
+              <x-forms.input-text id="class-min-students" class="block mt-1 w-full" type="text" name="class_min_students"
+                value="{{old('class_min_students')}}"
                 placeholder="E.g. 5" required autofocus />
             </div>
           </div>
 
           <div class="p-2 w-1/2">
             <div class="relative">
-              <x-forms.input-label for="class_max_student" :value="__('Max. Student')" />
+              <x-forms.input-label for="class-max-students" :value="__('Max. Students')" />
 
-              <x-forms.input-text id="class_max_student" class="block mt-1 w-full" type="text" name="class_max_student"
-                value="{{old('class_max_student')}}"
+              <x-forms.input-text id="class-max-students" class="block mt-1 w-full" type="text" name="class_max_students"
+                value="{{old('class_max_students')}}"
                 placeholder="E.g. 30" required autofocus />
             </div>
           </div>
 
           <div class="p-2 w-full">
             <div class="relative">
-              <x-forms.input-label for="enroled_students" :value="__('Assign Students')" />
-
-              @foreach ($enrolments as $enrolment)
-                <div class="flex">
-                  <div class="form-check">
-                    <x-forms.checkbox-input type="checkbox" name="selected_students[]"
-                      value="{{ $enrolment->id }}" checked />
-
-                    <label class="form-check-label inline-block">
-                      {{$enrolment->student->fullName . ' - ' . $enrolment->student_profile->mykad}}
-                      <x-content.link class="font-semibold"
-                        :value="__('View Application')"
-                        href="{{ route('enrolments.show', $enrolment->id) }}" />
-                    </label>
-                  </div>
-                </div>
-              @endforeach
-              @if($enrolments->isEmpty())
-                No records of enroled students. Please try again later.
-              @endif
+              <x-forms.input-label for="class-students" :value="__('Assign Students')" />
+              <p class="my-1 font-semibold text-sm text-blue-600 hover:text-blue-900" id="message"></p>
+              <x-forms.choices id="class-students" name="selected_students[]"
+                multiple x-init="function () { studentChoices($el) }"
+                :options="$enrolments" :title="__('students')"
+                :selected="old('selected_students')"
+                required autofocus />
             </div>
           </div>
 

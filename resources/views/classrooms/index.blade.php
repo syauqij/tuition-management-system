@@ -40,7 +40,7 @@
                   @foreach ($course->courseSubjects as $courseSubject)
 
                     @if (!empty($courseSubject->subject->name ))
-                    <div class="h-12 grid grid-cols-3 gap-4 content-center border-b">
+                    <div class="h-12 grid grid-cols-3 gap-4 content-center @if($loop->remaining) border-b @endif " >
                       <div>
                         <x-content.link href="{{ route('classrooms.search', [
                           'keywords' => $courseSubject->subject->name,
